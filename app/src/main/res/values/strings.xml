@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AthenaBus</string>
+    <string name="button_text">Click Button</string>
+    <string name="example">Example</string>
+</resources>
