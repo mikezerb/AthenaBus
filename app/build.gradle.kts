@@ -2,9 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-android")
-    id("kotlin-kapt")
-    kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -69,21 +68,19 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     //Dagger - Hilt
     implementation ("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
-    kapt("com.google.dagger:dagger-compiler:2.38.1")
+    ksp("com.google.dagger:hilt-android-compiler:2.44")
+    ksp("com.google.dagger:dagger-compiler:2.38.1")
     implementation ("com.google.dagger:hilt-android:2.48")
-    kapt ("com.google.dagger:hilt-android-compiler:2.48")
-    kapt ("androidx.hilt:hilt-compiler:1.0.0")
+    ksp("com.google.dagger:hilt-android-compiler:2.48")
+    ksp("androidx.hilt:hilt-compiler:1.0.0")
     implementation ("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
     // Compose dependencies
     implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha07")
     implementation ("androidx.navigation:navigation-compose:2.4.0-alpha08")
     implementation ("com.google.accompanist:accompanist-flowlayout:0.17.0")
-
     // Coroutines
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.1")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.1")
-
     // Coroutine Lifecycle Scopes
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
@@ -92,9 +89,9 @@ dependencies {
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation ("com.squareup.okhttp3:okhttp:5.0.0-alpha.2")
     implementation ("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.2")
-}
-
-// Allow references to generated code
-kapt {
-    correctErrorTypes = true
+    // Room
+    implementation("androidx.room:room-runtime:2.5.2")
+    annotationProcessor("androidx.room:room-compiler:2.5.2")
+    ksp("androidx.room:room-compiler:2.5.2")
+    implementation("androidx.room:room-ktx:2.5.2")
 }

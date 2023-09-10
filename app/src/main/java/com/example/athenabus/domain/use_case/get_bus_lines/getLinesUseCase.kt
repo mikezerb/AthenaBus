@@ -16,12 +16,13 @@ class getLinesUseCase @Inject constructor(
     operator fun invoke(): Flow<Resource<List<Line>>> = flow {
         try {
             emit(Resource.Loading<List<Line>>())
-            val bus_lines = repository.getLines().map { it.toLine() }
-            emit(Resource.Success<List<Line>>(bus_lines))
-        }catch (e: HttpException){
-            emit(Resource.Error<List<Line>>(e.localizedMessage ?: "error"))
 
-        }catch (e: IOException){
+            val bus_lines = repository.getLines().map { it.toLine() }
+
+            emit(Resource.Success<List<Line>>(bus_lines))
+        }catch (e: HttpException) {
+            emit(Resource.Error<List<Line>>(e.localizedMessage ?: "error"))
+        }catch (e: IOException) {
             emit(Resource.Error<List<Line>>("Internet connection error"))
         }
     }

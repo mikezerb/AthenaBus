@@ -46,10 +46,10 @@ fun BusLineListScreen(
 
             LazyColumn(modifier = Modifier.fillMaxSize().padding(it)) {
                 items(state.bus_lines) { line ->
-                    BusLineItem(bus_line = line, onItemClick =
-                    {
-                        navController.navigate(Screen.BusLineDetailsScreen.route + "/${line.LineID}")
-                    }
+                    BusLineItem(busLine = line, onItemClick =
+                        {
+                            navController.navigate(Screen.BusLineDetailsScreen.route + "/${line.LineID}")
+                        }
                     )
                 }
             }

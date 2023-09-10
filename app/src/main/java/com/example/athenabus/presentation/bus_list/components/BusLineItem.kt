@@ -42,14 +42,14 @@ fun BusLineItem(
                 Text(
                     text = busLine.LineID,
                     style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp, start = 4.dp)
                 )
                 
                 // Display Line Description
                 Text(
                     text = busLine.LineDescr,
                     fontSize = 14.sp,
-                    modifier = Modifier.padding(bottom = 4.dp)
+                    modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)
                 )
             }
 
