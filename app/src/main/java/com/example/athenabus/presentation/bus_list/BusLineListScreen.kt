@@ -12,8 +12,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -31,7 +33,10 @@ fun BusLineListScreen(
 ) {
 
     val state = viewModel.state.value
+
+    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     Scaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
@@ -39,12 +44,15 @@ fun BusLineListScreen(
                 },
                 navigationIcon = {
                     // You can add a navigation icon if needed
-                }
+                },
+                scrollBehavior = scrollBehavior
             )
         },
         content = {
 
-            LazyColumn(modifier = Modifier.fillMaxSize().padding(it)) {
+            LazyColumn(modifier = Modifier
+                .fillMaxSize()
+                .padding(it)) {
                 items(state.bus_lines) { line ->
                     BusLineItem(busLine = line, onItemClick =
                         {
@@ -67,7 +75,7 @@ fun BusLineListScreen(
                 CircularProgressIndicator()
             }
         }
-    );
-    {
+    )
+    run {
     }
 }

@@ -12,7 +12,6 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 
-
 @HiltViewModel
 class BusLineListViewModel @Inject constructor(
     private val getLinesUseCase: getLinesUseCase
@@ -22,9 +21,9 @@ class BusLineListViewModel @Inject constructor(
     val state: State<BusLineListState> = _state
 
     init {
-        getLines()
+        getBusLines()
     }
-    private fun getLines(){
+    private fun getBusLines(){
         getLinesUseCase().onEach {
             result ->
             when(result){

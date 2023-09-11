@@ -2,10 +2,10 @@ package com.example.athenabus.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.example.athenabus.data.remote.dto.LineDtoItem
+import com.example.athenabus.data.local.entity.BusLineEntity
 
 @Database(
-    entities = [LineDtoItem::class],
+    entities = [BusLineEntity::class],
     version = 1
 )
 abstract class TelematicsDatabase : RoomDatabase() {

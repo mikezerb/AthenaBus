@@ -5,8 +5,8 @@ import androidx.room.Room
 import com.example.athenabus.common.Constants
 import com.example.athenabus.data.local.TelematicsDatabase
 import com.example.athenabus.data.remote.OASATelematicsAPI
-import com.example.athenabus.domain.repository.LineRepository
-import com.example.athenabus.domain.repository.LineRepositoryImpl
+import com.example.athenabus.data.repository.BusLineRepositoryImpl
+import com.example.athenabus.domain.repository.BusLineRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,8 +30,11 @@ object AppModule {
     }
     @Provides
     @Singleton
-    fun provideLineRepository(api: OASATelematicsAPI): LineRepository {
-        return LineRepositoryImpl(api)
+    fun provideLineRepository(
+        api: OASATelematicsAPI,
+        db: TelematicsDatabase
+    ): BusLineRepository {
+        return BusLineRepositoryImpl(api, db.dao)
     }
 
     @Provides

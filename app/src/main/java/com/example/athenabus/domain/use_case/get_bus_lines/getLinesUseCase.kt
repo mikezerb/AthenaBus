@@ -1,18 +1,20 @@
 package com.example.athenabus.domain.use_case.get_bus_lines
 
 import com.example.athenabus.common.Resource
-import com.example.athenabus.data.mapper.toLine
 import com.example.athenabus.domain.model.Line
-import com.example.athenabus.domain.repository.LineRepository
+import com.example.athenabus.domain.repository.BusLineRepository
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
-import retrofit2.HttpException
-import java.io.IOException
 import javax.inject.Inject
 
 class getLinesUseCase @Inject constructor(
-    private val repository: LineRepository,
+    private val repository: BusLineRepository,
 ){
+
+    operator fun invoke(): Flow<Resource<List<Line>>> {
+        return repository.getBusLines()
+    }
+
+    /*
     operator fun invoke(): Flow<Resource<List<Line>>> = flow {
         try {
             emit(Resource.Loading<List<Line>>())
@@ -29,4 +31,5 @@ class getLinesUseCase @Inject constructor(
             emit(Resource.Error<List<Line>>("Internet connection error"))
         }
     }
+     */
 }

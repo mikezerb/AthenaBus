@@ -6,6 +6,6 @@ import retrofit2.http.GET
 interface OASATelematicsAPI {
 
     @GET("api/?act=webGetLines")
-    suspend fun getLines() : LineDto
+    suspend fun getBusLines() : LineDto
 
 }
