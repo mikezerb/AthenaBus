@@ -4,9 +4,14 @@ import android.app.Application
 import androidx.room.Room
 import com.example.athenabus.common.Constants
 import com.example.athenabus.data.local.TelematicsDatabase
+import com.example.athenabus.data.manger.LocalUserMangerImpl
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.data.repository.BusLineRepositoryImpl
+import com.example.athenabus.domain.manger.LocalUserManger
 import com.example.athenabus.domain.repository.BusLineRepository
+import com.example.athenabus.domain.use_case.app_entry.AppEntryUseCases
+import com.example.athenabus.domain.use_case.app_entry.ReadAppEntryUseCase
+import com.example.athenabus.domain.use_case.app_entry.SaveAppEntryUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -46,4 +51,15 @@ object AppModule {
             "telematics.db"
         ).build()
     }
+
+    @Provides
+    @Singleton
+    fun provideLocalUserManger(app: Application): LocalUserManger = LocalUserMangerImpl(app)
+
+    @Provides
+    @Singleton
+    fun provideAppEntryUseCases(localUserManger: LocalUserManger) = AppEntryUseCases(
+        readAppEntryUseCase = ReadAppEntryUseCase(localUserManger),
+        saveAppEntryUseCase = SaveAppEntryUseCase(localUserManger)
+    )
 }

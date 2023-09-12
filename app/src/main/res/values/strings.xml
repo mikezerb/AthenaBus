@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">AthenaBus</string>
-    <string name="button_text">Click Button</string>
-    <string name="example">Example</string>
+    <string name="button_text" translatable="false">Click Button</string>
+    <string name="example" translatable="false">Example</string>
+    <string name="next_btn">Next</string>
+    <string name="back_btn">Back</string>
+    <string name="start_btn">Get Started</string>
+
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">AthenaBus</string>
+
+    <string name="next_btn">Επόμενο</string>
+    <string name="back_btn">Πίσω</string>
+    <string name="start_btn">Ξεκινήστε</string>
+
+</resources>
