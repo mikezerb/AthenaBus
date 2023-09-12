@@ -8,7 +8,7 @@ plugins {
 
 android {
     namespace = "com.example.athenabus"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.athenabus"
@@ -70,6 +70,8 @@ dependencies {
 
     //Splash Api
     implementation("androidx.core:core-splashscreen:1.0.1")
+    // Preferences DataStore (SharedPreferences like APIs)
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
     //Dagger - Hilt
     implementation ("com.google.dagger:hilt-android:2.48")
     ksp("com.google.dagger:hilt-android-compiler:2.48")
@@ -88,6 +90,10 @@ dependencies {
     // Coroutine Lifecycle Scopes
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    //Accompanist
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.31.4-beta")
+    //Compose Foundation
+    implementation ("androidx.compose.foundation:foundation:1.6.0-alpha05")
     // Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
