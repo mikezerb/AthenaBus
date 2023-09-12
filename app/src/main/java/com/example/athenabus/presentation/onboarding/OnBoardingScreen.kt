@@ -101,26 +101,6 @@ fun OnBoardingScreen(
                     )
             }
         }
-        Spacer(modifier = Modifier.weight(0.5f))
+        Spacer(modifier = Modifier.weight(0.2f))
     }
 }
-
-//@Composable
-//fun getButtonTexts(currentPage: Int): Pair<String, String> {
-//    val nextPageText = when (currentPage) {
-//        0 -> "" // You can provide an empty string or a default value here
-//        1 -> stringResource(id = R.string.back_btn)
-//        2 -> stringResource(id = R.string.back_btn)
-//        else -> ""
-//    }
-//
-//    val startText = when (currentPage) {
-//        0 -> stringResource(id = R.string.next_btn)
-//        1 -> stringResource(id = R.string.next_btn)
-//        2 -> stringResource(id = R.string.start_btn)
-//        else -> ""
-//    }
-//
-//    return Pair(nextPageText, startText)
-//}
-

@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.athenabus.data.local.PageData
 import com.example.athenabus.presentation.Dimens.MediumPadding1
 import com.example.athenabus.presentation.onboarding.Page
@@ -39,7 +40,7 @@ fun OnBoardingPage(
         Spacer(modifier = Modifier.width(MediumPadding1))
         Text(
             text = page.title,
-            modifier = Modifier.padding(horizontal = MediumPadding1),
+            modifier = Modifier.padding(horizontal = MediumPadding1).padding(bottom = 14.dp),
             style = MaterialTheme.typography.headlineLarge
         )
         Text(
