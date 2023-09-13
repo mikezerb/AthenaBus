@@ -2,9 +2,12 @@ package com.example.athenabus.presentation.onboarding.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -26,29 +29,38 @@ fun OnBoardingPage(
     modifier: Modifier = Modifier,
     page: Page
 ) {
-    Column(
-        modifier = modifier
-    ) {
-      Image(
-          modifier = Modifier
-              .fillMaxWidth()
-              .fillMaxHeight(fraction = 0.6f),
-          painter = painterResource(id = page.image),
-          contentDescription = null,
-          contentScale = ContentScale.Fit
-      )
-        Spacer(modifier = Modifier.width(MediumPadding1))
-        Text(
-            text = page.title,
-            modifier = Modifier.padding(horizontal = MediumPadding1).padding(bottom = 14.dp),
-            style = MaterialTheme.typography.headlineLarge
-        )
-        Text(
-            text = page.description,
-            modifier = Modifier.padding(horizontal = MediumPadding1),
-            style = MaterialTheme.typography.bodyMedium
-        )
+    Box (
+        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+    ){
+        Column(
+            modifier = modifier,
+        ) {
+            Image(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(fraction = 0.6f),
+                painter = painterResource(id = page.image),
+                contentDescription = null,
+                contentScale = ContentScale.Fit
+            )
+            Spacer(modifier = Modifier.width(MediumPadding1))
+            Text(
+                text = page.title,
+                modifier = Modifier
+                    .padding(horizontal = MediumPadding1)
+                    .padding(bottom = 14.dp),
+                style = MaterialTheme.typography.headlineLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+            Text(
+                text = page.description,
+                modifier = Modifier.padding(horizontal = MediumPadding1),
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.onBackground
+            )
+        }
     }
+
 }
 @Preview(showBackground = true)
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)

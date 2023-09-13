@@ -22,7 +22,6 @@ fun MaterialElevatedButton(
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             containerColor = MaterialTheme.colorScheme.primaryContainer,
         )
-
     ) {
         Text(text = text)
     }
@@ -49,7 +48,6 @@ fun MaterialTextButton(
     TextButton(
         onClick = onClick,
         modifier = Modifier.padding(16.dp)
-
     ) {
         Text(text = text)
     }
