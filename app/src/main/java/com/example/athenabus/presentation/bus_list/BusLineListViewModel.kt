@@ -23,17 +23,21 @@ class BusLineListViewModel @Inject constructor(
     init {
         getBusLines()
     }
-    private fun getBusLines(){
-        getLinesUseCase().onEach {
-            result ->
-            when(result){
+
+    private fun getBusLines() {
+        getLinesUseCase().onEach { result ->
+            when (result) {
                 is Resource.Success -> {
                     _state.value = BusLineListState(bus_lines = result.data ?: emptyList())
-                }is Resource.Error -> {
+                }
+
+                is Resource.Error -> {
                     _state.value = BusLineListState(error = result.message ?: "Unexpected error")
 
-                }is Resource.Loading -> {
-                _state.value = BusLineListState(isLoading = true)
+                }
+
+                is Resource.Loading -> {
+                    _state.value = BusLineListState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)

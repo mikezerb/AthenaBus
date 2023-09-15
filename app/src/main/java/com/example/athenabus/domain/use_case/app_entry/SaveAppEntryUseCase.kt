@@ -6,7 +6,7 @@ class SaveAppEntryUseCase(
     private val localUserManger: LocalUserManger
 ) {
 
-    suspend operator fun invoke(){
+    suspend operator fun invoke() {
         localUserManger.saveAppEntry()
     }
 }

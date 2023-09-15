@@ -24,35 +24,35 @@ fun BusLineItem(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onItemClick(busLine) }
-            .padding(6.dp),
+            .padding(4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
         border = BorderStroke(1.dp, Color.Black),
         elevation = CardDefaults.cardElevation(
-            defaultElevation = 6.dp
-        ),
-
+            defaultElevation = 2.dp
+        )
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .clickable { onItemClick(busLine) }
         ) {
-            Column(
-                modifier = Modifier.padding(8.dp)
-            ){
-                // Display Line Code
-                Text(
-                    text = busLine.LineID,
-                    style = MaterialTheme.typography.headlineLarge,
-                    modifier = Modifier.padding(bottom = 8.dp, start = 4.dp)
-                )
-                
-                // Display Line Description
-                Text(
-                    text = busLine.LineDescr,
-                    fontSize = 14.sp,
-                    modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)
-                )
-            }
-
+            // Display Line Code
+            Text(
+                text = busLine.LineID,
+                style = MaterialTheme.typography.headlineLarge,
+                modifier = Modifier.padding(bottom = 8.dp, start = 4.dp)
+            )
+            // Display Line Description
+            Text(
+                text = busLine.LineDescr,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)
+            )
         }
+
+    }
 
 }

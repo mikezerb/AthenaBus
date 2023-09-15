@@ -1,12 +1,12 @@
 package com.example.athenabus.presentation.nvgraph
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import com.example.athenabus.presentation.bus_detail.RouteListScreen
 import com.example.athenabus.presentation.bus_list.BusLineListScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingViewModel
@@ -21,10 +21,10 @@ fun NavGraph(
         navigation(
             route = Route.AppStartNavigationScreen.route,
             startDestination = Route.OnBoardingScreen.route
-        ){
+        ) {
             composable(
                 route = Route.OnBoardingScreen.route
-            ){
+            ) {
                 val viewModel: OnBoardingViewModel = hiltViewModel()
                 OnBoardingScreen(
                     event = viewModel::onEvent
@@ -35,18 +35,18 @@ fun NavGraph(
         navigation(
             route = Route.BusLine.route,
             startDestination = Route.BusLineScreen.route
-        ){
-            composable( route = Route.BusLineScreen.route ){
+        ) {
+            composable(route = Route.BusLineScreen.route) {
                 BusLineListScreen(navController)
             }
         }
 
         navigation(
-            route = Route.BusNavigation.route,
-            startDestination = Route.BusNavigatorScreen.route
-        ){
-            composable(route = Route.BusNavigatorScreen.route) {
-                Text(text = "Bus Navigator Screen")
+            route = Route.BusRoutes.route,
+            startDestination = Route.BusLineScreen.route
+        ) {
+            composable(route = Route.BusRoutesScreen.route + "/{lineCode}") {
+                RouteListScreen(navController = navController)
             }
         }
 

@@ -15,8 +15,8 @@ import java.io.IOException
 class BusLineRepositoryImpl(
     private val api: OASATelematicsAPI,
     private val dao: TelematicsDao
-): BusLineRepository {
-    override fun getBusLines(): Flow<Resource<List<Line>>>  = flow {
+) : BusLineRepository {
+    override fun getBusLines(): Flow<Resource<List<Line>>> = flow {
         emit(Resource.Loading())
 
         val busLines = dao.getBusLines().map { it.toBusLine() }
@@ -28,15 +28,19 @@ class BusLineRepositoryImpl(
             dao.clearBusLines()
             dao.insertBusLines(remoteBusLines.map { it.toBusLineEntity() })
 
-        }catch (e: HttpException){
-            emit(Resource.Error(
-                message = e.localizedMessage ?: "error",
-                data = busLines)
+        } catch (e: HttpException) {
+            emit(
+                Resource.Error(
+                    message = e.localizedMessage ?: "error",
+                    data = busLines
+                )
             )
-        } catch (e: IOException){
-            emit(Resource.Error(
-                message ="Internet connection error",
-                data = busLines)
+        } catch (e: IOException) {
+            emit(
+                Resource.Error(
+                    message = "Internet connection error",
+                    data = busLines
+                )
             )
         }
         val newBusLines = dao.getBusLines().map { it.toBusLine() }

@@ -12,8 +12,10 @@ interface TelematicsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBusLines(busLine: List<BusLineEntity>)
 
-    @Query("DELETE FROM " +
-            "BusLineEntity")
+    @Query(
+        "DELETE FROM " +
+                "BusLineEntity"
+    )
     suspend fun clearBusLines()
 
     @Query(

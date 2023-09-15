@@ -5,5 +5,5 @@ import com.example.athenabus.domain.model.Line
 import kotlinx.coroutines.flow.Flow
 
 interface BusLineRepository {
-    fun getBusLines() : Flow<Resource<List<Line>>>
+    fun getBusLines(): Flow<Resource<List<Line>>>
 }

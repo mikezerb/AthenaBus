@@ -29,9 +29,11 @@ fun OnBoardingPage(
     modifier: Modifier = Modifier,
     page: Page
 ) {
-    Box (
-        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
-    ){
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+    ) {
         Column(
             modifier = modifier,
         ) {
@@ -62,6 +64,7 @@ fun OnBoardingPage(
     }
 
 }
+
 @Preview(showBackground = true)
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable

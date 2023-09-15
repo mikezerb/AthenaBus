@@ -5,5 +5,6 @@
     <string name="next_btn">Next</string>
     <string name="back_btn">Back</string>
     <string name="start_btn">Get Started</string>
+    <string name="select_route_title">Select a Route</string>
 
 </resources>

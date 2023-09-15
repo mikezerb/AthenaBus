@@ -19,20 +19,19 @@ fun PageIndicator(
     pageNums: Int,
     selectedPage: Int,
     selectedColor: Color = MaterialTheme.colorScheme.primary,
-    unselectedColor: Color= MaterialTheme.colorScheme.inversePrimary
+    unselectedColor: Color = MaterialTheme.colorScheme.inversePrimary
 ) {
-    Row (
+    Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.SpaceBetween
-    ){
-        repeat(pageNums) {
-            page ->
-            Box (
+    ) {
+        repeat(pageNums) { page ->
+            Box(
                 modifier = Modifier
                     .size(IndicatorSize)
                     .clip(CircleShape)
-                    .background(color = if(page == selectedPage) selectedColor else unselectedColor)
-            ){
+                    .background(color = if (page == selectedPage) selectedColor else unselectedColor)
+            ) {
 
             }
         }

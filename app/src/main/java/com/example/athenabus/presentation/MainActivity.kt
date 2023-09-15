@@ -20,13 +20,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         installSplashScreen().apply {
-            setKeepOnScreenCondition{
+            setKeepOnScreenCondition {
                 viewModel.splashCondition
             }
         }
         setContent {
             AthenaBusTheme {
-                Surface (color = MaterialTheme.colorScheme.background)
+                Surface(color = MaterialTheme.colorScheme.background)
                 {
                     val startingDestination = viewModel.startDestination
                     NavGraph(startDestination = startingDestination)

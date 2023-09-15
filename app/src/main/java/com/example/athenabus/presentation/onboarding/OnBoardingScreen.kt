@@ -36,18 +36,18 @@ import kotlinx.coroutines.launch
 fun OnBoardingScreen(
     event: (OnBoardingEvent) -> Unit
 ) {
-    Column (
+    Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        val pagerState = rememberPagerState(initialPage = 0){
+        val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
         }
 
         val buttonState = remember {
             derivedStateOf {
-                when (pagerState.currentPage){
+                when (pagerState.currentPage) {
                     0 -> listOf("", "Next")
                     1 -> listOf("Back", "Next")
                     2 -> listOf("Back", "Get Started")
@@ -55,13 +55,12 @@ fun OnBoardingScreen(
                 }
             }
         }
-        Box (
+        Box(
             modifier = Modifier
                 .fillMaxHeight(0.8f)
                 .fillMaxWidth()
-        ){
-            HorizontalPager(state = pagerState) {
-                    index ->
+        ) {
+            HorizontalPager(state = pagerState) { index ->
                 OnBoardingPage(page = pages[index])
             }
         }
@@ -70,16 +69,16 @@ fun OnBoardingScreen(
             pageNums = pages.size,
             selectedPage = pagerState.currentPage
         )
-        Row (
+        Row(
             Modifier
                 .fillMaxWidth()
                 .padding(horizontal = MediumPadding1),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
-        ){
+        ) {
             val scope = rememberCoroutineScope()
 
-            if(buttonState.value[0].isNotEmpty()){
+            if (buttonState.value[0].isNotEmpty()) {
                 MaterialTextButton(
                     text = buttonState.value[0],
                     onClick = {
@@ -94,9 +93,9 @@ fun OnBoardingScreen(
                 text = buttonState.value[1],
                 onClick = {
                     scope.launch {
-                        if(pagerState.currentPage == 2){
+                        if (pagerState.currentPage == 2) {
                             event(OnBoardingEvent.SaveAppEntry)
-                        } else{
+                        } else {
                             pagerState.animateScrollToPage(page = pagerState.currentPage + 1)
                         }
 

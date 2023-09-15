@@ -7,8 +7,10 @@ import com.example.athenabus.data.local.TelematicsDatabase
 import com.example.athenabus.data.manger.LocalUserMangerImpl
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.data.repository.BusLineRepositoryImpl
+import com.example.athenabus.data.repository.RouteRepositoryImpl
 import com.example.athenabus.domain.manger.LocalUserManger
 import com.example.athenabus.domain.repository.BusLineRepository
+import com.example.athenabus.domain.repository.RouteRepository
 import com.example.athenabus.domain.use_case.app_entry.AppEntryUseCases
 import com.example.athenabus.domain.use_case.app_entry.ReadAppEntryUseCase
 import com.example.athenabus.domain.use_case.app_entry.SaveAppEntryUseCase
@@ -33,6 +35,7 @@ object AppModule {
             .build()
             .create(OASATelematicsAPI::class.java)
     }
+
     @Provides
     @Singleton
     fun provideLineRepository(
@@ -40,6 +43,14 @@ object AppModule {
         db: TelematicsDatabase
     ): BusLineRepository {
         return BusLineRepositoryImpl(api, db.dao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRouteRepository(
+        api: OASATelematicsAPI
+    ): RouteRepository {
+        return RouteRepositoryImpl(api)
     }
 
     @Provides
