@@ -2,9 +2,11 @@
     <string name="app_name">AthenaBus</string>
     <string name="button_text" translatable="false">Click Button</string>
     <string name="example" translatable="false">Example</string>
-    <string name="next_btn">Next</string>
-    <string name="back_btn">Back</string>
-    <string name="start_btn">Get Started</string>
-    <string name="select_route_title">Select a Route</string>
+    <string name="next_btn">Επόμενο</string>
+    <string name="back_btn">Πίσω</string>
+    <string name="start_btn">Ξεκινήστε</string>
+    <string name="select_route_title">Διαθέσιμες διαδρομές</string>
+    <string name="stops_tab_title">Στάσεις</string>
+    <string name="schedule_tab_title">Δρομολόγια</string>
 
 </resources>

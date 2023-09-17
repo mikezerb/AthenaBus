@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.bus_detail
+package com.example.athenabus.presentation.route_list
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.athenabus.presentation.bus_detail.components.BusRouteItem
+import com.example.athenabus.presentation.route_list.components.BusRouteItem
 
 @Composable
 fun RouteListScreen(

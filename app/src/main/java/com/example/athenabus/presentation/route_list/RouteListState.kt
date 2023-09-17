@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.bus_detail
+package com.example.athenabus.presentation.route_list
 
 import com.example.athenabus.domain.model.Route
 

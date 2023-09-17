@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.bus_detail.components
+package com.example.athenabus.presentation.route_list.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.clickable
@@ -33,7 +33,7 @@ fun BusRouteItem(
         ) {
             Text(
                 text = busRoute.route_descr,
-                style = MaterialTheme.typography.labelMedium,
+                style = MaterialTheme.typography.labelLarge,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
                     .padding(6.dp)

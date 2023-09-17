@@ -5,6 +5,7 @@ import com.example.athenabus.common.Resource
 import com.example.athenabus.data.mapper.toRoute
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.domain.model.Route
+import com.example.athenabus.domain.model.Stop
 import com.example.athenabus.domain.repository.RouteRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -35,5 +36,9 @@ class RouteRepositoryImpl @Inject constructor(
         }
 
 
+    }
+
+    override fun getStopsForRoute(routeCode: String): Flow<Resource<List<Stop>>> {
+        TODO("Not yet implemented")
     }
 }

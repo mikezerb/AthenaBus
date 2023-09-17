@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.bus_detail.components
+package com.example.athenabus.presentation.route_list.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

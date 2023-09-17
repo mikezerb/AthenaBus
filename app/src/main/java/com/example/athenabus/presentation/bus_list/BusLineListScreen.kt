@@ -5,9 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeightIn
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,9 +42,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
-import com.example.athenabus.presentation.bus_detail.RouteListViewModel
-import com.example.athenabus.presentation.bus_detail.components.BusRouteItem
 import com.example.athenabus.presentation.bus_list.components.BusLineItem
+import com.example.athenabus.presentation.nvgraph.Route
+import com.example.athenabus.presentation.route_list.RouteListViewModel
+import com.example.athenabus.presentation.route_list.components.BusRouteItem
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,24 +73,29 @@ fun BusLineListScreen(
                     defaultElevation = 6.dp
                 ),
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(375.dp)
+                    .wrapContentSize()
+                    .requiredHeightIn(min = 150.dp)
                     .padding(16.dp),
                 shape = RoundedCornerShape(16.dp),
             ) {
                 Text(
                     text = stringResource(R.string.select_route_title),
                     modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(12.dp)
+                        .align(Alignment.Start)
+                        .padding(12.dp),
+                    style = MaterialTheme.typography.bodyLarge
                 )
                 Divider(
-                    modifier = Modifier.padding(bottom = 4.dp),
-                    thickness = 1.5.dp,
+                    modifier = Modifier
+                        .padding(bottom = 4.dp)
+                        .padding(horizontal = 4.dp),
+                    thickness = 1.4.dp,
                     color = MaterialTheme.colorScheme.onTertiaryContainer
                 )
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     items(route_state.busRoutes) { bus_route ->
@@ -101,9 +108,10 @@ fun BusLineListScreen(
                                     duration = SnackbarDuration.Short
                                 )
                             }
+                            navController.navigate(Route.RoutesDetailScreen.route)
                         })
                         Divider(
-                            thickness = .8.dp,
+                            thickness = .7.dp,
                             modifier = Modifier.padding(horizontal = 12.dp),
                             color = MaterialTheme.colorScheme.onTertiaryContainer
                         )
@@ -146,55 +154,53 @@ fun BusLineListScreen(
         },
         snackbarHost = {
             SnackbarHost(hostState = snackbarHostState)
-        },
-        content = {
-            Box(modifier = Modifier.fillMaxSize()) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(it)
-                ) {
-                    items(state.bus_lines) { line ->
-                        BusLineItem(busLine = line, onItemClick =
-                        {
-                            //navController.navigate(Route.BusRoutesScreen.route + "/${line.LineCode}")
-                            showDialog = true
-                            selectedBusLine = line
-                            // Pass the line code to the RouteListViewModel
-                            routeViewModel.getRoutes(line.LineCode)
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    message = "Επιλογή γραμμής: " + line.LineCode,
-                                    withDismissAction = true,
-                                    duration = SnackbarDuration.Short
-                                )
-                            }
+        }
+    )
+    {
+        Box(modifier = Modifier.fillMaxSize()) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+            ) {
+                items(state.bus_lines) { line ->
+                    BusLineItem(busLine = line, onItemClick =
+                    {
+                        //navController.navigate(Route.BusRoutesScreen.route + "/${line.LineCode}")
+                        showDialog = true
+                        selectedBusLine = line
+                        // Pass the line code to the RouteListViewModel
+                        routeViewModel.getRoutes(line.LineCode)
+                        scope.launch {
+                            snackbarHostState.showSnackbar(
+                                message = "Επιλογή γραμμής: " + line.LineCode,
+                                withDismissAction = true,
+                                duration = SnackbarDuration.Short
+                            )
                         }
-                        )
                     }
-                }
-                if (state.error.isNotBlank()) {
-                    Text(
-                        text = state.error,
-                        color = MaterialTheme.colorScheme.error,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 20.dp)
-                    )
-                }
-                if (state.isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(54.dp)
-                            .align(Alignment.Center),
-                        strokeWidth = 6.dp
                     )
                 }
             }
+            if (state.error.isNotBlank()) {
+                Text(
+                    text = state.error,
+                    color = MaterialTheme.colorScheme.error,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp)
+                )
+            }
+            if (state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(54.dp)
+                        .align(Alignment.Center),
+                    strokeWidth = 6.dp
+                )
+            }
         }
-    )
-    run {
     }
 }
 

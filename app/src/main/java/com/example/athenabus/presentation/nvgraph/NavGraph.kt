@@ -6,10 +6,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.example.athenabus.presentation.bus_detail.RouteListScreen
 import com.example.athenabus.presentation.bus_list.BusLineListScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingViewModel
+import com.example.athenabus.presentation.route_details.RouteDetailsScreen
+import com.example.athenabus.presentation.route_list.RouteListScreen
 
 @Composable
 fun NavGraph(
@@ -47,6 +48,15 @@ fun NavGraph(
         ) {
             composable(route = Route.BusRoutesScreen.route + "/{lineCode}") {
                 RouteListScreen(navController = navController)
+            }
+        }
+
+        navigation(
+            route = Route.RoutesDetail.route,
+            startDestination = Route.RoutesDetailScreen.route
+        ) {
+            composable(route = Route.RoutesDetailScreen.route) {
+                RouteDetailsScreen(navController = navController)
             }
         }
 

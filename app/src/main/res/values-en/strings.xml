@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AthenaBus</string>
+    <string name="next_btn">Next</string>
+    <string name="back_btn">Back</string>
+    <string name="start_btn">Get Started</string>
+    <string name="select_route_title">Available routes</string>
+    <string name="stops_tab_title">Stops</string>
+    <string name="schedule_tab_title">Schedules</string>
+
+
+</resources>

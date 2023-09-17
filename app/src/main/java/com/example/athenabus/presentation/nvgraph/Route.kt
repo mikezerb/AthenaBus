@@ -12,4 +12,7 @@ sealed class Route(
     object BusRoutes : Route(route = "busNavigation")
     object BusNavigatorScreen : Route(route = "busNavigatorScreen")
     object BusRoutesScreen : Route(route = "busRouteScreen")
+    object RoutesDetail : Route(route = "RoutesDetail")
+    object RoutesDetailScreen : Route(route = "RoutesDetailScreen")
+
 }
