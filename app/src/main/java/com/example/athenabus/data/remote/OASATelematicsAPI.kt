@@ -16,4 +16,11 @@ interface OASATelematicsAPI {
         @Query("p1") lineCode: String
     ): RouteDto
 
+    @GET("api/")
+    suspend fun getStopsForRoute(
+        @Query("act") action: String = "webGetStops",
+        @Query("p1") routeCode: String
+    ): RouteDto
+
+
 }
