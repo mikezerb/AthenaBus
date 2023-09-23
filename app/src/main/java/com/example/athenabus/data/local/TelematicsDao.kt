@@ -22,10 +22,10 @@ interface TelematicsDao {
         """
             SELECT * 
             FROM BusLineEntity
-            WHERE LineID LIKE '%' || :query || '%'
+            WHERE LineID LIKE '%' || UPPER(:query) || '%'
         """
     )
-    suspend fun searchBusLine(query: String): BusLineEntity
+    suspend fun searchBusLines(query: String): List<BusLineEntity>
 
     @Query("SELECT * FROM BusLineEntity")
     suspend fun getBusLines(): List<BusLineEntity>

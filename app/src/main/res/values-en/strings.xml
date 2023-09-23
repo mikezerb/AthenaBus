@@ -8,6 +8,7 @@
     <string name="select_route_title">Available routes</string>
     <string name="stops_tab_title">Stops</string>
     <string name="schedule_tab_title">Schedules</string>
+    <string name="search_placeholder">Search</string>
 
 
 </resources>

@@ -49,4 +49,40 @@ class BusLineRepositoryImpl(
 
         emit(Resource.Success(distinctBusLines))
     }
+
+    override fun getLineFromDB(searchTxt: String): Flow<Resource<List<Line>>> = flow {
+        emit(Resource.Loading())
+
+        val busLines = dao.searchBusLines(searchTxt).map { it.toBusLine() }
+        emit(Resource.Loading(data = busLines))
+
+        val isDbEmpty = busLines.isEmpty() && searchTxt.isBlank()
+
+        if (!isDbEmpty) {
+            emit(Resource.Loading())
+            return@flow
+        }
+
+        var remoteBusList = try {
+            val remoteBusLines = api.getBusLines()
+            dao.clearBusLines()
+            dao.insertBusLines(remoteBusLines.map { it.toBusLineEntity() })
+        } catch (e: HttpException) {
+            emit(
+                Resource.Error(
+                    message = e.localizedMessage ?: "error",
+                    data = busLines
+                )
+            )
+        } catch (e: IOException) {
+            emit(
+                Resource.Error(
+                    message = "Internet connection error",
+                    data = busLines
+                )
+            )
+        }
+
+        emit(Resource.Success(busLines))
+    }
 }

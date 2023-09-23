@@ -6,4 +6,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface BusLineRepository {
     fun getBusLines(): Flow<Resource<List<Line>>>
+    fun getLineFromDB(searchTxt: String): Flow<Resource<List<Line>>>
 }

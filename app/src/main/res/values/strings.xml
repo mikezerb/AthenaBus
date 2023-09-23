@@ -8,5 +8,6 @@
     <string name="select_route_title">Διαθέσιμες διαδρομές</string>
     <string name="stops_tab_title">Στάσεις</string>
     <string name="schedule_tab_title">Δρομολόγια</string>
+    <string name="search_placeholder">Αναζήτηση γραμμής</string>
 
 </resources>

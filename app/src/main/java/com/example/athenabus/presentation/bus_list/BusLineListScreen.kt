@@ -12,15 +12,18 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -46,7 +49,6 @@ import com.example.athenabus.presentation.bus_list.components.BusLineItem
 import com.example.athenabus.presentation.nvgraph.Route
 import com.example.athenabus.presentation.route_list.RouteListViewModel
 import com.example.athenabus.presentation.route_list.components.BusRouteItem
-import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -101,14 +103,15 @@ fun BusLineListScreen(
                     items(route_state.busRoutes) { bus_route ->
                         BusRouteItem(busRoute = bus_route, onItemClick =
                         {
-                            scope.launch {
-                                snackbarHostState.showSnackbar(
-                                    message = "Επιλογή διαδρομής: " + bus_route.route_descr,
-                                    withDismissAction = true,
-                                    duration = SnackbarDuration.Short
-                                )
-                            }
+                            showDialog = false
                             navController.navigate(Route.RoutesDetailScreen.route)
+//                            scope.launch {
+//                                snackbarHostState.showSnackbar(
+//                                    message = "Επιλογή διαδρομής: " + bus_route.route_descr,
+//                                    withDismissAction = true,
+//                                    duration = SnackbarDuration.Short
+//                                )
+//                            }
                         })
                         Divider(
                             thickness = .7.dp,
@@ -149,7 +152,12 @@ fun BusLineListScreen(
                 navigationIcon = {
                     // You can add a navigation icon if needed
                 },
-                scrollBehavior = scrollBehavior
+                scrollBehavior = scrollBehavior,
+                actions = {
+                    IconButton(onClick = { navController.navigate(Route.SearchLineScreen.route) }) {
+                        Icon(imageVector = Icons.Filled.Search, contentDescription = null)
+                    }
+                }
             )
         },
         snackbarHost = {
@@ -157,27 +165,28 @@ fun BusLineListScreen(
         }
     )
     {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(it)
             ) {
                 items(state.bus_lines) { line ->
-                    BusLineItem(busLine = line, onItemClick =
-                    {
-                        //navController.navigate(Route.BusRoutesScreen.route + "/${line.LineCode}")
-                        showDialog = true
-                        selectedBusLine = line
-                        // Pass the line code to the RouteListViewModel
-                        routeViewModel.getRoutes(line.LineCode)
-                        scope.launch {
-                            snackbarHostState.showSnackbar(
-                                message = "Επιλογή γραμμής: " + line.LineCode,
-                                withDismissAction = true,
-                                duration = SnackbarDuration.Short
-                            )
-                        }
+                    BusLineItem(
+                        busLine = line, onItemClick =
+                        {
+                            //navController.navigate(Route.BusRoutesScreen.route + "/${line.LineCode}")
+                            showDialog = true
+                            selectedBusLine = line
+                            // Pass the line code to the RouteListViewModel
+                            routeViewModel.getRoutes(line.LineCode)
+//                        scope.launch {
+//                            snackbarHostState.showSnackbar(
+//                                message = "Επιλογή γραμμής: " + line.LineCode,
+//                                withDismissAction = true,
+//                                duration = SnackbarDuration.Short
+//                            )
+//                        }
                     }
                     )
                 }

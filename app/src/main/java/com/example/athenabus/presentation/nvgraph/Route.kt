@@ -14,5 +14,7 @@ sealed class Route(
     object BusRoutesScreen : Route(route = "busRouteScreen")
     object RoutesDetail : Route(route = "RoutesDetail")
     object RoutesDetailScreen : Route(route = "RoutesDetailScreen")
+    object SearchLine : Route(route = "SearchLine")
+    object SearchLineScreen : Route(route = "SearchLineScreen")
 
 }

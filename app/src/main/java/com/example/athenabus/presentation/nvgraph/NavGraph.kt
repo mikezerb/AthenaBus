@@ -11,6 +11,7 @@ import com.example.athenabus.presentation.onboarding.OnBoardingScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingViewModel
 import com.example.athenabus.presentation.route_details.RouteDetailsScreen
 import com.example.athenabus.presentation.route_list.RouteListScreen
+import com.example.athenabus.presentation.search_screen.SearchScreen
 
 @Composable
 fun NavGraph(
@@ -57,6 +58,15 @@ fun NavGraph(
         ) {
             composable(route = Route.RoutesDetailScreen.route) {
                 RouteDetailsScreen(navController = navController)
+            }
+        }
+
+        navigation(
+            route = Route.SearchLine.route,
+            startDestination = Route.SearchLineScreen.route
+        ) {
+            composable(route = Route.SearchLineScreen.route) {
+                SearchScreen(navController = navController)
             }
         }
 
