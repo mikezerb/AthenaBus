@@ -46,6 +46,7 @@ import androidx.navigation.NavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.presentation.bus_list.components.BusLineItem
+import com.example.athenabus.presentation.common.MaterialTopAppBar
 import com.example.athenabus.presentation.nvgraph.Route
 import com.example.athenabus.presentation.route_list.RouteListViewModel
 import com.example.athenabus.presentation.route_list.components.BusRouteItem
@@ -72,12 +73,12 @@ fun BusLineListScreen(
         Dialog(onDismissRequest = { showDialog = false }) {
             Card(
                 elevation = CardDefaults.cardElevation(
-                    defaultElevation = 6.dp
+                    defaultElevation = 8.dp
                 ),
                 modifier = Modifier
                     .wrapContentSize()
                     .requiredHeightIn(min = 150.dp)
-                    .padding(16.dp),
+                    .padding(12.dp),
                 shape = RoundedCornerShape(16.dp),
             ) {
                 Text(
@@ -97,22 +98,27 @@ fun BusLineListScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 12.dp),
+                        .padding(bottom = 12.dp)
+                        .padding(horizontal = 8.dp),
+
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
                     items(route_state.busRoutes) { bus_route ->
-                        BusRouteItem(busRoute = bus_route, onItemClick =
-                        {
-                            showDialog = false
-                            navController.navigate(Route.RoutesDetailScreen.route)
-//                            scope.launch {
-//                                snackbarHostState.showSnackbar(
-//                                    message = "Επιλογή διαδρομής: " + bus_route.route_descr,
-//                                    withDismissAction = true,
-//                                    duration = SnackbarDuration.Short
-//                                )
-//                            }
-                        })
+                        BusRouteItem(
+                            busRoute = bus_route,
+                            onItemClick =
+                            {
+                                showDialog = false
+                                navController.navigate(Route.RoutesDetailScreen.route)
+//                                scope.launch {
+//                                    snackbarHostState.showSnackbar(
+//                                        message = "Επιλογή διαδρομής: " + bus_route.route_descr,
+//                                        withDismissAction = true,
+//                                        duration = SnackbarDuration.Short
+//                                    )
+//                                }
+                            }
+                        )
                         Divider(
                             thickness = .7.dp,
                             modifier = Modifier.padding(horizontal = 12.dp),
@@ -145,6 +151,12 @@ fun BusLineListScreen(
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
+            MaterialTopAppBar(
+                title = stringResource(id = R.string.app_name),
+                scrollBehavior = scrollBehavior,
+                isHomeScreen = true,
+                onSearchClick = { navController.navigate(Route.SearchLineScreen.route) }
+            )
             CenterAlignedTopAppBar(
                 title = {
                     Text(text = stringResource(id = R.string.app_name))
@@ -169,8 +181,10 @@ fun BusLineListScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(it)
-            ) {
+                    .padding(it),
+
+
+                ) {
                 items(state.bus_lines) { line ->
                     BusLineItem(
                         busLine = line, onItemClick =
@@ -178,16 +192,19 @@ fun BusLineListScreen(
                             //navController.navigate(Route.BusRoutesScreen.route + "/${line.LineCode}")
                             showDialog = true
                             selectedBusLine = line
-                            // Pass the line code to the RouteListViewModel
-                            routeViewModel.getRoutes(line.LineCode)
-//                        scope.launch {
+                            // Pass the line id to the RouteListViewModel
+                            routeViewModel.getLineCodes(line.LineID)
+//                          scope.launch {
 //                            snackbarHostState.showSnackbar(
 //                                message = "Επιλογή γραμμής: " + line.LineCode,
 //                                withDismissAction = true,
 //                                duration = SnackbarDuration.Short
 //                            )
 //                        }
-                    }
+                        },
+                        onToggleFavorite = { favorite_line ->
+
+                        }
                     )
                 }
             }

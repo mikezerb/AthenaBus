@@ -27,7 +27,15 @@ interface TelematicsDao {
     )
     suspend fun searchBusLines(query: String): List<BusLineEntity>
 
+    @Query(
+        """
+            SELECT LineCode 
+            FROM BusLineEntity
+            WHERE LineID = UPPER(:query) 
+        """
+    )
+    suspend fun getLineCodesFromLineID(query: String): List<String>
+
     @Query("SELECT * FROM BusLineEntity")
     suspend fun getBusLines(): List<BusLineEntity>
-
 }

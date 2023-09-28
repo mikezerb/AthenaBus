@@ -1,4 +1,4 @@
-package com.example.athenabus.domain.use_case.get_bus_lines
+package com.example.athenabus.domain.use_case.bus_lines
 
 import com.example.athenabus.common.Resource
 import com.example.athenabus.domain.model.Line

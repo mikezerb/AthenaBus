@@ -11,7 +11,7 @@ fun LineDtoItem.toBusLineEntity(): BusLineEntity {
         LineID = LineID,
         LineDescr = LineDescr,
         LineDescrEng = LineDescrEng,
-        LineCode = LineCode
+        LineCode = LineCode,
     )
 }
 

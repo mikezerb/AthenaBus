@@ -15,7 +15,6 @@ fun LineItem(
     line: Line,
     modifier: Modifier = Modifier
 ) {
-
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
@@ -26,7 +25,6 @@ fun LineItem(
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = line.LineID)
-
             }
         }
 

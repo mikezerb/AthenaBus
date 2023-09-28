@@ -9,5 +9,6 @@
     <string name="stops_tab_title">Στάσεις</string>
     <string name="schedule_tab_title">Δρομολόγια</string>
     <string name="search_placeholder">Αναζήτηση γραμμής</string>
+    <string name="favorite_btn_add" translatable="false">Add</string>
 
 </resources>

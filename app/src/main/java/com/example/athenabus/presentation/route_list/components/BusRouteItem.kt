@@ -20,7 +20,7 @@ import com.example.athenabus.presentation.theme.AthenaBusTheme
 @Composable
 fun BusRouteItem(
     busRoute: Route,
-    onItemClick: (Route) -> Unit
+    onItemClick: (Route) -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxWidth()

@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DirectionsBus
 import androidx.compose.material.icons.filled.Timeline
 import androidx.compose.material.icons.outlined.DirectionsBus
@@ -17,7 +16,6 @@ import androidx.compose.material.icons.outlined.Timeline
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -26,7 +24,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -38,21 +35,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.athenabus.R
+import com.example.athenabus.presentation.common.MaterialTopAppBar
 import com.example.athenabus.presentation.common.TabItem
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun RouteDetailsScreen(
     navController: NavController,
-
-    ) {
+) {
     val tabItems = listOf(
         TabItem(
             title = stringResource(R.string.stops_tab_title),
@@ -69,41 +61,15 @@ fun RouteDetailsScreen(
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
 
-
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         topBar = {
-            TopAppBar(
-                title = {
-                    Column {
-                        Text(
-                            text = "Test Line 123",
-                            style = TextStyle(
-                                fontFamily = FontFamily.Default,
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 20.sp,
-                                letterSpacing = 0.15.sp
-                            )
-                        )
-                        Text(
-                            modifier = Modifier.padding(start = 4.dp),
-                            text = "ID: 1234",
-                            style = TextStyle(
-                                fontSize = 14.sp, // Adjust the font size as needed
-                                fontWeight = FontWeight.Normal,
-                                letterSpacing = 0.25.sp,
-                                color = MaterialTheme.colorScheme.secondary // Adjust the color as needed
-                            )
-                        )
-                    }
-                },
-                navigationIcon = {
-                    IconButton(onClick = { navController.navigateUp() }) {
-
-                        Icon(imageVector = Icons.Default.ArrowBack, contentDescription = null)
-                    }
-                },
-                scrollBehavior = scrollBehavior
+            MaterialTopAppBar(
+                title = "Test 321",
+                subtitle = "ID: 1234",
+                scrollBehavior = scrollBehavior,
+                isLineDetailsScreen = true,
+                onBackClick = { navController.navigateUp() }
             )
         },
         snackbarHost = {

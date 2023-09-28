@@ -26,8 +26,8 @@ class RouteDetailsViewModel @Inject constructor(
             val routeCode = "2045"
 
             val routeStops = async { repository.getStopsForRoute(routeCode) }
-
             when (val res = routeStops.await()) {
+
 
             }
 

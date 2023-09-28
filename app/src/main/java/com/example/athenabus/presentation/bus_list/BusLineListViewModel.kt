@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
-import com.example.athenabus.domain.use_case.get_bus_lines.getLinesUseCase
+import com.example.athenabus.domain.use_case.bus_lines.getLinesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -42,5 +42,4 @@ class BusLineListViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
 }

@@ -6,5 +6,5 @@ data class SearchLinesState(
     val lines: List<Line> = emptyList(),
     val isLoading: Boolean = false,
     val isRefreshing: Boolean = false,
-    val searchQuery: String = ""
+    var searchQuery: String = ""
 )

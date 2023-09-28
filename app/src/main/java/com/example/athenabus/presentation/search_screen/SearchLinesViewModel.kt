@@ -43,12 +43,12 @@ class SearchLinesViewModel @Inject constructor(
         viewModelScope.launch {
             repository
                 .getLineFromDB(query)
-                .collect() { result ->
+                .collect { result ->
                     when (result) {
                         is Resource.Success -> {
                             result.data?.let { busLines ->
                                 state = state.copy(
-                                    lines = busLines
+                                    lines = busLines.distinctBy { it.LineID }
                                 )
                             }
                         }
