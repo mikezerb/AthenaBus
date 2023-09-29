@@ -42,15 +42,16 @@ object AppModule {
         api: OASATelematicsAPI,
         db: TelematicsDatabase
     ): BusLineRepository {
-        return BusLineRepositoryImpl(api, db.linesDao)
+        return BusLineRepositoryImpl(api, db.linesDao, db.routeDao)
     }
 
     @Provides
     @Singleton
     fun provideRouteRepository(
-        api: OASATelematicsAPI
+        api: OASATelematicsAPI,
+        db: TelematicsDatabase
     ): RouteRepository {
-        return RouteRepositoryImpl(api)
+        return RouteRepositoryImpl(api, db.linesDao)
     }
 
     @Provides

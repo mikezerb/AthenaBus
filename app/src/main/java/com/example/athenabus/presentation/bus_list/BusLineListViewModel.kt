@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
 import com.example.athenabus.domain.use_case.bus_lines.getLinesUseCase
+import com.example.athenabus.domain.use_case.get_route.GetRouteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BusLineListViewModel @Inject constructor(
-    private val getLinesUseCase: getLinesUseCase
+    private val getLinesUseCase: getLinesUseCase,
+    private val getRouteUseCase: GetRouteUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(BusLineListState())
@@ -33,7 +35,6 @@ class BusLineListViewModel @Inject constructor(
 
                 is Resource.Error -> {
                     _state.value = BusLineListState(error = result.message ?: "Unexpected error")
-
                 }
 
                 is Resource.Loading -> {
@@ -42,4 +43,6 @@ class BusLineListViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
+
 }

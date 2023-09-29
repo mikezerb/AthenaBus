@@ -12,7 +12,7 @@ interface OASATelematicsAPI {
 
     @GET("api/")
     suspend fun getRoutesForLine(
-        @Query("act") action: String = "getRoutesForLine",
+        @Query("act") action: String = "webGetRoutes",
         @Query("p1") lineCode: String
     ): RouteDto
 

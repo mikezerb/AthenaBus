@@ -38,4 +38,6 @@ interface TelematicsLineDao {
         """
     )
     suspend fun getLineCodesFromLineID(query: String): List<String>
+
+
 }

@@ -12,16 +12,11 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
@@ -73,78 +68,82 @@ fun BusLineListScreen(
         Dialog(onDismissRequest = { showDialog = false }) {
             Card(
                 elevation = CardDefaults.cardElevation(
-                    defaultElevation = 8.dp
+                    defaultElevation = 6.dp
+                ),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surface,
                 ),
                 modifier = Modifier
                     .wrapContentSize()
-                    .requiredHeightIn(min = 150.dp)
+                    .requiredHeightIn(min = 130.dp)
                     .padding(12.dp),
-                shape = RoundedCornerShape(16.dp),
+                shape = RoundedCornerShape(12.dp),
             ) {
                 Text(
                     text = stringResource(R.string.select_route_title),
                     modifier = Modifier
                         .align(Alignment.Start)
                         .padding(12.dp),
-                    style = MaterialTheme.typography.bodyLarge
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
                 Divider(
                     modifier = Modifier
                         .padding(bottom = 4.dp)
                         .padding(horizontal = 4.dp),
-                    thickness = 1.4.dp,
-                    color = MaterialTheme.colorScheme.onTertiaryContainer
+                    thickness = 1.5.dp,
+                    color = MaterialTheme.colorScheme.primary
                 )
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp)
-                        .padding(horizontal = 8.dp),
-
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
-                ) {
-                    items(route_state.busRoutes) { bus_route ->
-                        BusRouteItem(
-                            busRoute = bus_route,
-                            onItemClick =
-                            {
-                                showDialog = false
-                                navController.navigate(Route.RoutesDetailScreen.route)
-//                                scope.launch {
-//                                    snackbarHostState.showSnackbar(
-//                                        message = "Επιλογή διαδρομής: " + bus_route.route_descr,
-//                                        withDismissAction = true,
-//                                        duration = SnackbarDuration.Short
-//                                    )
-//                                }
-                            }
-                        )
-                        Divider(
-                            thickness = .7.dp,
-                            modifier = Modifier.padding(horizontal = 12.dp),
-                            color = MaterialTheme.colorScheme.onTertiaryContainer
-                        )
-                    }
-
-                }
-                if (state.error.isNotBlank()) {
+//                // Check if busRoutes length is 1 and navigate if true
+//                if (route_state.busRoutes.size == 1) {
+//                    showDialog = false
+//                    navController.navigate(Route.RoutesDetailScreen.route)
+//                }
+                if (route_state.error.isNotBlank()) {
                     Text(
                         text = state.error,
                         color = MaterialTheme.colorScheme.error,
                         textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 20.dp)
                     )
-                }
-                if (state.isLoading) {
-                    CircularProgressIndicator(
+                } else if (route_state.isLoading) {
+                    Box(
                         modifier = Modifier
-                            .size(54.dp),
-                        strokeWidth = 6.dp
-                    )
-                }
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        CircularProgressIndicator()
+                    }
+                } else {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 12.dp)
+                            .padding(horizontal = 8.dp),
 
+                        verticalArrangement = Arrangement.spacedBy(4.dp)
+                    ) {
+                        items(route_state.busRoutes) { busRoute ->
+                            BusRouteItem(
+                                busRoute = busRoute,
+                                onItemClick =
+                                {
+                                    showDialog = false
+                                    navController.navigate(Route.RoutesDetailScreen.route)
+                                }
+                            )
+                            Divider(
+                                thickness = .8.dp,
+                                modifier = Modifier.padding(horizontal = 10.dp),
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
+                    }
+                }
             }
         }
     }
@@ -156,20 +155,6 @@ fun BusLineListScreen(
                 scrollBehavior = scrollBehavior,
                 isHomeScreen = true,
                 onSearchClick = { navController.navigate(Route.SearchLineScreen.route) }
-            )
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(text = stringResource(id = R.string.app_name))
-                },
-                navigationIcon = {
-                    // You can add a navigation icon if needed
-                },
-                scrollBehavior = scrollBehavior,
-                actions = {
-                    IconButton(onClick = { navController.navigate(Route.SearchLineScreen.route) }) {
-                        Icon(imageVector = Icons.Filled.Search, contentDescription = null)
-                    }
-                }
             )
         },
         snackbarHost = {

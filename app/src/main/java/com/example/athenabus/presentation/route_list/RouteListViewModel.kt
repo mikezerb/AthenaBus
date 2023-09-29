@@ -31,8 +31,8 @@ class RouteListViewModel @Inject constructor(
         }
     }
 
-    fun getRoutes(lineCode: String) {
-        getRouteUseCase(lineCode).onEach { result ->
+    fun getLineCodes(lineId: String) {
+        getRouteUseCase(lineId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     _state.value = RouteListState(busRoutes = result.data ?: emptyList())
@@ -49,47 +49,4 @@ class RouteListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getLineCodes(lineId: String) {
-        getBusCodesUseCase(lineId).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    _state.value = RouteListState(bus_codes = result.data ?: emptyList())
-                    val lineCodes = result.data ?: emptyList()
-                    fetchRoutesForLineCodes(lineCodes)
-                }
-
-                is Resource.Error -> {
-                    _state.value = RouteListState(error = result.message ?: "Unexpected error")
-
-                }
-
-                is Resource.Loading -> {
-                    _state.value = RouteListState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    private fun fetchRoutesForLineCodes(lineCodes: List<String>) {
-        lineCodes.forEach { lineCode ->
-            getRouteUseCase(lineCode).onEach { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        // Append the routes for this lineCode to the existing list
-                        val existingRoutes = _state.value.busRoutes
-                        val newRoutes = result.data ?: emptyList()
-                        _state.value = RouteListState(busRoutes = existingRoutes + newRoutes)
-                    }
-
-                    is Resource.Error -> {
-                        _state.value = RouteListState(error = result.message ?: "Unexpected error")
-                    }
-
-                    is Resource.Loading -> {
-                        // You can update the loading state if needed
-                    }
-                }
-            }.launchIn(viewModelScope)
-        }
-    }
 }

@@ -1,6 +1,7 @@
 package com.example.athenabus.data.mapper
 
 import com.example.athenabus.data.local.entity.BusLineEntity
+import com.example.athenabus.data.local.entity.RouteEntity
 import com.example.athenabus.data.remote.dto.LineDtoItem
 import com.example.athenabus.data.remote.dto.RouteDtoItem
 import com.example.athenabus.domain.model.Line
@@ -26,8 +27,44 @@ fun BusLineEntity.toBusLine(): Line {
 
 fun RouteDtoItem.toRoute(): Route {
     return Route(
-        route_code = route_code,
-        route_descr = route_descr,
-        route_descr_eng = route_descr_eng
+        RouteCode = RouteCode,
+        LineCode = LineCode,
+        RouteDescr = RouteDescr,
+        RouteDescrEng = RouteDescrEng,
+        RouteDistance = RouteDistance,
+        RouteType = RouteType
+    )
+}
+
+fun RouteDtoItem.toRouteEntity(): RouteEntity {
+    return RouteEntity(
+        RouteCode = RouteCode,
+        LineCode = LineCode,
+        RouteDescr = RouteDescr,
+        RouteDescrEng = RouteDescrEng,
+        RouteDistance = RouteDistance,
+        RouteType = RouteType
+    )
+}
+
+fun RouteEntity.toRoute(): Route {
+    return Route(
+        RouteCode = RouteCode,
+        LineCode = LineCode,
+        RouteDescr = RouteDescr,
+        RouteDescrEng = RouteDescrEng,
+        RouteDistance = RouteDistance,
+        RouteType = RouteType
+    )
+}
+
+fun Route.toRouteEntity(): RouteEntity {
+    return RouteEntity(
+        RouteCode = RouteCode,
+        LineCode = LineCode,
+        RouteDescr = RouteDescr,
+        RouteDescrEng = RouteDescrEng,
+        RouteDistance = RouteDistance,
+        RouteType = RouteType
     )
 }

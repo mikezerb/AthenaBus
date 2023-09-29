@@ -32,11 +32,11 @@ fun BusRouteItem(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = busRoute.route_descr,
-                style = MaterialTheme.typography.labelLarge,
+                text = busRoute.RouteDescr,
+                style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurface,
                 modifier = Modifier
-                    .padding(6.dp)
+                    .padding(8.dp)
                     .align(CenterHorizontally),
             )
         }
@@ -52,9 +52,12 @@ fun testRouteItem() {
     AthenaBusTheme {
         BusRouteItem(
             busRoute = Route(
-                route_code = "919",
-                route_descr = "ATHINA - THESALIA",
-                route_descr_eng = "agsag"
+                RouteCode = "919",
+                RouteDescr = "ATHINA - THESALIA",
+                RouteDescrEng = "agsag",
+                LineCode = "12412",
+                RouteType = "1",
+                RouteDistance = "2521"
             ), onItemClick = {})
     }
 }

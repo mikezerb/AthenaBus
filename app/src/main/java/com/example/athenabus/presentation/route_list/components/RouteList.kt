@@ -30,7 +30,7 @@ fun RouteList(
                     .padding(16.dp)
             ) {
                 Text(
-                    text = route.route_descr,
+                    text = route.RouteDescr,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }
