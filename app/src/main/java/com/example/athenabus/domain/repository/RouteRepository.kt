@@ -7,6 +7,5 @@ import kotlinx.coroutines.flow.Flow
 
 interface RouteRepository {
     fun getRoutesByID(lineID: String): Flow<Resource<List<Route>>>
-
     fun getStopsForRoute(routeCode: String): Flow<Resource<List<Stop>>>
 }

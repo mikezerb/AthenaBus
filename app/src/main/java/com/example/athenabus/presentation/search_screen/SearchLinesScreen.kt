@@ -60,7 +60,6 @@ fun SearchScreen(
                 scrollBehavior = scrollBehavior,
                 enableBackButton = true,
                 onBackClick = { navController.navigateUp() }
-
             )
         },
         snackbarHost = {
@@ -102,11 +101,10 @@ fun SearchScreen(
                     } else null
                 },
                 modifier = Modifier
-                    .fillMaxSize()
                     .padding(it)
             ) {
                 LazyColumn(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier
                 ) {
                     items(state.lines.size) { i ->
                         val line = state.lines[i]
@@ -120,8 +118,6 @@ fun SearchScreen(
                                 }
                                 .padding(16.dp)
                         )
-
-
                         if (i < state.lines.size) {
                             Divider(modifier = Modifier.padding(horizontal = 16.dp))
                         }
@@ -129,10 +125,7 @@ fun SearchScreen(
                     }
 
                 }
-
-
             }
-
         }
     }
 

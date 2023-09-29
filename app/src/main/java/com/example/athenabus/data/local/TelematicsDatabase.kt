@@ -10,4 +10,5 @@ import com.example.athenabus.data.local.entity.BusLineEntity
 )
 abstract class TelematicsDatabase : RoomDatabase() {
     abstract val dao: TelematicsDao
+    abstract val linesDao: TelematicsLineDao
 }
