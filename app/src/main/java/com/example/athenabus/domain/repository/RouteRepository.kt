@@ -8,6 +8,4 @@ import kotlinx.coroutines.flow.Flow
 interface RouteRepository {
     fun getRoutesByID(lineID: String): Flow<Resource<List<Route>>>
     fun getStopsForRoute(routeCode: String): Flow<Resource<List<Stop>>>
-    fun getRoutesFromLine(lineCodes: List<String>): Flow<Resource<List<Route>>>
-    fun getRoutesByListID(lineIds: List<String>): Flow<Resource<List<Route>>>
 }

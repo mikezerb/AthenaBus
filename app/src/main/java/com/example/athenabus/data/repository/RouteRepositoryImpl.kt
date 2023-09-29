@@ -40,14 +40,4 @@ class RouteRepositoryImpl @Inject constructor(
     override fun getStopsForRoute(routeCode: String): Flow<Resource<List<Stop>>> {
         TODO("Not yet implemented")
     }
-
-    override fun getRoutesFromLine(lineCodes: List<String>): Flow<Resource<List<Route>>> {
-        TODO("Not yet implemented")
-    }
-
-    override fun getRoutesByListID(lineIds: List<String>): Flow<Resource<List<Route>>> {
-        TODO("Not yet implemented")
-    }
-
-
 }
