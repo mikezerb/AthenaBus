@@ -2,7 +2,6 @@ package com.example.athenabus.data.repository
 
 import com.example.athenabus.common.Resource
 import com.example.athenabus.data.local.TelematicsLineDao
-import com.example.athenabus.data.local.TelematicsRouteDao
 import com.example.athenabus.data.mapper.toBusLine
 import com.example.athenabus.data.mapper.toBusLineEntity
 import com.example.athenabus.data.remote.OASATelematicsAPI
@@ -16,7 +15,6 @@ import java.io.IOException
 class BusLineRepositoryImpl(
     private val api: OASATelematicsAPI,
     private val lineDao: TelematicsLineDao,
-    private val routeDao: TelematicsRouteDao
 ) : BusLineRepository {
     override fun getBusLines(): Flow<Resource<List<Line>>> = flow {
         emit(Resource.Loading())

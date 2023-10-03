@@ -5,8 +5,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
+import com.example.athenabus.domain.model.Line
+import com.example.athenabus.domain.use_case.bus_lines.GetLinesFromSearchUseCase
 import com.example.athenabus.domain.use_case.bus_lines.getLinesUseCase
-import com.example.athenabus.domain.use_case.get_route.GetRouteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,11 +17,13 @@ import javax.inject.Inject
 @HiltViewModel
 class BusLineListViewModel @Inject constructor(
     private val getLinesUseCase: getLinesUseCase,
-    private val getRouteUseCase: GetRouteUseCase
+    private val getLinesFromSearchUseCase: GetLinesFromSearchUseCase,
 ) : ViewModel() {
 
     private val _state = mutableStateOf(BusLineListState())
     val state: State<BusLineListState> = _state
+
+    private val allBusLines = mutableListOf<Line>() // Store all bus lines
 
     init {
         getBusLines()
@@ -30,9 +33,11 @@ class BusLineListViewModel @Inject constructor(
         getLinesUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    _state.value = BusLineListState(bus_lines = result.data ?: emptyList())
+                    val busLines = result.data ?: emptyList()
+                    allBusLines.clear()
+                    allBusLines.addAll(busLines)
+                    _state.value = BusLineListState(bus_lines = busLines)
                 }
-
                 is Resource.Error -> {
                     _state.value = BusLineListState(error = result.message ?: "Unexpected error")
                 }
@@ -44,5 +49,13 @@ class BusLineListViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-
+    // Function to filter bus lines based on search query
+    fun searchBusLines(query: String) {
+        val filteredBusLines = if (query.isEmpty()) {
+            allBusLines // Show all bus lines when the query is empty
+        } else {
+            getLinesFromSearchUseCase(allBusLines, query)
+        }
+        _state.value = BusLineListState(bus_lines = filteredBusLines)
+    }
 }

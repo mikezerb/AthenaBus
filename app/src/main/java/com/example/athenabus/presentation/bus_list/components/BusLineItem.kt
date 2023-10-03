@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.bus_list.components
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -21,15 +20,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.presentation.common.FavoriteButton
-import com.example.athenabus.presentation.theme.AthenaBusTheme
 import com.example.athenabus.sample.SampleLineProvider
+import com.example.athenabus.ui.theme.AthenaBusTheme
 
 @Composable
 fun BusLineItem(
@@ -43,11 +40,11 @@ fun BusLineItem(
             .padding(horizontal = 8.dp, vertical = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
         ),
-        border = BorderStroke(1.dp, Color.Black),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp
-        )
+        ),
     ) {
         Box(modifier = Modifier.clickable { onItemClick(busLine) }) {
             Column(
@@ -71,15 +68,14 @@ fun BusLineItem(
                         style = MaterialTheme.typography.displaySmall,
                     )
                 }
-                Spacer(modifier = Modifier.height(6.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 // Display Line Description
                 Text(
                     text = busLine.LineDescr,
-                    fontSize = 14.sp,
+                    style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)
                 )
             }
-
             FavoriteButton(modifier = Modifier
                 .align(Alignment.TopEnd)
                 .padding(8.dp),

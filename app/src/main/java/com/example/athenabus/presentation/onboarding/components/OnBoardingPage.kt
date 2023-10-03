@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.example.athenabus.data.local.PageData
 import com.example.athenabus.presentation.Dimens.MediumPadding1
 import com.example.athenabus.presentation.onboarding.Page
-import com.example.athenabus.presentation.theme.AthenaBusTheme
+import com.example.athenabus.ui.theme.AthenaBusTheme
 
 @Composable
 fun OnBoardingPage(

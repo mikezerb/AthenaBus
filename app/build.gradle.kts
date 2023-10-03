@@ -41,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -108,5 +108,5 @@ dependencies {
     ksp("androidx.room:room-compiler:2.5.2")
     implementation("androidx.room:room-ktx:2.5.2")
     // UI icons
-    implementation("androidx.compose.material:material-icons-extended-android:1.5.1")
+    implementation("androidx.compose.material:material-icons-extended-android:1.5.2")
 }

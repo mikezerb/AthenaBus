@@ -26,10 +26,23 @@ class LocalUserMangerImpl(
             preferences[PreferencesKeys.APP_ENTRY] ?: false
         }
     }
+
+    override suspend fun saveDarkMode(isDarkMode: Boolean) {
+        context.dataStore.edit { settings ->
+            settings[PreferencesKeys.IS_DARK_MODE] = isDarkMode
+        }
+    }
+
+    override fun readDarkMode(): Flow<Boolean> {
+        return context.dataStore.data.map { preferences ->
+            preferences[PreferencesKeys.IS_DARK_MODE] ?: false
+        }
+    }
 }
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = USER_SETTINGS)
 
 private object PreferencesKeys {
     val APP_ENTRY = booleanPreferencesKey(name = Constants.APP_ENTRY)
+    val IS_DARK_MODE = booleanPreferencesKey(name = Constants.DARK_MODE)
 }

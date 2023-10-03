@@ -6,38 +6,38 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.rememberNavController
+import com.example.athenabus.R
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MaterialTopAppBar(
     title: String,
     subtitle: String? = null,
-    scrollBehavior: TopAppBarScrollBehavior,
     isHomeScreen: Boolean = false,
     isLineDetailsScreen: Boolean = false,
-    enableBackButton: Boolean = false,
-    onBackClick: () -> Unit = { },
-    onSearchClick: () -> Unit = { },
+    canNavigateBack: Boolean = false,
+    navigateUp: () -> Unit = { },
+    onSettingsClick: () -> Unit = { },
     // TODO: Add click for map, favorite or schedule alarm buttons
 ) {
+    val navController = rememberNavController()
     TopAppBar(
         title = {
             if (isHomeScreen) {
@@ -45,17 +45,19 @@ fun MaterialTopAppBar(
                     text = title,
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
+                    fontFamily = FontFamily(Font(R.font.poppins_semibold))
                 )
             } else if (isLineDetailsScreen) {
                 Column {
                     Text(
                         text = title,
-                        style = TextStyle(
-                            fontFamily = FontFamily.Default,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp,
-                            letterSpacing = 0.15.sp
-                        )
+                        style = MaterialTheme.typography.titleLarge
+//                        style = TextStyle(
+//                            fontFamily = FontFamily.Default,
+//                            fontWeight = FontWeight.Bold,
+//                            fontSize = 20.sp,
+//                            letterSpacing = 0.15.sp
+//                        )
                     )
                     if (!subtitle.isNullOrBlank()) {
                         Text(
@@ -79,8 +81,8 @@ fun MaterialTopAppBar(
             }
         },
         navigationIcon = {
-            if (isLineDetailsScreen || enableBackButton) {
-                IconButton(onClick = onBackClick) {
+            if (isLineDetailsScreen || navController.previousBackStackEntry != null) {
+                IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "Back"
@@ -89,16 +91,15 @@ fun MaterialTopAppBar(
             }
         },
         actions = {
-            if (isHomeScreen) {
-                IconButton(onClick = onSearchClick) {
-                    Icon(
-                        imageVector = Icons.Filled.Search,
-                        contentDescription = "Search"
-                    )
-                }
-            }
+//            if (isHomeScreen) {
+//                IconButton(onClick = onSettingsClick) {
+//                    Icon(
+//                        imageVector = Icons.Outlined.Settings,
+//                        contentDescription = "Settings"
+//                    )
+//                }
+//            }
         },
-        scrollBehavior = scrollBehavior,
         modifier = Modifier.fillMaxWidth()
     )
 }
@@ -110,8 +111,7 @@ fun MaterialTopAppBar(
 fun HomeScreenTopAppBarPreview() {
     MaterialTopAppBar(
         title = "AthenaBus",
-        isHomeScreen = true,
-        scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
+        isHomeScreen = true
     )
 }
 
@@ -124,7 +124,6 @@ fun LineDetailsScreenTopAppBarPreview() {
         title = "608",
         subtitle = "1231",
         isLineDetailsScreen = true,
-        scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     )
 
 }

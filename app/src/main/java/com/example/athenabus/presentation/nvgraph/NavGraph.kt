@@ -7,11 +7,11 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
 import com.example.athenabus.presentation.bus_list.BusLineListScreen
+import com.example.athenabus.presentation.main_screen.MainScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingViewModel
 import com.example.athenabus.presentation.route_details.RouteDetailsScreen
 import com.example.athenabus.presentation.route_list.RouteListScreen
-import com.example.athenabus.presentation.search_screen.SearchScreen
 
 @Composable
 fun NavGraph(
@@ -28,9 +28,16 @@ fun NavGraph(
                 route = Route.OnBoardingScreen.route
             ) {
                 val viewModel: OnBoardingViewModel = hiltViewModel()
-                OnBoardingScreen(
-                    event = viewModel::onEvent
-                )
+                OnBoardingScreen(event = viewModel::onEvent)
+            }
+        }
+
+        navigation(
+            route = Route.MainActivity.route,
+            startDestination = Route.HomeScreen.route
+        ) {
+            composable(route = Route.HomeScreen.route) {
+                MainScreen()
             }
         }
 
@@ -61,16 +68,5 @@ fun NavGraph(
             }
         }
 
-        navigation(
-            route = Route.SearchLine.route,
-            startDestination = Route.SearchLineScreen.route
-        ) {
-            composable(route = Route.SearchLineScreen.route) {
-                SearchScreen(navController = navController)
-            }
-        }
-
-
     }
-
 }

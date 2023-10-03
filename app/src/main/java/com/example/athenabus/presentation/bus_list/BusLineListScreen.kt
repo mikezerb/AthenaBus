@@ -18,8 +18,6 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -31,20 +29,21 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.presentation.bus_list.components.BusLineItem
-import com.example.athenabus.presentation.common.MaterialTopAppBar
 import com.example.athenabus.presentation.nvgraph.Route
 import com.example.athenabus.presentation.route_list.RouteListViewModel
 import com.example.athenabus.presentation.route_list.components.BusRouteItem
+import com.example.athenabus.ui.theme.AthenaBusTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -147,38 +146,20 @@ fun BusLineListScreen(
             }
         }
     }
-    Scaffold(
-        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
-        topBar = {
-            MaterialTopAppBar(
-                title = stringResource(id = R.string.app_name),
-                scrollBehavior = scrollBehavior,
-                isHomeScreen = true,
-                onSearchClick = { navController.navigate(Route.SearchLineScreen.route) }
-            )
-        },
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        }
-    )
-    {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it),
-
-
-                ) {
-                items(state.bus_lines) { line ->
-                    BusLineItem(
-                        busLine = line, onItemClick =
-                        {
-                            //navController.navigate(Route.BusRoutesScreen.route + "/${line.LineCode}")
-                            showDialog = true
-                            selectedBusLine = line
-                            // Pass the line id to the RouteListViewModel
-                            routeViewModel.getLineCodes(line.LineID)
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            items(state.bus_lines) { line ->
+                BusLineItem(
+                    busLine = line, onItemClick =
+                    {
+                        //navController.navigate(Route.BusRoutesScreen.route + "/${line.LineCode}")
+                        showDialog = true
+                        selectedBusLine = line
+                        // Pass the line id to the RouteListViewModel
+                        routeViewModel.getLineCodes(line.LineID)
 //                          scope.launch {
 //                            snackbarHostState.showSnackbar(
 //                                message = "Επιλογή γραμμής: " + line.LineCode,
@@ -186,35 +167,40 @@ fun BusLineListScreen(
 //                                duration = SnackbarDuration.Short
 //                            )
 //                        }
-                        },
-                        onToggleFavorite = { favorite_line ->
+                    },
+                    onToggleFavorite = { favorite_line ->
 
-                        }
-                    )
-                }
-            }
-            if (state.error.isNotBlank()) {
-                Text(
-                    text = state.error,
-                    color = MaterialTheme.colorScheme.error,
-                    textAlign = TextAlign.Center,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 20.dp)
+                    }
                 )
             }
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(54.dp)
-                        .align(Alignment.Center),
-                    strokeWidth = 6.dp
-                )
-            }
+        }
+        if (state.error.isNotBlank()) {
+            Text(
+                text = state.error,
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+            )
+        }
+        if (state.isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(54.dp)
+                    .align(Alignment.Center),
+                strokeWidth = 6.dp
+            )
         }
     }
 }
 
-
+@Preview
+@Composable
+fun BuslineListPreview() {
+    AthenaBusTheme {
+        BusLineListScreen(navController = rememberNavController())
+    }
+}
 
 

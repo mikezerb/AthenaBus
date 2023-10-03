@@ -7,8 +7,18 @@
     <string name="start_btn">Get Started</string>
     <string name="select_route_title">Available routes</string>
     <string name="stops_tab_title">Stops</string>
+    <string name="favourite_lines_title">Lines</string>
     <string name="schedule_tab_title">Schedules</string>
-    <string name="search_placeholder">Search</string>
-
+    <string name="default_setting_title">Setting</string>
+    <string name="default_setting_desc">This is a setting description for test</string>
+    <string name="search_place_holder">Search</string>
+    <string name="default_setting_section">Settings Section</string>
+    <string name="theme_settings_theme_section">Theme</string>
+    <string name="theme_settings_theme_title">Dark Mode</string>
+    <string name="theme_settings_theme_subtitle">Change app appearance to dark</string>
+    <string name="theme_settings_app_section">Application</string>
+    <string name="theme_settings_product_section">Product</string>
+    <string name="theme_settings_github_title">Visit Github</string>
+    <string name="theme_settings_github_subtitle">See the latest updates and contribute to our open-source project</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.theme
+package com.example.athenabus.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

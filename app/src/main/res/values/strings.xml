@@ -8,7 +8,22 @@
     <string name="select_route_title">Διαθέσιμες διαδρομές</string>
     <string name="stops_tab_title">Στάσεις</string>
     <string name="schedule_tab_title">Δρομολόγια</string>
-    <string name="search_placeholder">Αναζήτηση γραμμής</string>
+    <string name="favourite_lines_title">Γραμμές</string>
+    <string name="search_place_holder">Αναζήτηση</string>
+    <string name="default_setting_title">Ρύθμιση</string>
+    <string name="default_setting_desc">Αυτό είναι μία ρύθμιση για δοκιμή</string>
     <string name="favorite_btn_add" translatable="false">Add</string>
+    <string name="default_setting_section">Κατηγορία ρύθμισης</string>
+    <!-- strings for settings   -->
+    <string name="theme_settings_theme_section">Θέμα</string>
+    <string name="theme_settings_theme_title">Σκούρο θέμα</string>
+    <string name="theme_settings_theme_subtitle">Αλλαγή εμφάνισης της εφαρμογής</string>
+
+    <string name="theme_settings_app_section">Εφαρμογή</string>
+
+
+    <string name="theme_settings_product_section">Θέμα</string>
+    <string name="theme_settings_github_title">Επισκεφθείτε το Github</string>
+    <string name="theme_settings_github_subtitle">Δείτε τις τελευταίες ενημερώσεις και συνεισφέρετε στο έργο ανοικτού κώδικα</string>
 
 </resources>

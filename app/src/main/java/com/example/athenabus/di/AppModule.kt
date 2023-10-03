@@ -1,6 +1,7 @@
 package com.example.athenabus.di
 
 import android.app.Application
+import android.content.Context
 import androidx.room.Room
 import com.example.athenabus.common.Constants
 import com.example.athenabus.data.local.TelematicsDatabase
@@ -17,6 +18,7 @@ import com.example.athenabus.domain.use_case.app_entry.SaveAppEntryUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -42,7 +44,7 @@ object AppModule {
         api: OASATelematicsAPI,
         db: TelematicsDatabase
     ): BusLineRepository {
-        return BusLineRepositoryImpl(api, db.linesDao, db.routeDao)
+        return BusLineRepositoryImpl(api, db.linesDao)
     }
 
     @Provides
@@ -74,4 +76,8 @@ object AppModule {
         readAppEntryUseCase = ReadAppEntryUseCase(localUserManger),
         saveAppEntryUseCase = SaveAppEntryUseCase(localUserManger)
     )
+
+    @Provides
+    fun provideDataStoreUtil(@ApplicationContext context: Context): DataStoreUtil =
+        DataStoreUtil(context)
 }

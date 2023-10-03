@@ -15,7 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.athenabus.domain.model.Route
-import com.example.athenabus.presentation.theme.AthenaBusTheme
+import com.example.athenabus.ui.theme.AthenaBusTheme
 
 @Composable
 fun BusRouteItem(

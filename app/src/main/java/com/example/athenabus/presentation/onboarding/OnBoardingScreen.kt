@@ -28,7 +28,7 @@ import com.example.athenabus.presentation.common.MaterialElevatedButton
 import com.example.athenabus.presentation.common.MaterialTextButton
 import com.example.athenabus.presentation.onboarding.components.OnBoardingPage
 import com.example.athenabus.presentation.onboarding.components.PageIndicator
-import com.example.athenabus.presentation.theme.AthenaBusTheme
+import com.example.athenabus.ui.theme.AthenaBusTheme
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalFoundationApi::class)

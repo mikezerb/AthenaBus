@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.route_details
+package com.example.athenabus.presentation.favorites_screen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Box
@@ -9,19 +9,16 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DirectionsBus
-import androidx.compose.material.icons.filled.Timeline
+import androidx.compose.material.icons.filled.FollowTheSigns
 import androidx.compose.material.icons.outlined.DirectionsBus
-import androidx.compose.material.icons.outlined.Timeline
+import androidx.compose.material.icons.outlined.FollowTheSigns
 import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -31,37 +28,37 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.presentation.common.TabItem
 
-@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun RouteDetailsScreen(
-    navController: NavController,
+fun FavoriteScreen(
+    navController: NavController
 ) {
-    val tabItems = listOf(
+
+    val favTabItems = listOf(
         TabItem(
-            title = stringResource(R.string.stops_tab_title),
+            title = stringResource(R.string.favourite_lines_title),
             selectedIcon = Icons.Filled.DirectionsBus,
             unSelectedIcon = Icons.Outlined.DirectionsBus
         ),
         TabItem(
-            title = stringResource(R.string.schedule_tab_title),
-            selectedIcon = Icons.Filled.Timeline,
-            unSelectedIcon = Icons.Outlined.Timeline
+            title = stringResource(R.string.stops_tab_title),
+            selectedIcon = Icons.Filled.FollowTheSigns,
+            unSelectedIcon = Icons.Outlined.FollowTheSigns
         )
     )
-
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
-    val snackbarHostState = remember { SnackbarHostState() }
-
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
+
         var selectedTabIndex by remember { mutableStateOf(0) }
-        val pagerState = rememberPagerState { tabItems.size }
+        val pagerState = rememberPagerState { favTabItems.size }
         LaunchedEffect(selectedTabIndex) {
             pagerState.animateScrollToPage(selectedTabIndex)
         }
@@ -79,7 +76,7 @@ fun RouteDetailsScreen(
                 .fillMaxSize()
         ) {
             TabRow(selectedTabIndex = selectedTabIndex) {
-                tabItems.forEachIndexed { index, tabItem ->
+                favTabItems.forEachIndexed { index, tabItem ->
                     Tab(
                         selected = index == selectedTabIndex,
                         onClick = { selectedTabIndex = index },
@@ -104,12 +101,20 @@ fun RouteDetailsScreen(
                     .weight(1f)
             ) { index ->
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = tabItems[index].title)
+                    Text(text = favTabItems[index].title)
                     DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
 
                     }
                 }
             }
         }
+
     }
+
+}
+
+@Preview(name = "FavoriteScreen")
+@Composable
+private fun PreviewFavoriteScreen() {
+    FavoriteScreen(navController = rememberNavController())
 }

@@ -10,12 +10,12 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.example.athenabus.MainViewModel
 import com.example.athenabus.presentation.nvgraph.NavGraph
-import com.example.athenabus.presentation.theme.AthenaBusTheme
+import com.example.athenabus.ui.theme.AthenaBusTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<MainViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
