@@ -40,4 +40,25 @@ interface TelematicsLineDao {
     suspend fun getLineCodesFromLineID(query: String): List<String>
 
 
+    @Query(
+        """
+            SELECT *
+            FROM BusLineEntity
+            WHERE isFavorite = 1 
+        """
+    )
+    suspend fun getFavoriteLines(): List<BusLineEntity>
+
+
+    @Query(
+        """
+            UPDATE BusLineEntity 
+        SET isFavorite = NOT isFavorite where lineID = :query
+        """
+    )
+    suspend fun toggleFavoriteLine(query: String)
+
+
+
+
 }

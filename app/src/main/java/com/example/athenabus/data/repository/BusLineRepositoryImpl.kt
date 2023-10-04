@@ -117,7 +117,9 @@ class BusLineRepositoryImpl(
         }
     }
 
-    override fun addFavoriteLines(line: Line) {
+    override suspend fun toggleFavoriteLine(lineID: String) {
+
+        lineDao.toggleFavoriteLine(lineID)
 
     }
 }

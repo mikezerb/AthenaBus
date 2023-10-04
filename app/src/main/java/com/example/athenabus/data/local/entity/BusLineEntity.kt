@@ -8,5 +8,6 @@ data class BusLineEntity(
     @PrimaryKey val LineCode: String,
     val LineDescr: String,
     val LineDescrEng: String,
-    val LineID: String
+    val LineID: String,
+    val isFavorite: Boolean
 )

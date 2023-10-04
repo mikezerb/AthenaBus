@@ -13,6 +13,7 @@ fun LineDtoItem.toBusLineEntity(): BusLineEntity {
         LineDescr = LineDescr,
         LineDescrEng = LineDescrEng,
         LineCode = LineCode,
+        isFavorite = false
     )
 }
 
@@ -21,7 +22,8 @@ fun BusLineEntity.toBusLine(): Line {
         LineCode = LineCode,
         LineID = LineID,
         LineDescr = LineDescr,
-        LineDescrEng = LineDescrEng
+        LineDescrEng = LineDescrEng,
+        isFavorite = isFavorite
     )
 }
 

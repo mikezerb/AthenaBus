@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -34,10 +35,15 @@ fun LinesSearchBar(
     searchQuery: String,
     onSearchChange: (String) -> Unit,
     onClearSearch: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isGridViewEnabled: Boolean,
+    onToggleGridView: (Boolean) -> Unit,
 ) {
     // val keyboardController = LocalSoftwareKeyboardController.current
     val focusManager = LocalFocusManager.current
+
+    var isGridView by rememberSaveable { mutableStateOf(false) }
+
     OutlinedTextField(
         value = searchQuery,
         onValueChange = onSearchChange,
@@ -59,6 +65,10 @@ fun LinesSearchBar(
                 ) {
                     Icon(imageVector = Icons.Outlined.Close, contentDescription = null)
                 }
+            } else {
+                ChangeLayoutButton(
+                    enableGridView = isGridViewEnabled,
+                    onClick = { onToggleGridView(!isGridViewEnabled) })
             }
         },
         shape = RoundedCornerShape(32.dp),
@@ -93,6 +103,9 @@ private fun PreviewLinesSearchBar() {
         LinesSearchBar(
             searchQuery = searchQuery,
             onSearchChange = { },
-            onClearSearch = { searchQuery = "" })
+            onClearSearch = { searchQuery = "" },
+            isGridViewEnabled = true,
+            onToggleGridView = { }
+        )
     }
 }

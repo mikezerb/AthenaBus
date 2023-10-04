@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.common
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.tween
@@ -28,18 +27,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.example.athenabus.ui.theme.AthenaBusTheme
 
 @Composable
 fun FavoriteButton(
     modifier: Modifier,
-    onClick: () -> Unit
-
+    onClick: () -> Unit,
+    isFavorite: Boolean = false
 ) {
-    var buttonState: StarButtonState by remember { mutableStateOf(StarButtonState.IDLE) }
+    var buttonState: StarButtonState by remember { mutableStateOf(if (isFavorite) StarButtonState.PRESSED else StarButtonState.IDLE) }
 
     val shape = RoundedCornerShape(corner = CornerSize(16.dp))
 
@@ -139,16 +136,4 @@ fun FavoriteButton(
 enum class StarButtonState {
     IDLE,
     PRESSED
-}
-
-@Preview(showBackground = true, locale = "el_GR")
-@Preview(showBackground = true, locale = "en_US")
-@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
-@Composable
-fun StarButtonPreview() {
-    AthenaBusTheme {
-        FavoriteButton(modifier = Modifier) {
-
-        }
-    }
 }

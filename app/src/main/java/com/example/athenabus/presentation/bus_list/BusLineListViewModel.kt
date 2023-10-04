@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.use_case.bus_lines.GetLinesFromSearchUseCase
+import com.example.athenabus.domain.use_case.bus_lines.ToggleFavoriteLineUseCase
 import com.example.athenabus.domain.use_case.bus_lines.getLinesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -18,6 +19,7 @@ import javax.inject.Inject
 class BusLineListViewModel @Inject constructor(
     private val getLinesUseCase: getLinesUseCase,
     private val getLinesFromSearchUseCase: GetLinesFromSearchUseCase,
+    private val toggleFavoriteLineUseCase: ToggleFavoriteLineUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(BusLineListState())
@@ -57,5 +59,9 @@ class BusLineListViewModel @Inject constructor(
             getLinesFromSearchUseCase(allBusLines, query)
         }
         _state.value = BusLineListState(bus_lines = filteredBusLines)
+    }
+
+    suspend fun toggleFavoriteLine(query: String) {
+        toggleFavoriteLineUseCase(query)
     }
 }
