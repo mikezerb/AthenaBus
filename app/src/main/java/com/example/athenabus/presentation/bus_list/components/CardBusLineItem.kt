@@ -32,7 +32,8 @@ import com.example.athenabus.ui.theme.AthenaBusTheme
 fun BusLineItem(
     busLine: Line,
     onItemClick: (Line) -> Unit,
-    onToggleFavorite: (Line) -> Unit
+    onToggleFavorite: (Line) -> Unit,
+    showFavouriteIcon: Boolean = false
 ) {
     Card(
         modifier = Modifier
@@ -76,12 +77,15 @@ fun BusLineItem(
                     modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)
                 )
             }
-            FavoriteButton(modifier = Modifier
-                .align(Alignment.TopEnd)
-                .padding(8.dp),
-                onClick = { onToggleFavorite(busLine) },
-                isFavorite = busLine.isFavorite
-            )
+            if (showFavouriteIcon) {
+                FavoriteButton(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp),
+                    onClick = { onToggleFavorite(busLine) },
+                    isFavorite = busLine.isFavorite
+                )
+            }
         }
     }
 }

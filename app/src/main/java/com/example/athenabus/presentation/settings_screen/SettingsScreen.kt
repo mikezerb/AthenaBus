@@ -5,8 +5,12 @@ import android.net.Uri
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CloudUpload
+import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.material.icons.twotone.CloudUpload
 import androidx.compose.material.icons.twotone.DarkMode
+import androidx.compose.material.icons.twotone.PrivacyTip
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -48,7 +52,7 @@ fun SettingsScreen(
             SwitchPreference(
                 title = R.string.theme_settings_theme_title,
                 subtitle = R.string.theme_settings_theme_subtitle,
-                icon = { Icon(imageVector = Icons.TwoTone.DarkMode, contentDescription = null) },
+                icon = { Icon(imageVector = Icons.Outlined.DarkMode, contentDescription = null) },
                 isChecked = darkThemeState.isDarkMode,
                 onCheckedChange = { themeViewModel.toggleTheme() }
             )
@@ -57,15 +61,15 @@ fun SettingsScreen(
             SwitchPreference(
                 title = R.string.default_setting_title,
                 subtitle = R.string.default_setting_desc,
-                icon = { Icon(imageVector = Icons.TwoTone.CloudUpload, contentDescription = null) },
+                icon = { Icon(imageVector = Icons.Outlined.CloudUpload, contentDescription = null) },
                 isChecked = isOtherMode,
                 onCheckedChange = { isOtherMode = !isOtherMode }
             )
         }
-        SettingsGroup(title = R.string.theme_settings_product_section) {
+        SettingsGroup(title = R.string.product_settings_product_section) {
             BasicPreference(
-                title = R.string.theme_settings_github_title,
-                description = R.string.theme_settings_github_subtitle,
+                title = R.string.product_settings_github_title,
+                description = R.string.product_settings_github_subtitle,
                 onClick = {
                     val intent = Intent(
                         Intent.ACTION_VIEW,
@@ -74,7 +78,18 @@ fun SettingsScreen(
                     context.startActivity(intent)
                 },
                 icon = ImageVector.vectorResource(R.drawable.github_icon)
-
+            )
+            BasicPreference(
+                title = R.string.product_settings_privacy_title,
+                description = R.string.product_settings_privacy_subtitle,
+                onClick = {
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(Constants.PRIVACY_LINK)
+                    )
+                    context.startActivity(intent)
+                },
+                icon = Icons.Outlined.PrivacyTip
             )
         }
     }

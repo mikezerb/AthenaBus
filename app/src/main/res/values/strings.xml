@@ -19,11 +19,10 @@
     <string name="theme_settings_theme_title">Σκούρο θέμα</string>
     <string name="theme_settings_theme_subtitle">Αλλαγή εμφάνισης της εφαρμογής</string>
 
-    <string name="theme_settings_app_section">Εφαρμογή</string>
-
-
-    <string name="theme_settings_product_section">Θέμα</string>
-    <string name="theme_settings_github_title">Επισκεφθείτε το Github</string>
-    <string name="theme_settings_github_subtitle">Δείτε τις τελευταίες ενημερώσεις και συνεισφέρετε στο έργο ανοικτού κώδικα</string>
+    <string name="product_settings_product_section">Εφαρμογή</string>
+    <string name="product_settings_github_title">Επισκεφθείτε το Github</string>
+    <string name="product_settings_github_subtitle">Δείτε τις τελευταίες ενημερώσεις και συνεισφέρετε στο έργο ανοικτού κώδικα</string>
+    <string name="product_settings_privacy_title">Πολιτική Απορρήτου</string>
+    <string name="product_settings_privacy_subtitle">Μάθετε πώς προστατεύουμε τα δεδομένα και τις πληροφορίες σας</string>
 
 </resources>

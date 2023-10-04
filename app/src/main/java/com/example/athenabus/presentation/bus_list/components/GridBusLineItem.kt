@@ -30,7 +30,8 @@ import com.example.athenabus.presentation.common.FavoriteButton
 fun GridBusLineItem(
     busLine: Line,
     onItemClick: (Line) -> Unit,
-    onToggleFavorite: (Line) -> Unit
+    onToggleFavorite: (Line) -> Unit,
+    showFavorite: Boolean = false
 ) {
     OutlinedCard(
         modifier = Modifier
@@ -74,13 +75,15 @@ fun GridBusLineItem(
                     modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)
                 )
             }
-            FavoriteButton(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(8.dp),
-                onClick = { onToggleFavorite(busLine) },
-                isFavorite = busLine.isFavorite
-            )
+            if(showFavorite) {
+                FavoriteButton(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(8.dp),
+                    onClick = { onToggleFavorite(busLine) },
+                    isFavorite = busLine.isFavorite
+                )
+            }
         }
     }
 }

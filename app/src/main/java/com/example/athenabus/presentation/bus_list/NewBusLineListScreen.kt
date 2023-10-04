@@ -126,7 +126,7 @@ fun NewBusLineListScreen(
                         .padding(0.dp, 5.dp, 0.dp, 0.dp)
                 ) {
                     items(
-                        state.bus_lines.filter { it.LineID.contains(searchQuery.value, true) }
+                        state.bus_lines.filter { it.LineID.startsWith(searchQuery.value, true) }
                             .sortedBy { it.LineID }
                     ) { line ->
                         GridBusLineItem(
@@ -147,8 +147,10 @@ fun NewBusLineListScreen(
                     modifier = Modifier
                         .fillMaxSize()
                 ) {
-                    items(state.bus_lines.filter { it.LineID.contains(searchQuery.value, true) }
-                        .sortedBy { it.LineID }) { line ->
+                    items(
+                        state.bus_lines.filter { it.LineID.startsWith(searchQuery.value, true) }
+                        .sortedBy { it.LineID }
+                    ) { line ->
                         BusLineItem(
                             busLine = line, onItemClick =
                             {
