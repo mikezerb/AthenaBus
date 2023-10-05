@@ -50,11 +50,11 @@ fun NewBusLineListScreen(
     var isGridViewEnabled by rememberSaveable { mutableStateOf(false) }
     val onToggleGridView: (Boolean) -> Unit = { isEnabled ->
         isGridViewEnabled = isEnabled
-        // Update your UI or data to switch between grid and list view.
     }
     // Create a MutableState to store the search query
     val searchQuery = rememberSaveable { mutableStateOf("") }
     val scope = rememberCoroutineScope()
+
     Surface {
         Column(
             modifier = Modifier

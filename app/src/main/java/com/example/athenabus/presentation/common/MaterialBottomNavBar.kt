@@ -3,6 +3,8 @@ package com.example.athenabus.presentation.common
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Badge
 import androidx.compose.material3.BadgedBox
@@ -31,9 +33,7 @@ import com.example.athenabus.ui.theme.AthenaBusTheme
 fun MaterialBottomNavBar(
     navController: NavController
 ) {
-    NavigationBar(
-        modifier = Modifier.padding(0.dp)
-    ) {
+    NavigationBar() {
         val items = listOf(
             NavBarItem.Routes,
             NavBarItem.Favorites,

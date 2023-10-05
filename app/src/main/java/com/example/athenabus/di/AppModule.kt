@@ -5,16 +5,20 @@ import android.content.Context
 import androidx.room.Room
 import com.example.athenabus.common.Constants
 import com.example.athenabus.data.local.TelematicsDatabase
+import com.example.athenabus.data.location.DefaultLocationTracker
 import com.example.athenabus.data.manger.LocalUserMangerImpl
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.data.repository.BusLineRepositoryImpl
 import com.example.athenabus.data.repository.RouteRepositoryImpl
+import com.example.athenabus.domain.location.LocationTracker
 import com.example.athenabus.domain.manger.LocalUserManger
 import com.example.athenabus.domain.repository.BusLineRepository
 import com.example.athenabus.domain.repository.RouteRepository
 import com.example.athenabus.domain.use_case.app_entry.AppEntryUseCases
 import com.example.athenabus.domain.use_case.app_entry.ReadAppEntryUseCase
 import com.example.athenabus.domain.use_case.app_entry.SaveAppEntryUseCase
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -80,4 +84,21 @@ object AppModule {
     @Provides
     fun provideDataStoreUtil(@ApplicationContext context: Context): DataStoreUtil =
         DataStoreUtil(context)
+
+    @Provides
+    @Singleton
+    fun providesFusedLocationProviderClient(
+        application: Application
+    ): FusedLocationProviderClient =
+        LocationServices.getFusedLocationProviderClient(application)
+
+    @Provides
+    @Singleton
+    fun providesLocationTracker(
+        fusedLocationProviderClient: FusedLocationProviderClient,
+        application: Application
+    ): LocationTracker = DefaultLocationTracker(
+        fusedLocationProviderClient = fusedLocationProviderClient,
+        application = application
+    )
 }
