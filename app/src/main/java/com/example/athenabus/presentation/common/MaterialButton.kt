@@ -1,5 +1,6 @@
 package com.example.athenabus.presentation.common
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
@@ -8,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.athenabus.ui.theme.AthenaBusTheme
 
 @Composable
 fun MaterialElevatedButton(
@@ -28,18 +31,6 @@ fun MaterialElevatedButton(
 
 }
 
-//@Preview(showBackground = false)
-//@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
-//@Composable
-//fun materialButtonPreview() {
-//    AthenaBusTheme {
-//        MaterialTextButton(
-//            text = "Next",
-//            onClick = { }
-//        )
-//    }
-//}
-
 @Composable
 fun MaterialTextButton(
     text: String,
@@ -52,3 +43,16 @@ fun MaterialTextButton(
         Text(text = text)
     }
 }
+
+@Preview(showBackground = false)
+@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Composable
+fun materialButtonPreview() {
+    AthenaBusTheme {
+        MaterialTextButton(
+            text = "Next",
+            onClick = { }
+        )
+    }
+}
+

@@ -14,11 +14,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DockedSearchBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SearchBar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,13 +56,11 @@ fun NewBusLineListScreen(
     val searchQuery = rememberSaveable { mutableStateOf("") }
     val scope = rememberCoroutineScope()
     Surface {
-
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            SearchBar(
+            DockedSearchBar(
                 modifier = Modifier
                     .align(Alignment.Start)
                     .fillMaxWidth()
@@ -70,7 +68,6 @@ fun NewBusLineListScreen(
                 query = searchQuery.value,
                 onQueryChange = {
                     searchQuery.value = it
-//                //viewModel.searchBusLines(it)
                 },
                 onSearch = {},
                 active = false,
@@ -101,23 +98,6 @@ fun NewBusLineListScreen(
                 }
             )
             { }
-//        LinesSearchBar(
-//            searchQuery = searchQuery.value,
-//            onSearchChange = {
-//                searchQuery.value = it
-//                //viewModel.searchBusLines(it)
-//            },
-//            onClearSearch = {
-//                if (searchQuery.value.isNotEmpty())
-//                    searchQuery.value = ""
-//                //viewModel.searchBusLines(searchQuery.value)
-//            },
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(horizontal = 8.dp),
-//            isGridViewEnabled = isGridViewEnabled,
-//            onToggleGridView = onToggleGridView
-//        )
             if (isGridViewEnabled) {
                 LazyVerticalStaggeredGrid(
                     columns = StaggeredGridCells.Fixed(2),
@@ -149,7 +129,7 @@ fun NewBusLineListScreen(
                 ) {
                     items(
                         state.bus_lines.filter { it.LineID.startsWith(searchQuery.value, true) }
-                        .sortedBy { it.LineID }
+                            .sortedBy { it.LineID }
                     ) { line ->
                         BusLineItem(
                             busLine = line, onItemClick =

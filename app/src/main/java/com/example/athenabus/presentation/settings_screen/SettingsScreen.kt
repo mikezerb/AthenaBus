@@ -2,15 +2,16 @@ package com.example.athenabus.presentation.settings_screen
 
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CloudUpload
+import androidx.compose.material.icons.outlined.ColorLens
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.PrivacyTip
-import androidx.compose.material.icons.twotone.CloudUpload
-import androidx.compose.material.icons.twotone.DarkMode
-import androidx.compose.material.icons.twotone.PrivacyTip
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -32,14 +33,16 @@ import com.example.athenabus.presentation.settings_screen.components.BasicPrefer
 import com.example.athenabus.presentation.settings_screen.components.SettingsGroup
 import com.example.athenabus.presentation.settings_screen.components.SwitchPreference
 
+fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
 @Composable
 fun SettingsScreen(
     navController: NavController = rememberNavController(),
-    viewModel: SettingsViewModel = hiltViewModel(),
     themeViewModel: ThemeViewModel = hiltViewModel()
 ) {
     // Observe the dark theme setting
     val darkThemeState by themeViewModel.themeState.collectAsState()
+    val dynamicState by themeViewModel.dynamicState.collectAsState()
     var isOtherMode by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
@@ -47,6 +50,7 @@ fun SettingsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
         SettingsGroup(title = R.string.theme_settings_theme_section) {
             SwitchPreference(
@@ -56,12 +60,31 @@ fun SettingsScreen(
                 isChecked = darkThemeState.isDarkMode,
                 onCheckedChange = { themeViewModel.toggleTheme() }
             )
+            if (supportsDynamic()) {
+                SwitchPreference(
+                    title = R.string.theme_settings_color_title,
+                    subtitle = R.string.theme_settings_color_subtitle,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.ColorLens,
+                            contentDescription = null
+                        )
+                    },
+                    isChecked = dynamicState.isDynamicColor,
+                    onCheckedChange = { themeViewModel.toggleDynamicColors() }
+                )
+            }
         }
         SettingsGroup(title = R.string.default_setting_section) {
             SwitchPreference(
                 title = R.string.default_setting_title,
                 subtitle = R.string.default_setting_desc,
-                icon = { Icon(imageVector = Icons.Outlined.CloudUpload, contentDescription = null) },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Outlined.CloudUpload,
+                        contentDescription = null
+                    )
+                },
                 isChecked = isOtherMode,
                 onCheckedChange = { isOtherMode = !isOtherMode }
             )

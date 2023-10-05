@@ -16,10 +16,16 @@
     <string name="theme_settings_theme_section">Theme</string>
     <string name="theme_settings_theme_title">Dark Mode</string>
     <string name="theme_settings_theme_subtitle">Change app appearance to dark</string>
+    <string name="theme_settings_color_title">Dynamic Color</string>
+    <string name="theme_settings_color_subtitle">Enable/disable dynamic colors</string>
     <string name="product_settings_product_section">Application</string>
     <string name="product_settings_github_title">Visit Github</string>
     <string name="product_settings_github_subtitle">See the latest updates and contribute to our open-source project</string>
     <string name="product_settings_privacy_title">Privacy Policy</string>
     <string name="product_settings_privacy_subtitle">Learn How We Protect Your Data and Information</string>
+    <string name="routes_nav_bar">Routes</string>
+    <string name="favorites_nav_bar">Favorites</string>
+    <string name="closest_stops_nav_bar">Closest Stops</string>
+    <string name="settings_nav_bar">Settings</string>
 
 </resources>

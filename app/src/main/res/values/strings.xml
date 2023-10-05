@@ -15,14 +15,21 @@
     <string name="favorite_btn_add" translatable="false">Add</string>
     <string name="default_setting_section">Κατηγορία ρύθμισης</string>
     <!-- strings for settings   -->
-    <string name="theme_settings_theme_section">Θέμα</string>
+    <string name="theme_settings_theme_section">Εμφάνιση</string>
     <string name="theme_settings_theme_title">Σκούρο θέμα</string>
     <string name="theme_settings_theme_subtitle">Αλλαγή εμφάνισης της εφαρμογής</string>
+
+    <string name="theme_settings_color_title">Δυναμικά χρώματα</string>
+    <string name="theme_settings_color_subtitle">Αλλαγή χρωμάτων της εφαρμογής</string>
 
     <string name="product_settings_product_section">Εφαρμογή</string>
     <string name="product_settings_github_title">Επισκεφθείτε το Github</string>
     <string name="product_settings_github_subtitle">Δείτε τις τελευταίες ενημερώσεις και συνεισφέρετε στο έργο ανοικτού κώδικα</string>
     <string name="product_settings_privacy_title">Πολιτική Απορρήτου</string>
     <string name="product_settings_privacy_subtitle">Μάθετε πώς προστατεύουμε τα δεδομένα και τις πληροφορίες σας</string>
+    <string name="routes_nav_bar">Γραμμές</string>
+    <string name="favorites_nav_bar">Αγαπημένα</string>
+    <string name="closest_stops_nav_bar">Κοντινές Στάσεις</string>
+    <string name="settings_nav_bar">Ρυθμίσεις</string>
 
 </resources>

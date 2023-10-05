@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.onboarding.components
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -65,8 +64,7 @@ fun OnBoardingPage(
 
 }
 
-@Preview(showBackground = true)
-@Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
+@Preview
 @Composable
 fun OnBoardingPreview() {
     AthenaBusTheme {

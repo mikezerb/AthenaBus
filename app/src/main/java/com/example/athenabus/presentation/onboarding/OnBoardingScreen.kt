@@ -50,7 +50,7 @@ fun OnBoardingScreen(
                 when (pagerState.currentPage) {
                     0 -> listOf("", "Next")
                     1 -> listOf("Back", "Next")
-                    2 -> listOf("Back", "Get Started")
+                    2 -> listOf("", "Get Started")
                     else -> listOf("", "")
                 }
             }

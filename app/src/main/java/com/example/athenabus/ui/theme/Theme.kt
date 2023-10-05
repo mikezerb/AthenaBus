@@ -93,23 +93,25 @@ private val LightColorScheme = lightColorScheme(
     */
 )
 
+// For checking API support, we could do a simple build SDK version check
+fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
 @Composable
 fun AthenaBusTheme(
     themeViewModel: ThemeViewModel = hiltViewModel(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val themeState by themeViewModel.themeState.collectAsState()
+    val dynamicState by themeViewModel.dynamicState.collectAsState()
 
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        dynamicState.isDynamicColor && supportsDynamic() -> {
             val context = LocalContext.current
             if (themeState.isDarkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(
                 context
             )
         }
-
         themeState.isDarkMode -> DarkColorScheme
         else -> LightColorScheme
     }

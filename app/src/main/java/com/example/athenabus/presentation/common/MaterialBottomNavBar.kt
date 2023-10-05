@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.common
 
-import android.content.res.Configuration
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.animation.core.animateFloatAsState
@@ -19,6 +18,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -37,7 +37,7 @@ fun MaterialBottomNavBar(
         val items = listOf(
             NavBarItem.Routes,
             NavBarItem.Favorites,
-            NavBarItem.Settings
+            NavBarItem.ClosestStops
         )
 
         var selectedItemIndex by rememberSaveable {
@@ -46,11 +46,7 @@ fun MaterialBottomNavBar(
 
         val nabBackStackEntry by navController.currentBackStackEntryAsState()
 
-        val currentDestination = nabBackStackEntry?.destination
-
-        val bottomBarDestination = items.any { it.route == currentDestination?.route }
-
-        val scale: Float = 1.2f
+        val scale: Float = 1.1f
 
         val animatedScale: Float by animateFloatAsState(
             targetValue = scale,
@@ -62,12 +58,13 @@ fun MaterialBottomNavBar(
 
         items.forEachIndexed { index, navBarItem ->
             NavigationBarItem(
+                alwaysShowLabel = true,
                 modifier = Modifier.then(
                     Modifier.scale(
-                        if (selectedItemIndex == index) animatedScale else 1f
+                        if (nabBackStackEntry?.destination?.route == navBarItem.route) animatedScale else 1f
                     )
                 ),
-                selected = selectedItemIndex == index,
+                selected = nabBackStackEntry?.destination?.route == navBarItem.route,
                 onClick = {
                     selectedItemIndex = index
                     //navController.navigate(navBarItem.title)
@@ -86,7 +83,7 @@ fun MaterialBottomNavBar(
                 },
                 icon = {
                     BadgedBox(badge = {
-                        if (navBarItem.badgeCount != null) {
+                        if (navBarItem.badgeCount != 0) {
                             Badge {
                                 Text(text = navBarItem.badgeCount.toString())
                             }
@@ -95,7 +92,7 @@ fun MaterialBottomNavBar(
                         }
                     }) {
                         Icon(
-                            imageVector = if (index == selectedItemIndex) {
+                            imageVector = if (nabBackStackEntry?.destination?.route == navBarItem.route) {
                                 navBarItem.selectedIcon
                             } else {
                                 navBarItem.unSelectedIcon
@@ -103,18 +100,14 @@ fun MaterialBottomNavBar(
                         )
                     }
                 },
-                label = { Text(text = navBarItem.title) }
+                label = { Text(text = stringResource(navBarItem.title)) }
             )
-
         }
-
-
     }
 
 }
 
 @Preview(showBackground = true)
-@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 private fun PreviewMaterialBottomNavBar() {
     AthenaBusTheme {

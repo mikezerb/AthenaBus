@@ -13,7 +13,7 @@ fun RootNavigationGraph(navController: NavHostController) {
         route = Graph.ROOT,
         startDestination = Graph.ONBOARDING
     ) {
-        onBoardingNavGraph(navController = navController)
+        onBoardingNavGraph()
         composable(route = Graph.HOME) {
             MainScreen()
         }

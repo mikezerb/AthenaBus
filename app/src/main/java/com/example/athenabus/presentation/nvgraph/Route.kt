@@ -23,5 +23,7 @@ sealed class Route(
     object SearchLineScreen : Route(route = "SearchLineScreen")
     object SettingsActivity : Route(route = "settings")
     object SettingsActivityScreen : Route(route = "settingsActivityScreen")
+    object ClosestStopsActivity : Route(route = "closestStops")
+    object ClosestStopsActivityScreen : Route(route = "closestStopsActivityScreen")
 
 }
