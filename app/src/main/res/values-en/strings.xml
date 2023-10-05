@@ -27,5 +27,7 @@
     <string name="favorites_nav_bar">Favorites</string>
     <string name="closest_stops_nav_bar">Closest Stops</string>
     <string name="settings_nav_bar">Settings</string>
+    <string name="setting_lang_title">English Language</string>
+    <string name="setting_lang_desc">Αυτό είναι μία ρύθμιση για δοκιμή</string>
 
 </resources>

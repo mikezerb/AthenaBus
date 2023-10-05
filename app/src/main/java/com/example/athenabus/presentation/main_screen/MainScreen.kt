@@ -43,7 +43,10 @@ fun MainScreen(
                     isHomeScreen = true,
                     canNavigateBack = navController.previousBackStackEntry != null,
                     onSettingsClick = {
-                        navController.navigate(Route.SettingsActivityScreen.route)
+                        navController.navigate(Route.SettingsActivityScreen.route) {
+                            popUpTo(Route.HomeScreen.route)
+                            launchSingleTop = true
+                        }
                     }
                 )
             },

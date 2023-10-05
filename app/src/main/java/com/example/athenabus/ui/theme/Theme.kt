@@ -99,21 +99,25 @@ fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 @Composable
 fun AthenaBusTheme(
     themeViewModel: ThemeViewModel = hiltViewModel(),
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
     val themeState by themeViewModel.themeState.collectAsState()
     val dynamicState by themeViewModel.dynamicState.collectAsState()
 
-    val colorScheme = when {
-        dynamicState.isDynamicColor && supportsDynamic() -> {
-            val context = LocalContext.current
-            if (themeState.isDarkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(
-                context
-            )
+    val colorScheme = if (dynamicState.isDynamicColor) {
+        when {
+            supportsDynamic() -> {
+                val context = LocalContext.current
+                if (themeState.isDarkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(
+                    context
+                )
+            }
+
+            themeState.isDarkMode -> DarkColorScheme
+            else -> LightColorScheme
         }
-        themeState.isDarkMode -> DarkColorScheme
-        else -> LightColorScheme
+    } else {
+        if (themeState.isDarkMode) DarkColorScheme else LightColorScheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {

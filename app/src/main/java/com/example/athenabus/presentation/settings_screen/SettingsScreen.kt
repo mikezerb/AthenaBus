@@ -3,6 +3,7 @@ package com.example.athenabus.presentation.settings_screen
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
@@ -11,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CloudUpload
 import androidx.compose.material.icons.outlined.ColorLens
 import androidx.compose.material.icons.outlined.DarkMode
+import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.PrivacyTip
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
@@ -24,6 +26,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.os.LocaleListCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -35,6 +38,11 @@ import com.example.athenabus.presentation.settings_screen.components.SwitchPrefe
 
 fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
+private fun changeLanguage(s: String) {
+    //code to change the app language.
+    AppCompatDelegate.setApplicationLocales(LocaleListCompat.forLanguageTags(s))
+} // this AppCompatDelegate should be in main Thread, because its automatically restarts the activity.
+
 @Composable
 fun SettingsScreen(
     navController: NavController = rememberNavController(),
@@ -44,6 +52,7 @@ fun SettingsScreen(
     val darkThemeState by themeViewModel.themeState.collectAsState()
     val dynamicState by themeViewModel.dynamicState.collectAsState()
     var isOtherMode by remember { mutableStateOf(false) }
+    var langFlag by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
 
@@ -87,6 +96,25 @@ fun SettingsScreen(
                 },
                 isChecked = isOtherMode,
                 onCheckedChange = { isOtherMode = !isOtherMode }
+            )
+            SwitchPreference(
+                title = R.string.setting_lang_title,
+                subtitle = R.string.setting_lang_desc,
+                icon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Language,
+                        contentDescription = null
+                    )
+                },
+                isChecked = langFlag,
+                onCheckedChange = {
+                    if (langFlag) {
+                        changeLanguage("en")
+                    } else {
+                        changeLanguage("el")
+                    }
+                    langFlag = !langFlag
+                }
             )
         }
         SettingsGroup(title = R.string.product_settings_product_section) {

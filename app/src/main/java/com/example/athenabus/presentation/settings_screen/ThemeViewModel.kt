@@ -65,12 +65,11 @@ class ThemeViewModel @Inject constructor(dataStoreUtil: DataStoreUtil) : ViewMod
     }
 
     fun toggleDynamicColors() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             Log.d("dynamic", "Try to toggle dynamic color")
             dataStore.edit { preferences ->
                 Log.d("dynamic", "Dynamic preference is: " + preferences[IS_DYNAMIC_MODE_KEY])
                 preferences[IS_DYNAMIC_MODE_KEY] = !(preferences[IS_DYNAMIC_MODE_KEY] ?: false)
-
             }
         }
     }
