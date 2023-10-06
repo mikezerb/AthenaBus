@@ -16,6 +16,7 @@ import com.example.athenabus.ui.theme.AthenaBusTheme
 @Composable
 fun MaterialElevatedButton(
     text: String,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     ElevatedButton(
