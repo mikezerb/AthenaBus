@@ -4,8 +4,10 @@ import com.example.athenabus.common.Resource
 import com.example.athenabus.data.local.TelematicsLineDao
 import com.example.athenabus.data.mapper.toBusLine
 import com.example.athenabus.data.mapper.toBusLineEntity
+import com.example.athenabus.data.mapper.toStop
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.domain.model.Line
+import com.example.athenabus.domain.model.Stop
 import com.example.athenabus.domain.repository.BusLineRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -122,4 +124,18 @@ class BusLineRepositoryImpl(
         lineDao.toggleFavoriteLine(lineID)
 
     }
+
+    override fun getStopsFromXY(latitude: String, longitude: String): Flow<Resource<List<Stop>>> =
+        flow {
+            emit(Resource.Loading())
+            try {
+                val closestStopsRemote = api.getClosestStops(x = latitude, y = longitude)
+                val closestStops = closestStopsRemote.map { it.toStop() }
+                emit(Resource.Success(closestStops))
+            } catch (e: HttpException) {
+                emit(Resource.Error(message = e.localizedMessage ?: "error"))
+            } catch (e: Exception) {
+                emit(Resource.Error(message = e.message ?: "An error occurred"))
+            }
+        }
 }

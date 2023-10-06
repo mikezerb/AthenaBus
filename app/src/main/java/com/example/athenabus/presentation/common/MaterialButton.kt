@@ -21,7 +21,7 @@ fun MaterialElevatedButton(
 ) {
     ElevatedButton(
         onClick = onClick,
-        modifier = Modifier.padding(16.dp),
+        modifier = modifier,
         colors = ButtonDefaults.buttonColors(
             contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
             containerColor = MaterialTheme.colorScheme.primaryContainer,
@@ -49,11 +49,9 @@ fun MaterialTextButton(
 @Preview(uiMode = UI_MODE_NIGHT_YES, showBackground = true)
 @Composable
 fun materialButtonPreview() {
-    AthenaBusTheme {
-        MaterialTextButton(
-            text = "Next",
-            onClick = { }
-        )
-    }
+    MaterialTextButton(
+        text = "Next",
+        onClick = { }
+    )
 }
 

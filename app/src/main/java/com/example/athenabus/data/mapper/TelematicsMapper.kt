@@ -2,10 +2,12 @@ package com.example.athenabus.data.mapper
 
 import com.example.athenabus.data.local.entity.BusLineEntity
 import com.example.athenabus.data.local.entity.RouteEntity
+import com.example.athenabus.data.remote.dto.ClosestStopDtoItem
 import com.example.athenabus.data.remote.dto.LineDtoItem
 import com.example.athenabus.data.remote.dto.RouteDtoItem
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Route
+import com.example.athenabus.domain.model.Stop
 
 fun LineDtoItem.toBusLineEntity(): BusLineEntity {
     return BusLineEntity(
@@ -68,5 +70,16 @@ fun Route.toRouteEntity(): RouteEntity {
         RouteDescrEng = RouteDescrEng,
         RouteDistance = RouteDistance,
         RouteType = RouteType
+    )
+}
+
+fun ClosestStopDtoItem.toStop(): Stop{
+    return Stop(
+        StopCode = StopCode,
+        StopDescr = StopDescr,
+        StopDescrEng = StopDescrEng,
+        StopID = StopID,
+        StopStreet = StopStreet,
+        distance = distance
     )
 }

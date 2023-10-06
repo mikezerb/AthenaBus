@@ -1,5 +1,6 @@
 package com.example.athenabus.data.remote
 
+import com.example.athenabus.data.remote.dto.ClosestStopDto
 import com.example.athenabus.data.remote.dto.LineDto
 import com.example.athenabus.data.remote.dto.RouteDto
 import retrofit2.http.GET
@@ -22,5 +23,10 @@ interface OASATelematicsAPI {
         @Query("p1") routeCode: String
     ): RouteDto
 
-
+    @GET("api/")
+    suspend fun getClosestStops(
+        @Query("act") action: String = "getClosestStops",
+        @Query("p1") x: String,
+        @Query("p2") y: String
+    ):ClosestStopDto
 }

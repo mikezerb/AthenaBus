@@ -1,0 +1,21 @@
+<vector android:height="96dp" android:viewportHeight="368"
+    android:viewportWidth="385" android:width="100.434784dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#a0c2ff" android:fillType="evenOdd" android:pathData="M144.57,11.6l4.85,-1.2 98,396 -4.85,1.2Z"/>
+    <path android:fillColor="#a0c2ff" android:fillType="evenOdd" android:pathData="M22.31,26.58l4.66,-1.8L173.69,405.42l-4.67,1.8Z"/>
+    <path android:fillColor="#a0c2ff" android:fillType="evenOdd" android:pathData="M247.13,-20.58l4.91,-0.97 79.42,400.14 -4.9,0.97Z"/>
+    <path android:fillColor="#a0c2ff" android:fillType="evenOdd" android:pathData="M403.09,203.15L404.32,208 8.91,308.34l-1.23,-4.85Z"/>
+    <path android:fillColor="#a0c2ff" android:fillType="evenOdd" android:pathData="M369.66,53.06l1.36,4.81L-21.66,168.43l-1.36,-4.81Z"/>
+    <path android:fillColor="#6cabfb" android:fillType="evenOdd" android:pathData="M70.57,154.65l6.55,-2.46 41.9,111.51 -6.55,2.46Z"/>
+    <path android:fillColor="#6cabfb" android:fillType="evenOdd" android:pathData="M268.92,92.82l6.87,-1.33 24.44,126.64 -6.87,1.33Z"/>
+    <path android:fillColor="#6cabfb" android:fillType="evenOdd" android:pathData="M132.51,277.44l-1.6,-6.82 60.4,-14.14 1.6,6.82Z"/>
+    <path android:fillColor="#6cabfb" android:fillType="evenOdd" android:pathData="M220.23,255.63l-1.59,-6.82 69.07,-16.13 1.59,6.82Z"/>
+    <path android:fillColor="#6cabfb" android:fillType="evenOdd" android:pathData="M90.33,137l-1.82,-6.76L258.74,84.49l1.82,6.76Z"/>
+    <path android:fillColor="#6cabfb" android:fillType="evenOdd" android:pathData="M211.27,278.17l6.81,-1.63 12.37,51.77 -6.81,1.63Z"/>
+    <path android:fillAlpha="0.63" android:fillColor="#dce8fe"
+        android:pathData="M140,251a66,69 0,1 0,132 0a66,69 0,1 0,-132 0z"
+        android:strokeAlpha="0.63" android:strokeColor="#83b6f7"
+        android:strokeLineJoin="round" android:strokeWidth="1"/>
+    <path android:fillColor="#36c" android:fillType="evenOdd"
+        android:pathData="M205,75c58.25,0.02 57,61 57,61 1.15,49.85 -52.66,116.22 -57,115 -1.24,0.59 -56.17,-66.09 -56,-114C149,137 151.18,76.18 205,75Z"
+        android:strokeColor="#335f98" android:strokeLineJoin="round" android:strokeWidth="2"/>
+</vector>
