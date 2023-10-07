@@ -14,6 +14,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -23,8 +24,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
+import com.example.athenabus.presentation.nvgraph.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,9 +40,13 @@ fun MaterialTopAppBar(
     canNavigateBack: Boolean = false,
     navigateUp: () -> Unit = { },
     onSettingsClick: () -> Unit = { },
+    navController: NavController = rememberNavController()
     // TODO: Add click for map, favorite or schedule alarm buttons
 ) {
-    val navController = rememberNavController()
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+
     CenterAlignedTopAppBar(
         title = {
             if (isHomeScreen) {
@@ -82,7 +90,7 @@ fun MaterialTopAppBar(
             }
         },
         navigationIcon = {
-            if (isLineDetailsScreen || navController.previousBackStackEntry != null) {
+            if (currentRoute == Route.SettingsActivityScreen.route) {
                 IconButton(onClick = navigateUp) {
                     Icon(
                         imageVector = Icons.Default.ArrowBack,

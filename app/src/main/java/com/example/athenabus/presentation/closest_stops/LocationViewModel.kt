@@ -18,6 +18,10 @@ class LocationViewModel @Inject constructor(
     private val _state = mutableStateOf(LocationState())
     val state: State<LocationState> = _state
 
+    init {
+        getCurrentLocation()
+    }
+
     fun getCurrentLocation() {
         viewModelScope.launch {
             val currentLocation = locationTracker.getCurrentLocation()

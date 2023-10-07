@@ -1,5 +1,8 @@
 package com.example.athenabus.presentation.main_screen
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -10,12 +13,17 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.presentation.common.MaterialBottomNavBar
@@ -31,6 +39,14 @@ fun MainScreen(
 ) {
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
+    var showBottomBar by rememberSaveable { mutableStateOf(true) }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+
+    showBottomBar = when (navBackStackEntry?.destination?.route) {
+        Route.SettingsActivityScreen.route -> false // on this screen bottom bar should be hidden
+        "RouteOfScreenB" -> false // here too
+        else -> true // in all other cases show bottom bar
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize()
@@ -42,24 +58,31 @@ fun MainScreen(
                     title = stringResource(id = R.string.app_name),
                     isHomeScreen = true,
                     canNavigateBack = navController.previousBackStackEntry != null,
+                    navigateUp = { navController.popBackStack() },
                     onSettingsClick = {
                         navController.navigate(Route.SettingsActivityScreen.route) {
                             popUpTo(Route.HomeScreen.route)
                             launchSingleTop = true
                         }
-                    }
+                    },
+                    navController = navController
                 )
             },
             snackbarHost = {
                 SnackbarHost(hostState = snackbarHostState)
             },
-            bottomBar = { MaterialBottomNavBar(navController) },
+            bottomBar = {
+                AnimatedVisibility(
+                    visible = showBottomBar,
+                    enter = slideInVertically(initialOffsetY = { it }),
+                    exit = slideOutVertically(targetOffsetY = { it }),
+                ){
+                    MaterialBottomNavBar(navController)
+                }
+            },
         ) {
             Box(modifier = Modifier.padding(it)) {
                 HomeNavGraph(navController = navController)
-//                NavHost(navController = navController, startDestination = Route.HomeScreen.route){
-//                    homeGraph(navController = navController)
-//                }
             }
         }
     }

@@ -142,6 +142,30 @@ fun SettingsScreen(
                 },
                 icon = Icons.Outlined.PrivacyTip
             )
+            BasicPreference(
+                title = R.string.product_settings_privacy_title,
+                description = R.string.product_settings_privacy_subtitle,
+                onClick = {
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(Constants.PRIVACY_LINK)
+                    )
+                    context.startActivity(intent)
+                },
+                icon = Icons.Outlined.PrivacyTip
+            )
+            BasicPreference(
+                title = R.string.product_settings_privacy_title,
+                description = R.string.product_settings_privacy_subtitle,
+                onClick = {
+                    val intent = Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse(Constants.PRIVACY_LINK)
+                    )
+                    context.startActivity(intent)
+                },
+                icon = Icons.Outlined.PrivacyTip
+            )
         }
     }
 }
