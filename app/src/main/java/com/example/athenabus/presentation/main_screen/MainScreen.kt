@@ -75,7 +75,7 @@ fun MainScreen(
                     visible = showBottomBar,
                     enter = slideInVertically(initialOffsetY = { it }),
                     exit = slideOutVertically(targetOffsetY = { it }),
-                ){
+                ) {
                     MaterialBottomNavBar(navController)
                 }
             },

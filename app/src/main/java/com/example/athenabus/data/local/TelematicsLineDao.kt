@@ -59,6 +59,4 @@ interface TelematicsLineDao {
     suspend fun toggleFavoriteLine(query: String)
 
 
-
-
 }

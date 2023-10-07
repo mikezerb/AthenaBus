@@ -40,6 +40,7 @@ class BusLineListViewModel @Inject constructor(
                     allBusLines.addAll(busLines)
                     _state.value = BusLineListState(bus_lines = busLines)
                 }
+
                 is Resource.Error -> {
                     _state.value = BusLineListState(error = result.message ?: "Unexpected error")
                 }

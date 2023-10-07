@@ -2,11 +2,8 @@ package com.example.athenabus.presentation.bus_list.components
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ViewAgenda
-import androidx.compose.material.icons.filled.ViewComfyAlt
 import androidx.compose.material.icons.outlined.GridView
 import androidx.compose.material.icons.outlined.ViewAgenda
-import androidx.compose.material.icons.outlined.ViewComfyAlt
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalContentColor
@@ -28,7 +25,7 @@ fun ChangeLayoutButton(
         if (enableGridView) painterResource(id = R.drawable.grid_btn_icon) else painterResource(id = R.drawable.list_btn_icon)
 
     val layoutIcon =
-        if(enableGridView) Icons.Outlined.ViewAgenda else Icons.Outlined.GridView
+        if (enableGridView) Icons.Outlined.ViewAgenda else Icons.Outlined.GridView
 
     IconButton(
         onClick = onClick,

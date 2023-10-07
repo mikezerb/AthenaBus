@@ -3,7 +3,6 @@ package com.example.athenabus.presentation.nvgraph
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -42,7 +41,7 @@ fun HomeNavGraph(navController: NavHostController) {
         navigation(
             route = Route.SettingsActivity.route,
             startDestination = Route.SettingsActivityScreen.route
-        ){
+        ) {
             composable(route = Route.SettingsActivityScreen.route) {
                 SettingsScreen(navController = navController)
             }

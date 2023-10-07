@@ -7,5 +7,4 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteScreenViewModel @Inject constructor(
 
-) : ViewModel() {
-}
+) : ViewModel()

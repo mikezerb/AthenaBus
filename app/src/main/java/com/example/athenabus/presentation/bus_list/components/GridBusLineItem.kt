@@ -75,7 +75,7 @@ fun GridBusLineItem(
                     modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)
                 )
             }
-            if(showFavorite) {
+            if (showFavorite) {
                 FavoriteButton(
                     modifier = Modifier
                         .align(Alignment.TopEnd)

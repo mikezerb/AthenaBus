@@ -102,7 +102,8 @@ fun MaterialTopAppBar(
             if (
                 currentRoute == Route.NewBusLineScreen.route
                 || currentRoute == Route.FavoriteScreen.route
-                || currentRoute == Route.ClosestStopsActivityScreen.route ) {
+                || currentRoute == Route.ClosestStopsActivityScreen.route
+            ) {
                 IconButton(onClick = onSettingsClick) {
                     Icon(
                         imageVector = Icons.Outlined.Settings,

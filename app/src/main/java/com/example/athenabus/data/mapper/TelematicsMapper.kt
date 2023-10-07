@@ -73,7 +73,7 @@ fun Route.toRouteEntity(): RouteEntity {
     )
 }
 
-fun ClosestStopDtoItem.toStop(): Stop{
+fun ClosestStopDtoItem.toStop(): Stop {
     return Stop(
         StopCode = StopCode,
         StopDescr = StopDescr,

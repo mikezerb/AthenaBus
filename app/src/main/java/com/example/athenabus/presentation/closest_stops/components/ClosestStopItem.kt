@@ -47,7 +47,10 @@ fun ClosestStopItem(
             ) {
                 Text(text = stop.StopDescr, style = MaterialTheme.typography.titleMedium)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text(text = "${stop.StopStreet?: ""} (ID: ${stop.StopID}, CODE: ${stop.StopCode}, COORDS: [${stop.StopLat}, ${stop.StopLng}])" , style = MaterialTheme.typography.labelSmall)
+                Text(
+                    text = "${stop.StopStreet ?: ""} (ID: ${stop.StopID}, CODE: ${stop.StopCode}, COORDS: [${stop.StopLat}, ${stop.StopLng}])",
+                    style = MaterialTheme.typography.labelSmall
+                )
             }
         }
     }

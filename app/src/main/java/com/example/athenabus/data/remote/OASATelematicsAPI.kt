@@ -28,5 +28,5 @@ interface OASATelematicsAPI {
         @Query("act") action: String = "getClosestStops",
         @Query("p1") x: String,
         @Query("p2") y: String
-    ):ClosestStopDto
+    ): ClosestStopDto
 }

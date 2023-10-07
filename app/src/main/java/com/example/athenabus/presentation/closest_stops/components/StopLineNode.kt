@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
@@ -102,16 +103,18 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                 startColor = MaterialTheme.colorScheme.surfaceTint,
                 endColor = MaterialTheme.colorScheme.surfaceTint
             )
-        ) { modifier -> ClosestStopItem(modifier = modifier, stop = Stop(
-            StopCode = "124",
-            StopDescr = "Δοκιμή Στάσης",
-            StopDescrEng = "",
-            StopID = "602",
-            StopStreet = "ΠΕΙΡΑΙΩΣ",
-            StopLat = "38.0400",
-            StopLng = "23.7614",
-            distance = "0.004502298261997398"
-        ), onClick = { }) }
+        ) { modifier ->
+            ClosestStopItem(modifier = modifier.align(Alignment.Center), stop = Stop(
+                StopCode = "124",
+                StopDescr = "Δοκιμή Στάσης",
+                StopDescrEng = "",
+                StopID = "602",
+                StopStreet = "ΠΕΙΡΑΙΩΣ",
+                StopLat = "38.0400",
+                StopLng = "23.7614",
+                distance = "0.004502298261997398"
+            ), onClick = { })
+        }
         StopLineNode(
             position = StopLineNodePosition.MIDDLE,
             circleParameters = circleParameters(
@@ -121,16 +124,18 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                 startColor = MaterialTheme.colorScheme.surfaceTint,
                 endColor = MaterialTheme.colorScheme.surfaceTint
             )
-        ) { modifier -> ClosestStopItem(modifier = modifier, stop = Stop(
-            StopCode = "124",
-            StopDescr = "Επόμενη στάση",
-            StopDescrEng = "",
-            StopID = "602",
-            StopLat = "38.0400",
-            StopLng = "23.7614",
-            StopStreet = "ΠΕΙΡΑΙΩΣ",
-            distance = "0.004502298261997398"
-        ), onClick = { }) }
+        ) { modifier ->
+            ClosestStopItem(modifier = modifier, stop = Stop(
+                StopCode = "124",
+                StopDescr = "Επόμενη στάση",
+                StopDescrEng = "",
+                StopID = "602",
+                StopLat = "38.0400",
+                StopLng = "23.7614",
+                StopStreet = "ΠΕΙΡΑΙΩΣ",
+                distance = "0.004502298261997398"
+            ), onClick = { })
+        }
         StopLineNode(position = StopLineNodePosition.LAST) { modifier ->
             ClosestStopItem(
                 modifier = modifier,

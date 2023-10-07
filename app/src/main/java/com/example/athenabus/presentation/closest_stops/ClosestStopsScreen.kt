@@ -7,6 +7,8 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,11 +24,15 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -39,8 +45,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -62,7 +70,7 @@ import kotlinx.coroutines.launch
 
 private const val TAG = "ClosestStopsScreen"
 
-@OptIn(ExperimentalPermissionsApi::class)
+@OptIn(ExperimentalPermissionsApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun ClosestStopsScreen(
     navController: NavController = rememberNavController(),
@@ -89,6 +97,9 @@ fun ClosestStopsScreen(
         }
     }
 
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
+
     var isMapLoaded by remember { mutableStateOf(false) }
 
     val uiSettings by remember {
@@ -99,6 +110,8 @@ fun ClosestStopsScreen(
             )
         )
     }
+
+    var showSnackbar by remember { mutableStateOf(false) }
 
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(athens, 11f)
@@ -131,11 +144,14 @@ fun ClosestStopsScreen(
                             TextButton(
                                 onClick = {
                                     viewModel.getCurrentLocation()
-                                    if (value.currentLocation != null)
+                                    if (value.currentLocation != null) {
                                         closestStopsViewModel.getClosestStops(
-                                            x = value.currentLocation?.latitude.toString() ?: "0.0",
-                                            value.currentLocation?.longitude.toString() ?: "0.0"
+                                            x = value.currentLocation?.latitude.toString(),
+                                            y = value.currentLocation?.longitude.toString()
                                         )
+                                    } else {
+                                        showSnackbar = true
+                                    }
                                 }
                             ) {
                                 Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
@@ -171,7 +187,7 @@ fun ClosestStopsScreen(
                                 Log.d(TAG, "POI clicked: ${it.name}")
                             }
                         ) {
-                            val scope = rememberCoroutineScope()
+
                             SideEffect {
                                 scope.launch {
                                     value.currentLocation?.let {
@@ -272,20 +288,23 @@ fun ClosestStopsScreen(
                             Column(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .weight(0.6f)
+                                    .weight(0.8f)
                                     .background(MaterialTheme.colorScheme.surface),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                                 verticalArrangement = Arrangement.SpaceEvenly
                             ) {
                                 ElevatedButton(
                                     onClick = {
-                                        value.let { locationState ->
-                                            closestStopsViewModel.getClosestStops(
-                                                x = locationState.currentLocation?.latitude.toString()
-                                                    ?: "0.0",
-                                                locationState.currentLocation?.longitude.toString()
-                                                    ?: "0.0"
-                                            )
+                                        viewModel.getCurrentLocation()
+                                        if (value.currentLocation != null) {
+                                            value.let { locationState ->
+                                                closestStopsViewModel.getClosestStops(
+                                                    x = locationState.currentLocation?.latitude.toString(),
+                                                    y = locationState.currentLocation?.longitude.toString()
+                                                )
+                                            }
+                                        } else {
+                                            showSnackbar = true
                                         }
                                     }) {
                                     Text(
@@ -293,6 +312,33 @@ fun ClosestStopsScreen(
                                         style = MaterialTheme.typography.headlineSmall,
                                         color = MaterialTheme.colorScheme.surfaceTint
                                     )
+                                }
+                            }
+                            AnimatedVisibility(
+                                visible = showSnackbar,
+                                enter = slideIn(initialOffset = { IntOffset(0, it.height / 2) }),
+                                exit = slideOut(targetOffset = { IntOffset(0, it.height / 2) })
+                            ) {
+                                Snackbar(
+                                    modifier = Modifier.padding(4.dp),
+                                    action = {
+                                        TextButton(
+                                            onClick = {
+                                            }) {
+                                            Text(text = "Activate")
+                                        }
+                                    },
+                                    dismissAction = {
+                                        IconButton(onClick = { showSnackbar = false }) {
+                                            Icon(
+                                                imageVector = Icons.Outlined.Close,
+                                                contentDescription = null
+                                            )
+                                        }
+                                    }
+                                ) {
+                                    Text(text = "Turn Device Location On")
+
                                 }
                             }
                         }
