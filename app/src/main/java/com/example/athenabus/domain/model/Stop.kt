@@ -5,6 +5,8 @@ data class Stop(
     val StopDescr: String,
     val StopDescrEng: String,
     val StopStreet: String,
+    val StopLat: String,
+    val StopLng: String,
     val StopID: String,
     val distance: String
 )

@@ -108,6 +108,8 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
             StopDescrEng = "",
             StopID = "602",
             StopStreet = "ΠΕΙΡΑΙΩΣ",
+            StopLat = "38.0400",
+            StopLng = "23.7614",
             distance = "0.004502298261997398"
         ), onClick = { }) }
         StopLineNode(
@@ -124,6 +126,8 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
             StopDescr = "Επόμενη στάση",
             StopDescrEng = "",
             StopID = "602",
+            StopLat = "38.0400",
+            StopLng = "23.7614",
             StopStreet = "ΠΕΙΡΑΙΩΣ",
             distance = "0.004502298261997398"
         ), onClick = { }) }
@@ -135,6 +139,8 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                     StopDescr = "Τελευταία στάση",
                     StopDescrEng = "",
                     StopID = "602",
+                    StopLat = "38.0400",
+                    StopLng = "23.7614",
                     StopStreet = "ΠΕΙΡΑΙΩΣ",
                     distance = "0.004502298261997398"
                 ),

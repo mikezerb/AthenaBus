@@ -80,6 +80,8 @@ fun ClosestStopDtoItem.toStop(): Stop{
         StopDescrEng = StopDescrEng,
         StopID = StopID,
         StopStreet = StopStreet,
+        StopLat = StopLat,
+        StopLng = StopLng,
         distance = distance
     )
 }

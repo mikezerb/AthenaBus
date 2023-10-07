@@ -8,13 +8,14 @@ import android.location.LocationManager
 import androidx.core.content.ContextCompat
 import com.example.athenabus.domain.location.LocationTracker
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 class DefaultLocationTracker(
     private val fusedLocationProviderClient: FusedLocationProviderClient,
-    private val application: Application
+    private val application: Application,
 ) : LocationTracker {
-    
+
     override suspend fun getCurrentLocation(): Location? {
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
             application,

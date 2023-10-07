@@ -12,6 +12,8 @@ class SampleStopProvider : PreviewParameterProvider<Stop> {
            StopDescrEng = "",
            StopID = "602",
            StopStreet = "ΠΕΙΡΑΙΩΣ",
+           StopLng = "23.7614",
+           StopLat = "38.0400",
            distance = "0.004502298261997398"
        )
     )
