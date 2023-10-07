@@ -46,7 +46,6 @@ fun MaterialTopAppBar(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-
     CenterAlignedTopAppBar(
         title = {
             if (isHomeScreen) {
@@ -100,7 +99,10 @@ fun MaterialTopAppBar(
             }
         },
         actions = {
-            if (isHomeScreen) {
+            if (
+                currentRoute == Route.NewBusLineScreen.route
+                || currentRoute == Route.FavoriteScreen.route
+                || currentRoute == Route.ClosestStopsActivityScreen.route ) {
                 IconButton(onClick = onSettingsClick) {
                     Icon(
                         imageVector = Icons.Outlined.Settings,
@@ -113,7 +115,6 @@ fun MaterialTopAppBar(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable
@@ -124,7 +125,6 @@ fun HomeScreenTopAppBarPreview() {
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Preview(uiMode = UI_MODE_NIGHT_YES)
 @Composable

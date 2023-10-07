@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.domain.location.LocationTracker
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +18,8 @@ class LocationViewModel @Inject constructor(
 
     private val _state = mutableStateOf(LocationState())
     val state: State<LocationState> = _state
+
+    val isLocationEnabled = MutableStateFlow(false)
 
     init {
         getCurrentLocation()

@@ -17,9 +17,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -34,12 +37,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.athenabus.R
+import com.example.athenabus.presentation.closest_stops.components.ClosestStopItem
 import com.example.athenabus.presentation.closest_stops.components.EnableLocation
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -59,7 +64,8 @@ private const val TAG = "ClosestStopsScreen"
 @Composable
 fun ClosestStopsScreen(
     navController: NavController = rememberNavController(),
-    viewModel: LocationViewModel = hiltViewModel()
+    viewModel: LocationViewModel = hiltViewModel(),
+    closestStopsViewModel: ClosestStopsViewModel = hiltViewModel()
 ) {
     val athens = LatLng(37.981, 23.7273)
 
@@ -70,13 +76,16 @@ fun ClosestStopsScreen(
         )
     )
 
+    val value = viewModel.state.value
+
+    val stops_value = closestStopsViewModel.state.value
+
     SideEffect {
         if (locationPermissions.allPermissionsGranted) {
             viewModel.getCurrentLocation()
+            //   closestStopsViewModel.getClosestStops(x = value.currentLocation?.latitude.toString() ?: "0.0", value.currentLocation?.longitude.toString() ?: "0.0")
         }
     }
-
-    val value = viewModel.state.value
 
     var isMapLoaded by remember { mutableStateOf(false) }
 
@@ -105,7 +114,7 @@ fun ClosestStopsScreen(
                 verticalArrangement = Arrangement.SpaceEvenly
             ) {
                 if (areGranted) {
-                    Surface(tonalElevation = 4.dp) {
+                    Surface(tonalElevation = 2.dp) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -113,13 +122,18 @@ fun ClosestStopsScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-
                             Text(
-                                text = "${value.currentLocation?.latitude ?: 0.0}, ${value.currentLocation?.longitude ?: 0.0}",
+                                text = "Loc: ${value.currentLocation?.latitude ?: 0.0}, ${value.currentLocation?.longitude ?: 0.0}",
                                 style = MaterialTheme.typography.bodyMedium
                             )
                             TextButton(
-                                onClick = { viewModel.getCurrentLocation() }
+                                onClick = {
+                                    viewModel.getCurrentLocation()
+                                    closestStopsViewModel.getClosestStops(
+                                        x = value.currentLocation?.latitude.toString() ?: "0.0",
+                                        value.currentLocation?.longitude.toString() ?: "0.0"
+                                    )
+                                }
                             ) {
                                 Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
                                 Spacer(modifier = Modifier.width(4.dp))
@@ -130,18 +144,17 @@ fun ClosestStopsScreen(
                             }
                         }
                     }
-
                     // Set properties using MapProperties which you can use to recompose the map
                     val mapProperties = MapProperties(
                         // Only enable if user has accepted location permissions.
                         isMyLocationEnabled = value.currentLocation != null,
                     )
 
-                    Column(
+                    Surface(
                         modifier = Modifier
-                            .background(Color.Black)
                             .fillMaxWidth()
-                            .weight(0.8f)
+                            .weight(1f),
+                        tonalElevation = 8.dp
                     ) {
                         GoogleMap(
                             modifier = Modifier.fillMaxSize(),
@@ -183,16 +196,96 @@ fun ClosestStopsScreen(
                             }
                         }
                     }
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(1.2f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(text = "Closest Stops", style = MaterialTheme.typography.headlineSmall)
+                    if (stops_value.isLoading) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(0.8f),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .background(MaterialTheme.colorScheme.background)
+                                    .wrapContentSize()
+                                    .align(Alignment.Center),
+                                color = MaterialTheme.colorScheme.surfaceTint
+                            )
+                        }
                     }
+                    if (stops_value.error.isNotEmpty()) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(0.8f),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = stops_value.error,
+                                color = MaterialTheme.colorScheme.error,
+                                style = MaterialTheme.typography.headlineSmall
+                            )
+                        }
+                    } else if (stops_value.closestStops.isNotEmpty()) {
+                        Surface(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(1.4f),
+                            shadowElevation = 8.dp,
+                        ) {
+                            Column(
+                                modifier = Modifier.fillMaxSize(),
+                                verticalArrangement = Arrangement.Top,
+                                horizontalAlignment = Alignment.Start
+                            ) {
+                                Text(
+                                    text = "Available stops",
+                                    modifier = Modifier.padding(8.dp),
+                                    style = MaterialTheme.typography.titleSmall,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                                LazyColumn(
+                                    modifier = Modifier.fillMaxWidth(),
+                                ) {
+                                    items(
+                                        stops_value.closestStops
+                                    ) { stop ->
+                                        ClosestStopItem(
+                                            stop = stop,
+                                            onClick = { },
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    } else if (!stops_value.isLoading && isMapLoaded) {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .weight(0.6f)
+                                .background(MaterialTheme.colorScheme.surface),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            ElevatedButton(
+                                onClick = {
+                                    value.let { locationState ->
+                                        closestStopsViewModel.getClosestStops(
+                                            x = locationState.currentLocation?.latitude.toString()
+                                                ?: "0.0",
+                                            locationState.currentLocation?.longitude.toString()
+                                                ?: "0.0"
+                                        )
+                                    }
+                                }) {
+                                Text(
+                                    text = stringResource(R.string.search_stops),
+                                    style = MaterialTheme.typography.headlineSmall,
+                                    color = MaterialTheme.colorScheme.surfaceTint
+                                )
 
+                            }
+                        }
+                    }
                 } else {
                     EnableLocation(
                         modifier = Modifier

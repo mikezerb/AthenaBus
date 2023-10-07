@@ -44,7 +44,6 @@ fun MainScreen(
 
     showBottomBar = when (navBackStackEntry?.destination?.route) {
         Route.SettingsActivityScreen.route -> false // on this screen bottom bar should be hidden
-        "RouteOfScreenB" -> false // here too
         else -> true // in all other cases show bottom bar
     }
 

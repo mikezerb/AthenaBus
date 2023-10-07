@@ -15,11 +15,15 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -49,18 +53,23 @@ fun TestMapUI(
     ) {
 
         var isMapLoaded by remember { mutableStateOf(false) }
-        Surface (tonalElevation = 4.dp) {
+        Surface(
+            tonalElevation = 2.dp,
+            modifier = Modifier.padding(0.dp)
+        ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth().padding(horizontal = 4.dp),
+                    .fillMaxWidth()
+                    .padding(0.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = "Looasfsafasfasfasf")
+                Text(text = "Looasfsafasfasfasf", style = MaterialTheme.typography.bodySmall)
                 TextButton(
-                    onClick = { }
+                    onClick = { },
+                    modifier = Modifier.padding(0.dp)
                 ) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.Top) {
                         Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(text = "Update Location", style = MaterialTheme.typography.bodySmall)
@@ -72,15 +81,16 @@ fun TestMapUI(
         SideEffect {
             scope.launch {
                 delay(timeMillis = 2000)
-                isMapLoaded = false
+                isMapLoaded = true
             }
 
         }
-        Column(
+        Surface(
             modifier = Modifier
-                .background(Color.Black)
                 .fillMaxWidth()
-                .weight(1.2f)
+                .weight(1.2f),
+            color = Color.Cyan,
+            tonalElevation = 8.dp
         ) {
             Box(
                 modifier = Modifier
@@ -109,16 +119,33 @@ fun TestMapUI(
             }
         }
 
-
-        Box(
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
-                .weight(0.8f)
+                .weight(0.8f),
+            shadowElevation = 8.dp
         ) {
-            Column {
-                Text(text = "agasga")
-                Text(text = "agasga")
-                Text(text = "agasga")
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(MaterialTheme.colorScheme.surface),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Bottom
+            ) {
+
+                Text(
+                    text = "Close by stops",
+                    modifier = Modifier.padding(8.dp),
+                    style = MaterialTheme.typography.titleSmall
+                )
+                LazyColumn() {
+                    item {
+                        Column {
+                            Text(text = "HAFSAFAS")
+                        }
+                    }
+
+                }
             }
         }
 

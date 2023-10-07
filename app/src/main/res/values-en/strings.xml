@@ -29,5 +29,6 @@
     <string name="settings_nav_bar">Settings</string>
     <string name="setting_lang_title">English Language</string>
     <string name="setting_lang_desc">Αυτό είναι μία ρύθμιση για δοκιμή</string>
+    <string name="search_stops">Search Stops</string>
 
 </resources>
