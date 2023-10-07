@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -129,10 +131,11 @@ fun ClosestStopsScreen(
                             TextButton(
                                 onClick = {
                                     viewModel.getCurrentLocation()
-                                    closestStopsViewModel.getClosestStops(
-                                        x = value.currentLocation?.latitude.toString() ?: "0.0",
-                                        value.currentLocation?.longitude.toString() ?: "0.0"
-                                    )
+                                    if (value.currentLocation != null)
+                                        closestStopsViewModel.getClosestStops(
+                                            x = value.currentLocation?.latitude.toString() ?: "0.0",
+                                            value.currentLocation?.longitude.toString() ?: "0.0"
+                                        )
                                 }
                             ) {
                                 Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
@@ -183,7 +186,7 @@ fun ClosestStopsScreen(
                             AnimatedVisibility(
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .weight(0.5f),
+                                    .weight(0.8f),
                                 visible = !isMapLoaded,
                                 enter = EnterTransition.None,
                                 exit = fadeOut()
@@ -203,7 +206,7 @@ fun ClosestStopsScreen(
                                 .weight(0.8f),
                             contentAlignment = Alignment.Center
                         ) {
-                            CircularProgressIndicator(
+                            LinearProgressIndicator(
                                 modifier = Modifier
                                     .background(MaterialTheme.colorScheme.background)
                                     .wrapContentSize()
@@ -225,64 +228,72 @@ fun ClosestStopsScreen(
                                 style = MaterialTheme.typography.headlineSmall
                             )
                         }
-                    } else if (stops_value.closestStops.isNotEmpty()) {
-                        Surface(
+                    } else {
+                        AnimatedVisibility(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .weight(1.4f),
-                            shadowElevation = 8.dp,
+                            visible = stops_value.closestStops.isNotEmpty(),
+                            enter = fadeIn(),
+                            exit = fadeOut()
                         ) {
-                            Column(
-                                modifier = Modifier.fillMaxSize(),
-                                verticalArrangement = Arrangement.Top,
-                                horizontalAlignment = Alignment.Start
+                            Surface(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                shadowElevation = 8.dp,
                             ) {
-                                Text(
-                                    text = "Available stops",
-                                    modifier = Modifier.padding(8.dp),
-                                    style = MaterialTheme.typography.titleSmall,
-                                    color = MaterialTheme.colorScheme.onSurface
-                                )
-                                LazyColumn(
-                                    modifier = Modifier.fillMaxWidth(),
+                                Column(
+                                    modifier = Modifier.fillMaxSize(),
+                                    verticalArrangement = Arrangement.Top,
+                                    horizontalAlignment = Alignment.Start
                                 ) {
-                                    items(
-                                        stops_value.closestStops
-                                    ) { stop ->
-                                        ClosestStopItem(
-                                            stop = stop,
-                                            onClick = { },
-                                        )
+                                    Text(
+                                        text = "Available stops",
+                                        modifier = Modifier.padding(8.dp),
+                                        style = MaterialTheme.typography.titleSmall,
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+                                    LazyColumn(
+                                        modifier = Modifier.fillMaxWidth(),
+                                    ) {
+                                        items(
+                                            stops_value.closestStops
+                                        ) { stop ->
+                                            ClosestStopItem(
+                                                stop = stop,
+                                                onClick = { },
+                                            )
+                                        }
                                     }
                                 }
                             }
                         }
-                    } else if (!stops_value.isLoading && isMapLoaded) {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .weight(0.6f)
-                                .background(MaterialTheme.colorScheme.surface),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                            verticalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            ElevatedButton(
-                                onClick = {
-                                    value.let { locationState ->
-                                        closestStopsViewModel.getClosestStops(
-                                            x = locationState.currentLocation?.latitude.toString()
-                                                ?: "0.0",
-                                            locationState.currentLocation?.longitude.toString()
-                                                ?: "0.0"
-                                        )
-                                    }
-                                }) {
-                                Text(
-                                    text = stringResource(R.string.search_stops),
-                                    style = MaterialTheme.typography.headlineSmall,
-                                    color = MaterialTheme.colorScheme.surfaceTint
-                                )
-
+                        if (!stops_value.isLoading && isMapLoaded && stops_value.closestStops.isEmpty()) {
+                            Column(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(0.6f)
+                                    .background(MaterialTheme.colorScheme.surface),
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                verticalArrangement = Arrangement.SpaceEvenly
+                            ) {
+                                ElevatedButton(
+                                    onClick = {
+                                        value.let { locationState ->
+                                            closestStopsViewModel.getClosestStops(
+                                                x = locationState.currentLocation?.latitude.toString()
+                                                    ?: "0.0",
+                                                locationState.currentLocation?.longitude.toString()
+                                                    ?: "0.0"
+                                            )
+                                        }
+                                    }) {
+                                    Text(
+                                        text = stringResource(R.string.search_stops),
+                                        style = MaterialTheme.typography.headlineSmall,
+                                        color = MaterialTheme.colorScheme.surfaceTint
+                                    )
+                                }
                             }
                         }
                     }
