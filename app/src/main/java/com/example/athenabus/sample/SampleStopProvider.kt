@@ -1,7 +1,6 @@
 package com.example.athenabus.sample
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
-import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Stop
 
 class SampleStopProvider : PreviewParameterProvider<Stop> {

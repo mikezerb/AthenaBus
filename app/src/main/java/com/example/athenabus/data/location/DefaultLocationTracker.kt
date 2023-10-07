@@ -8,7 +8,6 @@ import android.location.LocationManager
 import androidx.core.content.ContextCompat
 import com.example.athenabus.domain.location.LocationTracker
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 class DefaultLocationTracker(
