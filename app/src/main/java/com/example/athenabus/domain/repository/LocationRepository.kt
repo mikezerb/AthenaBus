@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface LocationRepository {
 
-    suspend fun getLocationUpdates(interval: Long): Flow<Resource<Location>>
+    fun getCurrentLocation(): Flow<Resource<Location>>
 
     class LocationException(message: String) : Exception(message)
 

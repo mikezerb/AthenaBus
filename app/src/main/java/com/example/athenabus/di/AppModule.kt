@@ -90,11 +90,9 @@ object AppModule {
     @Provides
     @Singleton
     fun providesLocationRepository(
-        context: Context,
+        @ApplicationContext context: Context,
         client: FusedLocationProviderClient
-    ): LocationRepository {
-        return LocationRepositoryImpl(context, client)
-    }
+    ): LocationRepository = LocationRepositoryImpl(context, client)
 
     @Provides
     @Singleton

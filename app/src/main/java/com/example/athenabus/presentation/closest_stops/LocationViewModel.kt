@@ -19,8 +19,6 @@ class LocationViewModel @Inject constructor(
     private val _state = mutableStateOf(LocationState())
     val state: State<LocationState> = _state
 
-    val isLocationEnabled = MutableStateFlow(false)
-
     init {
         getCurrentLocation()
     }
