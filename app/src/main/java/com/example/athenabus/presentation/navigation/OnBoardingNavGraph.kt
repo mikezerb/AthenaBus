@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.nvgraph
+package com.example.athenabus.presentation.navigation
 
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder

@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.nvgraph
+package com.example.athenabus.presentation.navigation
 
 object Graph {
     const val ROOT = "root_graph"

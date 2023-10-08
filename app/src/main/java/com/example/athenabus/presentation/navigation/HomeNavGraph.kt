@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.nvgraph
+package com.example.athenabus.presentation.navigation
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.athenabus.presentation.bus_list.NewBusLineListScreen
 import com.example.athenabus.presentation.closest_stops.ClosestStopsScreen
+import com.example.athenabus.presentation.closest_stops.NewClosestStopsScreen
 import com.example.athenabus.presentation.favorites_screen.FavoriteScreen
 import com.example.athenabus.presentation.settings_screen.SettingsScreen
 
@@ -47,7 +48,7 @@ fun HomeNavGraph(navController: NavHostController) {
             }
         }
         composable(route = Route.ClosestStopsActivityScreen.route) {
-            ClosestStopsScreen(navController = navController)
+            NewClosestStopsScreen(navController = navController)
         }
     }
 }
