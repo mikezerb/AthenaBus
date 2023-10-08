@@ -40,7 +40,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.presentation.bus_list.components.BusLineItem
-import com.example.athenabus.presentation.nvgraph.Route
+import com.example.athenabus.presentation.navigation.Route
 import com.example.athenabus.presentation.route_list.RouteListViewModel
 import com.example.athenabus.presentation.route_list.components.BusRouteItem
 import com.example.athenabus.ui.theme.AthenaBusTheme

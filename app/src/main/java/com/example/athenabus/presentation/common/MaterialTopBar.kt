@@ -28,7 +28,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
-import com.example.athenabus.presentation.nvgraph.Route
+import com.example.athenabus.presentation.navigation.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

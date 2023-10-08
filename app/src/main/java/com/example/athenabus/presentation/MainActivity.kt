@@ -9,7 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.example.athenabus.MainViewModel
-import com.example.athenabus.presentation.nvgraph.NavGraph
+import com.example.athenabus.presentation.navigation.NavGraph
 import com.example.athenabus.ui.theme.AthenaBusTheme
 import dagger.hilt.android.AndroidEntryPoint
 

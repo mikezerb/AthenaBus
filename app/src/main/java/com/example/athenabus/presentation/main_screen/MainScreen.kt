@@ -28,8 +28,8 @@ import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.presentation.common.MaterialBottomNavBar
 import com.example.athenabus.presentation.common.MaterialTopAppBar
-import com.example.athenabus.presentation.nvgraph.HomeNavGraph
-import com.example.athenabus.presentation.nvgraph.Route
+import com.example.athenabus.presentation.navigation.HomeNavGraph
+import com.example.athenabus.presentation.navigation.Route
 
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -12,7 +12,7 @@ import androidx.compose.material.icons.outlined.Route
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.example.athenabus.R
-import com.example.athenabus.presentation.nvgraph.Route
+import com.example.athenabus.presentation.navigation.Route
 
 sealed class NavBarItem(
     @StringRes val title: Int,

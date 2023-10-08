@@ -25,11 +25,9 @@ class ClosestStopsViewModel @Inject constructor(
                 is Resource.Success -> {
                     _state.value = ClosestStopsState(closestStops = result.data ?: emptyList())
                 }
-
                 is Resource.Error -> {
                     _state.value = ClosestStopsState(error = result.message ?: "Unexpected error")
                 }
-
                 is Resource.Loading -> {
                     _state.value = ClosestStopsState(isLoading = true)
                 }

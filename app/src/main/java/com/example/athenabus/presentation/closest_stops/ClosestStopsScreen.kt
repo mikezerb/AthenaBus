@@ -190,7 +190,6 @@ fun ClosestStopsScreen(
                                 Log.d(TAG, "POI clicked: ${it.name}")
                             }
                         ) {
-
                             SideEffect {
                                 scope.launch {
                                     value.currentLocation?.let {
