@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -133,15 +135,16 @@ fun ClosestStopsScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(start = 8.dp),
+                                .padding(horizontal = 4.dp),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
                                 text = "Loc: ${value.currentLocation?.latitude ?: 0.0}, ${value.currentLocation?.longitude ?: 0.0}",
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodySmall
                             )
                             TextButton(
+                                modifier = Modifier.height(36.dp),
                                 onClick = {
                                     viewModel.getCurrentLocation()
                                     if (value.currentLocation != null) {
@@ -158,7 +161,7 @@ fun ClosestStopsScreen(
                                 Spacer(modifier = Modifier.width(4.dp))
                                 Text(
                                     text = "Update Location",
-                                    style = MaterialTheme.typography.bodyMedium
+                                    style = MaterialTheme.typography.labelSmall
                                 )
                             }
                         }
@@ -173,7 +176,7 @@ fun ClosestStopsScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f),
-                        tonalElevation = 8.dp
+                        tonalElevation = 4.dp
                     ) {
                         GoogleMap(
                             modifier = Modifier.fillMaxSize(),

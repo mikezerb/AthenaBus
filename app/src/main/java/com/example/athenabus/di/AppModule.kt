@@ -9,10 +9,12 @@ import com.example.athenabus.data.location.DefaultLocationTracker
 import com.example.athenabus.data.manger.LocalUserMangerImpl
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.data.repository.BusLineRepositoryImpl
+import com.example.athenabus.data.repository.LocationRepositoryImpl
 import com.example.athenabus.data.repository.RouteRepositoryImpl
 import com.example.athenabus.domain.location.LocationTracker
 import com.example.athenabus.domain.manger.LocalUserManger
 import com.example.athenabus.domain.repository.BusLineRepository
+import com.example.athenabus.domain.repository.LocationRepository
 import com.example.athenabus.domain.repository.RouteRepository
 import com.example.athenabus.domain.use_case.app_entry.AppEntryUseCases
 import com.example.athenabus.domain.use_case.app_entry.ReadAppEntryUseCase
@@ -87,10 +89,20 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun providesLocationRepository(
+        context: Context,
+        client: FusedLocationProviderClient
+    ): LocationRepository {
+        return LocationRepositoryImpl(context, client)
+    }
+
+    @Provides
+    @Singleton
     fun providesFusedLocationProviderClient(
         application: Application
     ): FusedLocationProviderClient =
         LocationServices.getFusedLocationProviderClient(application)
+
 
     @Provides
     @Singleton

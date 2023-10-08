@@ -8,6 +8,9 @@ import android.location.LocationManager
 import androidx.core.content.ContextCompat
 import com.example.athenabus.domain.location.LocationTracker
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.suspendCancellableCoroutine
 
 class DefaultLocationTracker(
@@ -15,6 +18,7 @@ class DefaultLocationTracker(
     private val application: Application,
 ) : LocationTracker {
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override suspend fun getCurrentLocation(): Location? {
         val hasAccessFineLocationPermission = ContextCompat.checkSelfPermission(
             application,
@@ -39,24 +43,22 @@ class DefaultLocationTracker(
         }
 
         return suspendCancellableCoroutine { cont ->
-            fusedLocationProviderClient.lastLocation.apply {
-                if (isComplete) {
-                    if (isSuccessful) {
-                        cont.resume(result) {} // Resume coroutine with location result
-                    } else {
-                        cont.resume(null) {} // Resume coroutine with null location result
-                    }
-                    return@suspendCancellableCoroutine
-                }
-                addOnSuccessListener {
-                    cont.resume(it) {}  // Resume coroutine with location result
-                }
-                addOnFailureListener {
+            val cancellationTokenSource = CancellationTokenSource()
+            fusedLocationProviderClient.getCurrentLocation(
+                Priority.PRIORITY_HIGH_ACCURACY,
+                cancellationTokenSource.token
+            ).addOnSuccessListener { location ->
+                if(location != null){
+                    cont.resume(location) {} // Resume coroutine with location result
+                }else {
                     cont.resume(null) {} // Resume coroutine with null location result
                 }
-                addOnCanceledListener {
-                    cont.cancel() // Cancel the coroutine
-                }
+            }.addOnCompleteListener {
+                cont.cancel() // Cancel the coroutine
+            }.addOnFailureListener {
+                cont.resume(null) {} // Resume coroutine with null location result
+            }.addOnCanceledListener {
+                cont.cancel() // Cancel the coroutine
             }
         }
     }

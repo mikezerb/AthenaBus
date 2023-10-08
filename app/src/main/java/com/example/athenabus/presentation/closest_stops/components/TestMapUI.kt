@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -51,25 +53,24 @@ fun TestMapUI(
 
         var isMapLoaded by remember { mutableStateOf(false) }
         Surface(
-            tonalElevation = 2.dp,
+            tonalElevation = 6.dp,
             modifier = Modifier.padding(0.dp)
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(0.dp),
+                    .fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(text = "Looasfsafasfasfasf", style = MaterialTheme.typography.bodySmall)
                 TextButton(
                     onClick = { },
-                    modifier = Modifier.padding(0.dp)
+                    modifier = Modifier.height(40.dp),
                 ) {
                     Row(verticalAlignment = Alignment.Top) {
                         Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text(text = "Update Location", style = MaterialTheme.typography.bodySmall)
+                        Text(text = "Update Location", style = MaterialTheme.typography.labelSmall)
                     }
                 }
             }
