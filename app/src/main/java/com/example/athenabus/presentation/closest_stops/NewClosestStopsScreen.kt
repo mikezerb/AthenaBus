@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -57,8 +59,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
+import com.example.athenabus.di.ThemeState
 import com.example.athenabus.presentation.closest_stops.components.ClosestStopItem
 import com.example.athenabus.presentation.closest_stops.components.EnableLocation
+import com.example.athenabus.presentation.settings_screen.ThemeViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -79,7 +83,8 @@ private const val TAG = "NewClosestStopsScreen"
 fun NewClosestStopsScreen(
     navController: NavController = rememberNavController(),
     viewModel: NewLocationViewModel = hiltViewModel(),
-    closestStopsViewModel: ClosestStopsViewModel = hiltViewModel()
+    closestStopsViewModel: ClosestStopsViewModel = hiltViewModel(),
+    themeViewModel: ThemeViewModel = hiltViewModel()
 ) {
     val locationPermissions = rememberMultiplePermissionsState(
         permissions = listOf(
@@ -93,6 +98,7 @@ fun NewClosestStopsScreen(
 
     val locationValue = viewModel.state.value
     val closestStopsValue = closestStopsViewModel.state.value
+    val darkThemeState by themeViewModel.themeState.collectAsState()
 
     val locationPermissionState = rememberMultiplePermissionsState(
         listOf(
@@ -133,7 +139,11 @@ fun NewClosestStopsScreen(
     val mapProperties = MapProperties(
         // Only enable if user has accepted location permissions.
         isMyLocationEnabled = locationValue.currentLocation != null,
-        mapStyleOptions = MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style)
+        mapStyleOptions = if (darkThemeState.isDarkMode) {
+            MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark)
+        } else {
+            MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style)
+        }
     )
     Box(
         modifier = Modifier.fillMaxSize(),
