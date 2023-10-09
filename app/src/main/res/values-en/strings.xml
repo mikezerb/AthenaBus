@@ -30,5 +30,7 @@
     <string name="setting_lang_title">English Language</string>
     <string name="setting_lang_desc">Αυτό είναι μία ρύθμιση για δοκιμή</string>
     <string name="search_stops">Search Stops</string>
+    <string name="km">km</string>
+
 
 </resources>

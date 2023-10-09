@@ -10,7 +10,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,6 +25,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.CircularProgressIndicator
@@ -50,8 +50,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -59,7 +61,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
-import com.example.athenabus.di.ThemeState
 import com.example.athenabus.presentation.closest_stops.components.ClosestStopItem
 import com.example.athenabus.presentation.closest_stops.components.EnableLocation
 import com.example.athenabus.presentation.settings_screen.ThemeViewModel
@@ -73,6 +74,10 @@ import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerComposable
+import com.google.maps.android.compose.MarkerInfoWindow
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 
@@ -178,7 +183,7 @@ fun NewClosestStopsScreen(
                                             y = locationValue.currentLocation?.longitude.toString()
                                         )
                                     } else {
-                                        showSnackbar = true
+                                        //showSnackbar = true
                                     }
                                 }
                             ) {
@@ -207,15 +212,36 @@ fun NewClosestStopsScreen(
                             onMapLoaded = {
                                 isMapLoaded = true
                             },
-                            onPOIClick = {
-                                Log.d(TAG, "POI clicked: ${it.name}")
-                            }
+//                            onPOIClick = {
+//                                Log.d(TAG, "POI clicked: ${it.name}")
+//                            }
                         ) {
                             SideEffect {
                                 scope.launch {
                                     locationValue.currentLocation?.let {
                                         cameraPositionState.centerOnLocation(
                                             it
+                                        )
+                                    }
+                                }
+                            }
+                            if (closestStopsValue.closestStops.isNotEmpty()) {
+                                closestStopsValue.closestStops.forEach { stop ->
+                                    MarkerComposable(
+                                        state = MarkerState(
+                                            position = LatLng(
+                                                stop.StopLat.toDouble(),
+                                                stop.StopLng.toDouble()
+                                            )
+                                        ),
+                                        title = stop.StopDescr,
+                                        snippet = stop.StopStreet ?: "",
+                                        draggable = false,
+                                    ){
+                                        Icon(
+                                            imageVector = ImageVector.vectorResource(id = R.drawable.bus_stop_pointer),
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.surfaceTint
                                         )
                                     }
                                 }
@@ -369,7 +395,7 @@ fun NewClosestStopsScreen(
                                     ) { stop ->
                                         ClosestStopItem(
                                             stop = stop,
-                                            onClick = { },
+                                            onClick = { }, //  closestStopsViewModel.getStopArrival(stopCode = stop.StopCode)
                                         )
                                         Divider(modifier = Modifier.padding(horizontal = 4.dp))
                                     }

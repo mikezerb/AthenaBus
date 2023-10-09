@@ -34,5 +34,6 @@
     <string name="closest_stops_nav_bar">Κοντινές Στάσεις</string>
     <string name="settings_nav_bar">Ρυθμίσεις</string>
     <string name="search_stops">Αναζήτηση Στάσεων</string>
+    <string name="km">χλμ</string>
 
 </resources>
