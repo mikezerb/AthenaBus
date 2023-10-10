@@ -6,7 +6,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
+import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.Route
+import com.example.athenabus.domain.use_case.bus_lines.GetStopArrivalUseCase
 import com.example.athenabus.domain.use_case.get_route.GetRoutesForStopsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
@@ -17,7 +19,8 @@ private const val TAG = "RoutesForStopViewModel"
 
 @HiltViewModel
 class RoutesForStopViewModel @Inject constructor(
-    private val getRoutesForStopsUseCase: GetRoutesForStopsUseCase
+    private val getRoutesForStopsUseCase: GetRoutesForStopsUseCase,
+    private val getStopArrivalUseCase: GetStopArrivalUseCase
 ) : ViewModel() {
     private val _state = mutableStateOf(RoutesForStopState())
     val state: State<RoutesForStopState> = _state
@@ -27,7 +30,6 @@ class RoutesForStopViewModel @Inject constructor(
     fun getRoutesForStop(stopCode: String) {
         if (routesForStops.containsKey(stopCode)) {
             Log.d(TAG, "routesForStops containsKey : $stopCode")
-
             _state.value =
                 RoutesForStopState(routesForStop = routesForStops[stopCode] ?: emptyList())
         } else {
@@ -42,6 +44,10 @@ class RoutesForStopViewModel @Inject constructor(
 
                         _state.value =
                             RoutesForStopState(routesForStop = result.data ?: emptyList())
+
+                        result.data?.forEach { _ ->
+                            getStopArrival(stopCode)
+                        }
                     }
 
                     is Resource.Error -> {
@@ -56,6 +62,32 @@ class RoutesForStopViewModel @Inject constructor(
                 }
             }.launchIn(viewModelScope)
         }
+    }
+
+    fun getStopArrival(stopCode: String) {
+        getStopArrivalUseCase(stopCode).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    Log.d(TAG, "Got " + result.data?.size + " closestStopsArrival")
+                    val hash = hashMapOf(stopCode to (result.data?: emptyList<Arrival>()))
+                    _state.value =
+                        RoutesForStopState(arrivalsForStop = hash)
+                }
+
+                is Resource.Error -> {
+                    Log.e(
+                        TAG,
+                        "getStopArrivalUseCase" + "stop code: " + stopCode + result.message
+                    )
+                    _state.value =
+                        RoutesForStopState(error = result.message ?: "Unexpected error")
+                }
+
+                is Resource.Loading -> {
+                    _state.value = RoutesForStopState(isLoading = true)
+                }
+            }
+        }.launchIn(viewModelScope)
     }
 
 }

@@ -151,6 +151,15 @@ fun NewClosestStopsScreen(
         }
     }
 
+//    LaunchedEffect(key1 = routesForStopValue.routesForStop.isNotEmpty()) {
+//        if (routesForStopValue.routesForStop.isNotEmpty()) {
+//            Log.d("LaunchedEffect", " routesForStopValue ")
+//            closestStopsValue.closestStops.forEach { stop ->
+//                routesForStopViewModel.getRoutesForStop(stop.StopCode)
+//            }
+//        }
+//    }
+
 
     var isMapLoaded by remember { mutableStateOf(false) }
 
@@ -316,7 +325,6 @@ fun NewClosestStopsScreen(
                                                 x = locationState.currentLocation?.latitude.toString(),
                                                 y = locationState.currentLocation?.longitude.toString()
                                             )
-
                                         }
                                     } else {
 //                                        showSnackbar = true
@@ -426,6 +434,7 @@ fun NewClosestStopsScreen(
                                             onClick = { }, //  closestStopsViewModel.getStopArrival(stopCode = stop.StopCode)
                                             routes = (routesForStopViewModel.routesForStops[stop.StopCode]
                                                 ?: emptyList()).fastDistinctBy { it.RouteCode },
+                                            arrivals = routesForStopValue.arrivalsForStop[stop.StopCode]?: emptyList(),
                                             expanded = stop.StopCode.toInt() == expandedItem,
                                             onExpandClick = { id ->
                                                 expandedItem = if (expandedItem == id) {

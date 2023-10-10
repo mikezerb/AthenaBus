@@ -48,20 +48,27 @@ fun ExpandableClosestStopItem(
     onExpandClick: (id: Int) -> Unit = { }
 ) {
 
-    var expandeState by remember {
-        mutableStateOf(false)
-    }
     val rotationState by animateFloatAsState(
-        targetValue = if (expandeState) 180f else 0f, label = ""
+        targetValue = if (expanded) 180f else 0f, label = ""
     )
     var available_routes = ""
 
     if (routes.isNotEmpty()) {
         routes.filter { it.hidden != "1" }.forEachIndexed { index, route ->
+            if(arrivals.isNotEmpty()){
+                arrivals.filter { it.route_code == route.RouteCode }
+            }
             available_routes += "${route.LineID}: ${route.RouteDescr}"
             if (index < routes.size - 1) {
                 available_routes += ", "
             }
+        }
+    }
+
+    var arrivalsBuses = ""
+    if(arrivals.isNotEmpty()){
+        arrivals.forEach { arrival ->
+            arrivalsBuses += "${arrival.route_code}: ${arrival.btime2} min, "
         }
     }
 
@@ -131,7 +138,7 @@ fun ExpandableClosestStopItem(
                         )
 
                         Text(
-                            text = routes.size.toString() + " ${stringResource(id = R.string.available_routes)}." + "\n" + available_routes,
+                            text = routes.size.toString() + " ${stringResource(id = R.string.available_routes)}." + "\n" + available_routes + "\n" + "arrivals: " + arrivals.size.toString() + arrivalsBuses,
                             style = MaterialTheme.typography.labelSmall
                         )
 
