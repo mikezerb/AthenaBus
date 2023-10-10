@@ -6,5 +6,10 @@ data class Route(
     val RouteDescr: String,
     val RouteDescrEng: String,
     val RouteDistance: String,
-    val RouteType: String
+    val RouteType: String,
+    val LineID: String,
+    val hidden: String,
+    val LineDescr: String,
+    val LineDescrEng: String,
+    val MasterLineCode: String,
 )

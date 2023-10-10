@@ -23,22 +23,32 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Arrival
+import com.example.athenabus.domain.model.Route
 import com.example.athenabus.domain.model.Stop
 import com.example.athenabus.sample.SampleStopProvider
 
 @Composable
 fun ClosestStopItem(
     stop: Stop,
+    routes: List<Route> = emptyList(),
     arrivals: List<Arrival> = emptyList(),
     modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
     var arrival_times = ""
 
-    if(arrivals.isNotEmpty()){
-        arrival_times = arrivals.forEach {
-            it.route_code + " " + it.btime2 + " λεπτά"
-        }.toString()
+    if (arrivals.isNotEmpty()) {
+        arrivals.forEach {
+            arrival_times += it.route_code + " " + it.btime2 + " λεπτά"
+        }
+    }
+
+    var available_routes = ""
+
+    if (routes.isNotEmpty()) {
+        routes.filter { it.hidden != "1" }.forEach {
+            available_routes += it.LineID + " "
+        }
     }
     Surface(
         modifier = modifier
@@ -70,6 +80,10 @@ fun ClosestStopItem(
                     ),
                     style = MaterialTheme.typography.labelSmall
                 )
+                Text(
+                    text = "Available routes: " + routes.size + " " + available_routes,
+                    style = MaterialTheme.typography.labelSmall
+                )
             }
         }
     }
@@ -78,5 +92,5 @@ fun ClosestStopItem(
 @Preview(name = "ClosestStopItem")
 @Composable
 private fun PreviewClosestStopItem(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
-    ClosestStopItem(stop = stop, onClick = { })
+
 }

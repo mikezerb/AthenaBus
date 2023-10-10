@@ -31,6 +31,9 @@
     <string name="setting_lang_desc">Αυτό είναι μία ρύθμιση για δοκιμή</string>
     <string name="search_stops">Search Stops</string>
     <string name="km">km</string>
+    <string name="available_routes">available routes</string>
+    <string name="distance">Distance</string>
+
 
 
 </resources>

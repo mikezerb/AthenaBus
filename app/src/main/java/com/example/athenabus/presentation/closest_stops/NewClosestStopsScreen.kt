@@ -25,7 +25,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.PushPin
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.CircularProgressIndicator
@@ -44,6 +43,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -57,12 +57,14 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.util.fastDistinctBy
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
-import com.example.athenabus.presentation.closest_stops.components.ClosestStopItem
+import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.closest_stops.components.EnableLocation
+import com.example.athenabus.presentation.closest_stops.components.ExpandableClosestStopItem
 import com.example.athenabus.presentation.settings_screen.ThemeViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -74,9 +76,7 @@ import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
-import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerComposable
-import com.google.maps.android.compose.MarkerInfoWindow
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
@@ -89,6 +89,7 @@ fun NewClosestStopsScreen(
     navController: NavController = rememberNavController(),
     viewModel: NewLocationViewModel = hiltViewModel(),
     closestStopsViewModel: ClosestStopsViewModel = hiltViewModel(),
+    routesForStopViewModel: RoutesForStopViewModel = hiltViewModel(),
     themeViewModel: ThemeViewModel = hiltViewModel()
 ) {
     val locationPermissions = rememberMultiplePermissionsState(
@@ -98,12 +99,19 @@ fun NewClosestStopsScreen(
         )
     )
 
+    var expandedItem by remember {
+        mutableStateOf(-1)
+    }
+
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
 
     val locationValue = viewModel.state.value
     val closestStopsValue = closestStopsViewModel.state.value
+    val routesForStopValue = routesForStopViewModel.state.value
     val darkThemeState by themeViewModel.themeState.collectAsState()
+
+    val routeStates = remember { mutableStateMapOf<String, List<Route>>() }
 
     val locationPermissionState = rememberMultiplePermissionsState(
         listOf(
@@ -123,6 +131,26 @@ fun NewClosestStopsScreen(
             viewModel.getCurrentLocation()
         }
     }
+
+
+    LaunchedEffect(key1 = locationValue.currentLocation) {
+        if (locationValue.currentLocation != null) {
+            Log.d("LaunchedEffect", " closestStopsViewModel")
+            closestStopsViewModel.getClosestStops(
+                x = locationValue.currentLocation?.latitude.toString(),
+                y = locationValue.currentLocation?.longitude.toString()
+            )
+        }
+    }
+    LaunchedEffect(key1 = closestStopsValue.closestStops.isNotEmpty()) {
+        if (closestStopsValue.closestStops.isNotEmpty()) {
+            Log.d("LaunchedEffect", " closestStopsValue")
+            closestStopsValue.closestStops.forEach { stop ->
+                routesForStopViewModel.getRoutesForStop(stop.StopCode)
+            }
+        }
+    }
+
 
     var isMapLoaded by remember { mutableStateOf(false) }
 
@@ -164,17 +192,19 @@ fun NewClosestStopsScreen(
                     Surface(tonalElevation = 2.dp) {
                         Row(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 4.dp),
+                                .fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             Text(
                                 text = "Loc: ${locationValue.currentLocation?.latitude ?: "N/A"} ${locationValue.currentLocation?.longitude ?: ""}",
-                                style = MaterialTheme.typography.bodySmall
+                                style = MaterialTheme.typography.bodySmall,
+                                modifier = Modifier.padding(horizontal = 6.dp)
                             )
                             TextButton(
-                                modifier = Modifier.height(34.dp),
+                                modifier = Modifier
+                                    .height(34.dp)
+                                    .padding(horizontal = 4.dp),
                                 onClick = {
                                     viewModel.getCurrentLocation()
                                     if (locationValue.currentLocation != null) {
@@ -212,9 +242,6 @@ fun NewClosestStopsScreen(
                             onMapLoaded = {
                                 isMapLoaded = true
                             },
-//                            onPOIClick = {
-//                                Log.d(TAG, "POI clicked: ${it.name}")
-//                            }
                         ) {
                             SideEffect {
                                 scope.launch {
@@ -237,7 +264,7 @@ fun NewClosestStopsScreen(
                                         title = stop.StopDescr,
                                         snippet = stop.StopStreet ?: "",
                                         draggable = false,
-                                    ){
+                                    ) {
                                         Icon(
                                             imageVector = ImageVector.vectorResource(id = R.drawable.bus_stop_pointer),
                                             contentDescription = null,
@@ -289,6 +316,7 @@ fun NewClosestStopsScreen(
                                                 x = locationState.currentLocation?.latitude.toString(),
                                                 y = locationState.currentLocation?.longitude.toString()
                                             )
+
                                         }
                                     } else {
 //                                        showSnackbar = true
@@ -357,7 +385,7 @@ fun NewClosestStopsScreen(
                                     style = MaterialTheme.typography.titleSmall,
                                     color = MaterialTheme.colorScheme.onSurface
                                 )
-                                if (closestStopsValue.isLoading) {
+                                if (closestStopsValue.isLoading || routesForStopValue.isLoading) {
                                     Box(
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -373,7 +401,7 @@ fun NewClosestStopsScreen(
                                         )
                                     }
                                 }
-                                if (closestStopsValue.error.isNotEmpty()) {
+                                if (closestStopsValue.error.isNotEmpty() || routesForStopValue.error.isNotEmpty()) {
                                     Box(
                                         modifier = Modifier
                                             .fillMaxWidth()
@@ -393,9 +421,20 @@ fun NewClosestStopsScreen(
                                     items(
                                         closestStopsValue.closestStops
                                     ) { stop ->
-                                        ClosestStopItem(
+                                        ExpandableClosestStopItem(
                                             stop = stop,
                                             onClick = { }, //  closestStopsViewModel.getStopArrival(stopCode = stop.StopCode)
+                                            routes = (routesForStopViewModel.routesForStops[stop.StopCode]
+                                                ?: emptyList()).fastDistinctBy { it.RouteCode },
+                                            expanded = stop.StopCode.toInt() == expandedItem,
+                                            onExpandClick = { id ->
+                                                expandedItem = if (expandedItem == id) {
+                                                    -1
+                                                } else {
+                                                    id
+                                                }
+
+                                            }
                                         )
                                         Divider(modifier = Modifier.padding(horizontal = 4.dp))
                                     }

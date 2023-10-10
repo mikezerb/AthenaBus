@@ -35,5 +35,7 @@
     <string name="settings_nav_bar">Ρυθμίσεις</string>
     <string name="search_stops">Αναζήτηση Στάσεων</string>
     <string name="km">χλμ</string>
+    <string name="available_routes">διαθέσιμες γραμμές</string>
+    <string name="distance">Απόσταση</string>
 
 </resources>

@@ -36,4 +36,10 @@ interface OASATelematicsAPI {
         @Query("act") action: String = "getStopArrivals",
         @Query("p1") stopCode: String,
     ): ArrivalStopDto
+
+    @GET("api/")
+    suspend fun webRoutesForStop(
+        @Query("act") action: String = "webRoutesForStop",
+        @Query("p1") stopCode: String,
+    ): RouteDto
 }

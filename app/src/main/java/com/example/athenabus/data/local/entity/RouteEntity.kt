@@ -10,5 +10,5 @@ data class RouteEntity(
     val RouteDescr: String,
     val RouteDescrEng: String,
     val RouteDistance: String,
-    val RouteType: String
+    val RouteType: String,
 )

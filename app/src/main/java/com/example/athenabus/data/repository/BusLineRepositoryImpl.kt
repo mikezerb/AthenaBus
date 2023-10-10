@@ -5,10 +5,12 @@ import com.example.athenabus.data.local.TelematicsLineDao
 import com.example.athenabus.data.mapper.toArrival
 import com.example.athenabus.data.mapper.toBusLine
 import com.example.athenabus.data.mapper.toBusLineEntity
+import com.example.athenabus.data.mapper.toRoute
 import com.example.athenabus.data.mapper.toStop
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.Line
+import com.example.athenabus.domain.model.Route
 import com.example.athenabus.domain.model.Stop
 import com.example.athenabus.domain.repository.BusLineRepository
 import kotlinx.coroutines.flow.Flow
@@ -147,7 +149,19 @@ class BusLineRepositoryImpl @Inject constructor(
         try {
             val arrivals = api.getStopArrivals(stopCode = stopCode).map { it.toArrival() }
             emit(Resource.Success(data = arrivals))
-        }catch (e: HttpException) {
+        } catch (e: HttpException) {
+            emit(Resource.Error(message = e.localizedMessage ?: "error"))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An error occurred"))
+        }
+    }
+
+    override fun getRoutesForStop(stopCode: String): Flow<Resource<List<Route>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val arrivals = api.webRoutesForStop(stopCode = stopCode).map { it.toRoute() }
+            emit(Resource.Success(data = arrivals))
+        } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "error"))
         } catch (e: Exception) {
             emit(Resource.Error(message = e.message ?: "An error occurred"))

@@ -2,10 +2,13 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="ExpandableClosestStopItemPreview">
+        <State />
+      </entry>
       <entry key="PreviewTestMapUI - TestMapUI">
         <State />
       </entry>
-      <entry key="Unnamed">
+      <entry key="app">
         <State>
           <runningDeviceTargetSelectedWithDropDown>
             <Target>
@@ -13,12 +16,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\mikea\.android\avd\Pixel_6_API_34.avd" />
+                  <value value="C:\Users\mikeaposto\.android\avd\Pixel_6_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-10-09T17:21:11.182867600Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-10-10T00:52:14.207297Z" />
         </State>
       </entry>
     </value>

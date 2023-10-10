@@ -3,6 +3,7 @@ package com.example.athenabus.domain.repository
 import com.example.athenabus.common.Resource
 import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.Line
+import com.example.athenabus.domain.model.Route
 import com.example.athenabus.domain.model.Stop
 import kotlinx.coroutines.flow.Flow
 
@@ -13,4 +14,5 @@ interface BusLineRepository {
     suspend fun toggleFavoriteLine(lineID: String)
     fun getStopsFromXY(latitude: String, longitude: String): Flow<Resource<List<Stop>>>
     fun getStopArrivals(stopCode: String): Flow<Resource<List<Arrival>>>
+    fun getRoutesForStop(stopCode: String): Flow<Resource<List<Route>>>
 }

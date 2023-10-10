@@ -38,7 +38,12 @@ fun RouteDtoItem.toRoute(): Route {
         RouteDescr = RouteDescr,
         RouteDescrEng = RouteDescrEng,
         RouteDistance = RouteDistance,
-        RouteType = RouteType
+        RouteType = RouteType,
+        LineID = LineID,
+        hidden = hidden,
+        LineDescr = LineDescr,
+        LineDescrEng = LineDescrEng,
+        MasterLineCode = MasterLineCode
     )
 }
 
@@ -53,16 +58,17 @@ fun RouteDtoItem.toRouteEntity(): RouteEntity {
     )
 }
 
-fun RouteEntity.toRoute(): Route {
-    return Route(
-        RouteCode = RouteCode,
-        LineCode = LineCode,
-        RouteDescr = RouteDescr,
-        RouteDescrEng = RouteDescrEng,
-        RouteDistance = RouteDistance,
-        RouteType = RouteType
-    )
-}
+//fun RouteEntity.toRoute(): Route {
+//    return Route(
+//        RouteCode = RouteCode,
+//        LineCode = LineCode,
+//        RouteDescr = RouteDescr,
+//        RouteDescrEng = RouteDescrEng,
+//        RouteDistance = RouteDistance,
+//        RouteType = RouteType,
+//        LineID = LineID
+//    )
+//}
 
 fun Route.toRouteEntity(): RouteEntity {
     return RouteEntity(
@@ -88,10 +94,21 @@ fun ClosestStopDtoItem.toStop(): Stop {
     )
 }
 
-fun ArrivalStopDtoItem.toArrival(): Arrival{
+fun ArrivalStopDtoItem.toArrival(): Arrival {
     return Arrival(
         route_code = route_code,
         btime2 = btime2,
-        veh_code = veh_code
+        veh_code = veh_code,
+        RouteCode = "",
+        LineCode = "",
+        RouteDescr = "",
+        RouteDescrEng = "",
+        RouteDistance = "",
+        RouteType = "",
+        LineID = "",
+        hidden = "",
+        LineDescr = "",
+        LineDescrEng = "",
+        MasterLineCode = ""
     )
 }
