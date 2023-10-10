@@ -48,9 +48,9 @@ class DefaultLocationTracker(
                 Priority.PRIORITY_HIGH_ACCURACY,
                 cancellationTokenSource.token
             ).addOnSuccessListener { location ->
-                if(location != null){
+                if (location != null) {
                     cont.resume(location) {} // Resume coroutine with location result
-                }else {
+                } else {
                     cont.resume(null) {} // Resume coroutine with null location result
                 }
             }.addOnCompleteListener {

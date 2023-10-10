@@ -8,7 +8,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.example.athenabus.presentation.bus_list.NewBusLineListScreen
-import com.example.athenabus.presentation.closest_stops.ClosestStopsScreen
 import com.example.athenabus.presentation.closest_stops.NewClosestStopsScreen
 import com.example.athenabus.presentation.favorites_screen.FavoriteScreen
 import com.example.athenabus.presentation.settings_screen.SettingsScreen
