@@ -36,6 +36,8 @@
     <string name="search_stops">Αναζήτηση Στάσεων</string>
     <string name="km">χλμ</string>
     <string name="available_routes">διαθέσιμες γραμμές</string>
+    <string name="arriving_buses">ανερχόμενα λεωφορία</string>
+    <string name="min">λεπτά</string>
     <string name="distance">Απόσταση</string>
 
 </resources>

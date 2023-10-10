@@ -32,6 +32,8 @@
     <string name="search_stops">Search Stops</string>
     <string name="km">km</string>
     <string name="available_routes">available routes</string>
+    <string name="arriving_buses">arriving buses</string>
+    <string name="min">min</string>
     <string name="distance">Distance</string>
 
 

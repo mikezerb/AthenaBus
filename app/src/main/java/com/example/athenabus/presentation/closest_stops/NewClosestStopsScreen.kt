@@ -62,6 +62,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
+import com.example.athenabus.data.mapper.addRoute
+import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.closest_stops.components.EnableLocation
 import com.example.athenabus.presentation.closest_stops.components.ExpandableClosestStopItem
@@ -90,6 +92,7 @@ fun NewClosestStopsScreen(
     viewModel: NewLocationViewModel = hiltViewModel(),
     closestStopsViewModel: ClosestStopsViewModel = hiltViewModel(),
     routesForStopViewModel: RoutesForStopViewModel = hiltViewModel(),
+    arrivalsForStopViewModel: ArrivalsForStopViewModel = hiltViewModel(),
     themeViewModel: ThemeViewModel = hiltViewModel()
 ) {
     val locationPermissions = rememberMultiplePermissionsState(
@@ -109,6 +112,7 @@ fun NewClosestStopsScreen(
     val locationValue = viewModel.state.value
     val closestStopsValue = closestStopsViewModel.state.value
     val routesForStopValue = routesForStopViewModel.state.value
+    val arrivalsForStopValue = arrivalsForStopViewModel.state.value
     val darkThemeState by themeViewModel.themeState.collectAsState()
 
     val routeStates = remember { mutableStateMapOf<String, List<Route>>() }
@@ -151,14 +155,15 @@ fun NewClosestStopsScreen(
         }
     }
 
-//    LaunchedEffect(key1 = routesForStopValue.routesForStop.isNotEmpty()) {
-//        if (routesForStopValue.routesForStop.isNotEmpty()) {
-//            Log.d("LaunchedEffect", " routesForStopValue ")
-//            closestStopsValue.closestStops.forEach { stop ->
-//                routesForStopViewModel.getRoutesForStop(stop.StopCode)
-//            }
-//        }
-//    }
+    LaunchedEffect(key1 = routesForStopValue.routesForStop.isNotEmpty()) {
+        if (routesForStopValue.routesForStop.isNotEmpty()) {
+            Log.d("LaunchedEffect + routesForStopValue", " routesForStopValue ")
+            closestStopsValue.closestStops.forEach { stop ->
+                Log.d("closestStopsValue", "Stop: " + stop.StopDescr + " " + stop.StopID)
+                arrivalsForStopViewModel.getStopArrival(stop.StopCode)
+            }
+        }
+    }
 
 
     var isMapLoaded by remember { mutableStateOf(false) }
@@ -434,7 +439,7 @@ fun NewClosestStopsScreen(
                                             onClick = { }, //  closestStopsViewModel.getStopArrival(stopCode = stop.StopCode)
                                             routes = (routesForStopViewModel.routesForStops[stop.StopCode]
                                                 ?: emptyList()).fastDistinctBy { it.RouteCode },
-                                            arrivals = routesForStopValue.arrivalsForStop[stop.StopCode]?: emptyList(),
+                                            arrivals = fillArrivalDetail(arrivalsForStopViewModel.arrivalsForStop[stop.StopCode]?: emptyList(), routesForStopViewModel.routesForStops[stop.StopCode]?: emptyList()),
                                             expanded = stop.StopCode.toInt() == expandedItem,
                                             onExpandClick = { id ->
                                                 expandedItem = if (expandedItem == id) {
@@ -473,6 +478,22 @@ private suspend fun CameraPositionState.centerOnLocation(
         15f
     ),
 )
+
+//private fun fillArrivalDetail(arrivals: List<Arrival>, routes: List<Route>) : List<Arrival>{
+//    return arrivals.map {
+//        routes.find { route -> it.route_code == route.RouteCode }
+//        ?.let { it1 -> it.addRoute(it1) }
+//    }
+//}
+
+private fun fillArrivalDetail(arrivals: List<Arrival>, routes: List<Route>): List<Arrival> {
+    return arrivals.map { arrival ->
+        val matchingRoute = routes.find { route -> arrival.route_code == route.RouteCode }
+        matchingRoute?.let { route ->
+            arrival.copy(LineID = route.LineID)
+        } ?: arrival
+    }
+}
 
 @Preview
 @Composable

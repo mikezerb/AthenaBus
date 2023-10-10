@@ -112,3 +112,22 @@ fun ArrivalStopDtoItem.toArrival(): Arrival {
         MasterLineCode = ""
     )
 }
+
+fun Arrival.addRoute(route: Route): Arrival {
+    return Arrival(
+        route_code = route_code,
+        btime2 = btime2,
+        veh_code = veh_code,
+        RouteCode = route.RouteCode,
+        LineCode = route.LineCode,
+        RouteDescr = route.RouteDescr,
+        RouteDescrEng = route.RouteDescrEng,
+        RouteDistance = route.RouteDistance,
+        RouteType = route.RouteType,
+        LineID = route.LineID,
+        hidden = route.hidden,
+        LineDescr = route.LineDescr,
+        LineDescrEng = route.LineDescrEng,
+        MasterLineCode = route.MasterLineCode
+    )
+}

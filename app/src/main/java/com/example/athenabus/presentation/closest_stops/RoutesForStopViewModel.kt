@@ -20,7 +20,6 @@ private const val TAG = "RoutesForStopViewModel"
 @HiltViewModel
 class RoutesForStopViewModel @Inject constructor(
     private val getRoutesForStopsUseCase: GetRoutesForStopsUseCase,
-    private val getStopArrivalUseCase: GetStopArrivalUseCase
 ) : ViewModel() {
     private val _state = mutableStateOf(RoutesForStopState())
     val state: State<RoutesForStopState> = _state
@@ -41,13 +40,7 @@ class RoutesForStopViewModel @Inject constructor(
 
                         // Cache the fetched routes in the HashMap.
                         routesForStops[stopCode] = routes
-
-                        _state.value =
-                            RoutesForStopState(routesForStop = result.data ?: emptyList())
-
-                        result.data?.forEach { _ ->
-                            getStopArrival(stopCode)
-                        }
+                        _state.value = RoutesForStopState(routesForStop = result.data ?: emptyList())
                     }
 
                     is Resource.Error -> {
@@ -63,31 +56,31 @@ class RoutesForStopViewModel @Inject constructor(
             }.launchIn(viewModelScope)
         }
     }
-
-    fun getStopArrival(stopCode: String) {
-        getStopArrivalUseCase(stopCode).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    Log.d(TAG, "Got " + result.data?.size + " closestStopsArrival")
-                    val hash = hashMapOf(stopCode to (result.data?: emptyList<Arrival>()))
-                    _state.value =
-                        RoutesForStopState(arrivalsForStop = hash)
-                }
-
-                is Resource.Error -> {
-                    Log.e(
-                        TAG,
-                        "getStopArrivalUseCase" + "stop code: " + stopCode + result.message
-                    )
-                    _state.value =
-                        RoutesForStopState(error = result.message ?: "Unexpected error")
-                }
-
-                is Resource.Loading -> {
-                    _state.value = RoutesForStopState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
+//
+//    fun getStopArrival(stopCode: String) {
+//        getStopArrivalUseCase(stopCode).onEach { result ->
+//            when (result) {
+//                is Resource.Success -> {
+//                    Log.d(TAG, "Got " + result.data?.size + " closestStopsArrival")
+//                    val hash = hashMapOf(stopCode to (result.data?: emptyList<Arrival>()))
+//                    _state.value =
+//                        RoutesForStopState(arrivalsForStop = hash)
+//                }
+//
+//                is Resource.Error -> {
+//                    Log.e(
+//                        TAG,
+//                        "getStopArrivalUseCase" + "stop code: " + stopCode + result.message
+//                    )
+//                    _state.value =
+//                        RoutesForStopState(error = result.message ?: "Unexpected error")
+//                }
+//
+//                is Resource.Loading -> {
+//                    _state.value = RoutesForStopState(isLoading = true)
+//                }
+//            }
+//        }.launchIn(viewModelScope)
+//    }
 
 }

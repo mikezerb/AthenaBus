@@ -23,9 +23,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -55,20 +52,30 @@ fun ExpandableClosestStopItem(
 
     if (routes.isNotEmpty()) {
         routes.filter { it.hidden != "1" }.forEachIndexed { index, route ->
-            if(arrivals.isNotEmpty()){
+            if (arrivals.isNotEmpty()) {
                 arrivals.filter { it.route_code == route.RouteCode }
             }
             available_routes += "${route.LineID}: ${route.RouteDescr}"
-            if (index < routes.size - 1) {
-                available_routes += ", "
+            available_routes += if (index < routes.size - 1) {
+                "\n"
+            } else {
+                " "
             }
         }
     }
 
     var arrivalsBuses = ""
-    if(arrivals.isNotEmpty()){
-        arrivals.forEach { arrival ->
-            arrivalsBuses += "${arrival.route_code}: ${arrival.btime2} min, "
+    if (arrivals.isNotEmpty()) {
+        arrivals.groupBy { it.route_code }.forEach {
+            var times = ""
+            it.value.forEachIndexed { index, arrival ->
+                times += "${arrival.btime2} ${stringResource(id = R.string.min)}"
+                times += if (index < it.value.size - 1) {
+                    " & "
+                } else
+                    "\n"
+            }
+            arrivalsBuses += "${it.value.first().LineID}: " + times
         }
     }
 
@@ -91,7 +98,26 @@ fun ExpandableClosestStopItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(text = stop.StopDescr, style = MaterialTheme.typography.titleSmall)
+                Column(
+
+                ) {
+                    Text(text = stop.StopDescr, style = MaterialTheme.typography.titleSmall)
+                    Text(
+                        text = "${stop.StopStreet ?: ""} (${stop.StopCode})",
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                    Text(text = runCatching {
+                        val distance = stop.distance.toDoubleOrNull() ?: 0.0
+                        "%s: %.2f%s".format(
+                            stringResource(id = R.string.distance),
+                            distance * 100, stringResource(id = R.string.km)
+                        )
+                    }.getOrElse {
+                        "Distance: N/A"
+                    },
+                        style = MaterialTheme.typography.labelMedium
+                    )
+                }
                 IconButton(
                     modifier = Modifier.rotate(rotationState),
                     onClick = { onExpandClick(stop.StopCode.toInt()) }) {
@@ -119,27 +145,15 @@ fun ExpandableClosestStopItem(
                     tonalElevation = 4.dp,
                 ) {
                     Column(
-                        modifier = Modifier.padding(16.dp)
+                        modifier = Modifier
+                            .padding(start = 12.dp)
                     ) {
                         Text(
-                            text = "${stop.StopStreet ?: ""} (${stop.StopCode})",
+                            text = routes.size.toString() + " ${stringResource(id = R.string.available_routes)}" + "\n" +
+                                    available_routes + "\n" +
+                                    arrivals.size.toString() + " ${stringResource(id = R.string.arriving_buses)}" + "\n" +
+                                    arrivalsBuses,
                             style = MaterialTheme.typography.labelMedium
-                        )
-                        Text(text = runCatching {
-                            val distance = stop.distance.toDoubleOrNull() ?: 0.0
-                            "%s: %.2f%s".format(
-                                stringResource(id = R.string.distance),
-                                distance * 100, stringResource(id = R.string.km)
-                            )
-                        }.getOrElse {
-                            "Distance: N/A"
-                        },
-                            style = MaterialTheme.typography.labelMedium
-                        )
-
-                        Text(
-                            text = routes.size.toString() + " ${stringResource(id = R.string.available_routes)}." + "\n" + available_routes + "\n" + "arrivals: " + arrivals.size.toString() + arrivalsBuses,
-                            style = MaterialTheme.typography.labelSmall
                         )
 
                     }
