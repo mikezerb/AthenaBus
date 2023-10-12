@@ -9,6 +9,7 @@
     <string name="stops_tab_title">Στάσεις</string>
     <string name="schedule_tab_title">Δρομολόγια</string>
     <string name="favourite_lines_title">Γραμμές</string>
+    <string name="stops_tabs_title">Στάσεις</string>
     <string name="search_place_holder">Αναζήτηση</string>
     <string name="default_setting_title">Ρύθμιση</string>
     <string name="default_setting_desc">Αυτό είναι μία ρύθμιση για δοκιμή</string>
@@ -39,5 +40,6 @@
     <string name="arriving_buses">ανερχόμενα λεωφορία</string>
     <string name="min">λεπτά</string>
     <string name="distance">Απόσταση</string>
+    <string name="choose_direction">Επιλογή διαδρομής</string>
 
 </resources>

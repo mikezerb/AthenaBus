@@ -92,7 +92,6 @@ fun FavoriteScreen(
 
                     )
                 }
-
             }
             HorizontalPager(
                 state = pagerState,

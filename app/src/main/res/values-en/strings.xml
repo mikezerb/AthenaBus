@@ -8,6 +8,7 @@
     <string name="select_route_title">Available routes</string>
     <string name="stops_tab_title">Stops</string>
     <string name="favourite_lines_title">Lines</string>
+    <string name="stops_tabs_title">Stops</string>
     <string name="schedule_tab_title">Schedules</string>
     <string name="default_setting_title">Setting</string>
     <string name="default_setting_desc">This is a setting description for test</string>
@@ -35,7 +36,7 @@
     <string name="arriving_buses">arriving buses</string>
     <string name="min">min</string>
     <string name="distance">Distance</string>
-
+    <string name="choose_direction">Choose Direction</string>
 
 
 </resources>
