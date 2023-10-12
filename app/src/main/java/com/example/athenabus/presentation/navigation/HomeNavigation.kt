@@ -17,8 +17,6 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
         composable(route = Route.NewBusLineScreen.route) {
             NewBusLineListScreen(navController)
         }
-        lineDetailsGraph(navController)
-
         composable(route = Route.FavoriteScreen.route) {
             FavoriteScreen(navController)
         }

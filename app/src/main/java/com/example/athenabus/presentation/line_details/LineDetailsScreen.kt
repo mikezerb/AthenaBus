@@ -2,7 +2,6 @@ package com.example.athenabus.presentation.line_details
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Arrangement
@@ -46,7 +45,7 @@ fun LineDetailsScreen(
         visible = state.lines.isNotEmpty(),
         enter = slideInVertically(),
         exit = slideOutVertically()
-        ) {
+    ) {
         Surface {
             Column(
                 modifier
