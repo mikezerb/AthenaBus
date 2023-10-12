@@ -1,5 +1,6 @@
 package com.example.athenabus.presentation.bus_list
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -38,6 +39,7 @@ import com.example.athenabus.R
 import com.example.athenabus.presentation.bus_list.components.BusLineItem
 import com.example.athenabus.presentation.bus_list.components.ChangeLayoutButton
 import com.example.athenabus.presentation.bus_list.components.GridBusLineItem
+import com.example.athenabus.presentation.navigation.Route
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -134,7 +136,8 @@ fun NewBusLineListScreen(
                         BusLineItem(
                             busLine = line, onItemClick =
                             {
-                                //navController.navigate(Route.BusRoutesScreen.route + "/${line.LineCode}")
+                                Log.d("BusLineItem", Route.LineDetailsActivity.route + "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}")
+                                navController.navigate(Route.LineDetailsActivity.route + "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}") // &lineDesc=${line.LineDescr}&isFav=${line.isFavorite}
                             },
                             onToggleFavorite = { _ ->
                                 scope.launch {

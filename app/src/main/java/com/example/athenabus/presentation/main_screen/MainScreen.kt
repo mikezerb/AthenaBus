@@ -44,6 +44,7 @@ fun MainScreen(
 
     showBottomBar = when (navBackStackEntry?.destination?.route) {
         Route.SettingsActivityScreen.route -> false // on this screen bottom bar should be hidden
+        Route.LineDetailActivityScreen.route -> false // on this screen bottom bar should be hidden
         else -> true // in all other cases show bottom bar
     }
 
@@ -55,7 +56,6 @@ fun MainScreen(
             topBar = {
                 MaterialTopAppBar(
                     title = stringResource(id = R.string.app_name),
-                    isHomeScreen = true,
                     canNavigateBack = navController.previousBackStackEntry != null,
                     navigateUp = { navController.popBackStack() },
                     onSettingsClick = {

@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation
+package com.example.athenabus.ui.theme
 
 import androidx.compose.ui.unit.dp
 

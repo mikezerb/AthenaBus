@@ -22,8 +22,8 @@ import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.athenabus.data.local.PageData.pages
-import com.example.athenabus.presentation.Dimens.MediumPadding1
-import com.example.athenabus.presentation.Dimens.PageIndicatorWidth
+import com.example.athenabus.ui.theme.Dimens.MediumPadding1
+import com.example.athenabus.ui.theme.Dimens.PageIndicatorWidth
 import com.example.athenabus.presentation.common.MaterialElevatedButton
 import com.example.athenabus.presentation.common.MaterialTextButton
 import com.example.athenabus.presentation.onboarding.components.OnBoardingPage

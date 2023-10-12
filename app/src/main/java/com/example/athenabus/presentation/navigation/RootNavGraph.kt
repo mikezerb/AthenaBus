@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.example.athenabus.presentation.main_screen.MainScreen
 
 @Composable
@@ -14,8 +15,6 @@ fun RootNavigationGraph(navController: NavHostController) {
         startDestination = Graph.ONBOARDING
     ) {
         onBoardingNavGraph()
-        composable(route = Graph.HOME) {
-            MainScreen()
-        }
+        startNavGraph(navController)
     }
 }

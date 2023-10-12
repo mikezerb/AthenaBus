@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import com.example.athenabus.presentation.Dimens.IndicatorSize
+import com.example.athenabus.ui.theme.Dimens.IndicatorSize
 
 @Composable
 fun PageIndicator(

@@ -24,6 +24,9 @@ sealed class Route(
     object SettingsActivity : Route(route = "settings")
     object SettingsActivityScreen : Route(route = "settingsActivityScreen")
     object ClosestStopsActivity : Route(route = "closestStops")
-    object ClosestStopsActivityScreen : Route(route = "closestStopsActivityScreen")
+    object ClosestStopsActivityScreen : Route(route = "closestStopsActivity")
+
+    object LineDetailsActivity : Route(route = "lineDetailsScreen")
+    object LineDetailActivityScreen : Route(route = "lineDetailsScreen?lineId={lineId}&lineCode={lineCode}&lineDesc={lineDesc}&isFav={isFav}")
 
 }
