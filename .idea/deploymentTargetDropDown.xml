@@ -12,13 +12,13 @@
               <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\mikea\.android\avd\Pixel_6_API_34.avd" />
+                  <type value="SERIAL_NUMBER" />
+                  <value value="RFCT70EEZHR" />
                 </Key>
               </deviceKey>
             </Target>
           </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-10-12T19:24:50.645218700Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-10-12T19:26:56.486313100Z" />
         </State>
       </entry>
     </value>
