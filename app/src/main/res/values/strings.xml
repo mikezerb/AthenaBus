@@ -41,5 +41,11 @@
     <string name="min">λεπτά</string>
     <string name="distance">Απόσταση</string>
     <string name="choose_direction">Επιλογή διαδρομής</string>
+    <string name="trolley_chip_label">Τρόλεϊ</string>
+    <string name="buses_chip_label">Λεωφορεία</string>
+    <string name="_24hour_chip_label">24ώρα</string>
+    <string name="night_chip_label">Νυχτερινά</string>
+    <string name="aeroplane_chip_label">Αεροδρομίου</string>
+    <string name="express_chip_label">Express</string>
 
 </resources>

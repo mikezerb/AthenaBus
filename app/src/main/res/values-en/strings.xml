@@ -37,6 +37,12 @@
     <string name="min">min</string>
     <string name="distance">Distance</string>
     <string name="choose_direction">Choose Direction</string>
+    <string name="trolley_chip_label">Trolley</string>
+    <string name="buses_chip_label">Buses</string>
+    <string name="_24hour_chip_label">24hour</string>
+    <string name="night_chip_label">Night</string>
+    <string name="aeroplane_chip_label">Aeroplane</string>
+    <string name="express_chip_label">Express</string>
 
 
 </resources>
