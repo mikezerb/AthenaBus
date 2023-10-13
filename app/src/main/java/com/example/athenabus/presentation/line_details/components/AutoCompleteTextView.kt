@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.ExposedDropdownMenuDefaults.TrailingIcon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -23,11 +24,11 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AutoCompleteTextField(
+    modifier: Modifier = Modifier,
     initialText: String,
     itemList: List<String> = emptyList(),
     onQuery: (String) -> Unit = { },
     onClearResults: () -> Unit = { },
-    modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedOption by remember {
@@ -54,6 +55,7 @@ fun AutoCompleteTextField(
             trailingIcon = {
                 TrailingIcon(expanded = expanded)
             },
+            textStyle = MaterialTheme.typography.titleSmall,
             colors = ExposedDropdownMenuDefaults.textFieldColors()
         )
         ExposedDropdownMenu(

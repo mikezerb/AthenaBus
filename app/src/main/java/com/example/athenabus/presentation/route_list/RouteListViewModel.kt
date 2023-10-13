@@ -8,7 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Constants.PARAM_LINE_ID
 import com.example.athenabus.common.Resource
 import com.example.athenabus.domain.use_case.bus_lines.GetBusCodesUseCase
-import com.example.athenabus.domain.use_case.get_route.GetRouteUseCase
+import com.example.athenabus.domain.use_case.get_route.GetRouteFromLineIdUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RouteListViewModel @Inject constructor(
-    private val getRouteUseCase: GetRouteUseCase,
+    private val getRouteUseCase: GetRouteFromLineIdUseCase,
     private val getBusCodesUseCase: GetBusCodesUseCase,
     savedStateHandle: SavedStateHandle
 

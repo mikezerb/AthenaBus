@@ -62,7 +62,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
-import com.example.athenabus.data.mapper.addRoute
 import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.closest_stops.components.EnableLocation

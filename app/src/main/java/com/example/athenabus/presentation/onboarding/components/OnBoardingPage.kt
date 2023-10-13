@@ -19,9 +19,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.athenabus.data.local.PageData
-import com.example.athenabus.ui.theme.Dimens.MediumPadding1
 import com.example.athenabus.presentation.onboarding.Page
 import com.example.athenabus.ui.theme.AthenaBusTheme
+import com.example.athenabus.ui.theme.Dimens.MediumPadding1
 
 @Composable
 fun OnBoardingPage(

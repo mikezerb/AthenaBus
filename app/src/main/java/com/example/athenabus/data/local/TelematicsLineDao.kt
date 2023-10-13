@@ -28,7 +28,7 @@ interface TelematicsLineDao {
             WHERE LineID LIKE '%' || UPPER(:query) || '%'
         """
     )
-    suspend fun searchBusLines(query: String): List<BusLineEntity>
+    suspend fun searchBusLines(query: String): BusLineEntity
 
     @Query(
         """

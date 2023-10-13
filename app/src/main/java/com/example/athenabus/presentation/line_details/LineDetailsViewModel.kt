@@ -24,12 +24,12 @@ class LineDetailsViewModel @Inject constructor(
         getLineFromIDUseCase(lineId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    val busLines = result.data ?: emptyList()
+                    val busLines = result.data
                     Log.d(
                         "LineDetailsViewModel",
-                        "Found ${busLines.size} lines with lineId: $lineId"
+                        "Found ${busLines?.LineDescr} line with lineId: $lineId"
                     )
-                    _state.value = LineDetailsState(lines = busLines)
+                    _state.value = LineDetailsState(line = busLines)
                 }
 
                 is Resource.Error -> {

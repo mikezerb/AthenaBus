@@ -5,7 +5,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,8 +17,6 @@ import androidx.compose.material.icons.filled.Timeline
 import androidx.compose.material.icons.outlined.DirectionsBus
 import androidx.compose.material.icons.outlined.Timeline
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -29,9 +26,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +39,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.presentation.common.TabItem
-import com.example.athenabus.presentation.line_details.components.AutoCompleteTextField
+import com.example.athenabus.presentation.line_details.components.tabs.ScheduleScreen
+import com.example.athenabus.presentation.line_details.components.tabs.StopsScreen
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -52,33 +51,42 @@ fun LineDetailsScreen(
     lineCode: String = "",
     lineDesc: String = "",
     isFav: Boolean = false,
-    viewModel: LineDetailsViewModel = hiltViewModel()
+    viewModel: LineDetailsViewModel = hiltViewModel(),
+    routeViewModel: RouteDetailsViewModel = hiltViewModel()
 ) {
     Log.d(
         "LineDetailsScreen",
         "LineID: $lineId, LineCode: $lineCode, lineDesc: $lineDesc isFav = $isFav"
     )
+    val context = LocalContext.current
     val state = viewModel.state.value
+    val route_state = routeViewModel.state.value
 
+    val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = Unit) {
         viewModel.getLine(lineId)
+    }
+    LaunchedEffect(key1 = Unit){
+        routeViewModel.getLineCodes(lineId)
     }
 
     val tabItems = listOf(
         TabItem(
             title = stringResource(R.string.stops_tab_title),
             selectedIcon = Icons.Filled.DirectionsBus,
-            unSelectedIcon = Icons.Outlined.DirectionsBus
+            unSelectedIcon = Icons.Outlined.DirectionsBus,
+            screen = { state.line?.let { StopsScreen(line = it, routes = route_state.availableRoutes) } }
         ),
         TabItem(
             title = stringResource(R.string.schedule_tab_title),
             selectedIcon = Icons.Filled.Timeline,
-            unSelectedIcon = Icons.Outlined.Timeline
+            unSelectedIcon = Icons.Outlined.Timeline,
+            screen = { state.line?.let { ScheduleScreen(line = it) } }
         )
     )
 
     AnimatedVisibility(
-        visible = state.lines.isNotEmpty(),
+        visible = state.line != null,
         enter = slideInVertically(),
         exit = slideOutVertically()
     ) {
@@ -86,17 +94,13 @@ fun LineDetailsScreen(
 
             var selectedTabIndex by remember { mutableStateOf(0) }
             val pagerState = rememberPagerState { tabItems.size }
+
             LaunchedEffect(selectedTabIndex) {
                 pagerState.animateScrollToPage(selectedTabIndex)
             }
 
             LaunchedEffect(pagerState.currentPage) {
-                // Used for more than two pages
-//                if (!pagerState.isScrollInProgress) {
-//                    selectedTabIndex = pagerState.currentPage
-//                }
                 selectedTabIndex = pagerState.currentPage
-
             }
 
             Column(
@@ -106,17 +110,17 @@ fun LineDetailsScreen(
                 SecondaryTabRow(selectedTabIndex = selectedTabIndex) {
                     tabItems.forEachIndexed { index, tabItem ->
                         Tab(
-                            text = { Text(text = tabItem.title, maxLines = 1, overflow = TextOverflow.Ellipsis) },
+                            text = {
+                                Text(
+                                    text = tabItem.title,
+                                    maxLines = 1,
+                                    overflow = TextOverflow.Ellipsis
+                                )
+                            },
                             selected = index == selectedTabIndex,
-                            onClick = { selectedTabIndex = index },
-//                            icon = {
-//                                Icon(
-//                                    imageVector = if (index == selectedTabIndex) {
-//                                        tabItem.selectedIcon
-//                                    } else tabItem.unSelectedIcon,
-//                                    contentDescription = tabItem.title
-//                                )
-//                            }
+                            onClick = {
+                                selectedTabIndex = index
+                            }, //  { scope.launch { pagerState.animateScrollToPage(index) } }
                         )
                     }
                 }
@@ -126,18 +130,7 @@ fun LineDetailsScreen(
                         .fillMaxWidth()
                         .weight(1f)
                 ) { index ->
-                    Box(
-                        modifier = Modifier.fillMaxSize(),
-                        contentAlignment = Alignment.TopCenter
-                    ) {
-                        val options =
-                            listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
-
-                        AutoCompleteTextField(
-                            initialText = stringResource(R.string.choose_direction),
-                            itemList = options
-                        )
-                    }
+                    tabItems[index].screen()    // [pagerState.currentPage]
                 }
 
             }

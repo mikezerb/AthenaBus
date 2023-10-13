@@ -7,8 +7,10 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Map
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.StarBorder
@@ -40,6 +42,7 @@ fun MaterialTopAppBar(
     isLineDetailsScreen: Boolean = false,
     canNavigateBack: Boolean = false,
     navigateUp: () -> Unit = { },
+    navigationDrawerClick: () -> Unit = { },
     onFavoriteClick: () -> Unit = { },
     onMapClick: () -> Unit = { },
     onMoreSettings: () -> Unit = { },
@@ -107,8 +110,6 @@ fun MaterialTopAppBar(
                 title = {
                     Text(
                         text = title,
-                        modifier = Modifier.fillMaxWidth(),
-                        textAlign = TextAlign.Center,
                         fontFamily = FontFamily(Font(R.font.poppins_semibold))
                     )
                 },
@@ -116,9 +117,13 @@ fun MaterialTopAppBar(
                     if (currentRoute == Route.SettingsActivityScreen.route) {
                         IconButton(onClick = navigateUp) {
                             Icon(
-                                imageVector = Icons.Default.ArrowBack,
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back"
                             )
+                        }
+                    } else {
+                        IconButton(onClick = navigationDrawerClick) {
+                            Icon(imageVector = Icons.Default.Menu, contentDescription = null)
                         }
                     }
                 },
