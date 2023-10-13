@@ -9,7 +9,7 @@ object Constants {
     const val DYNAMIC_MODE = "dynamicMode"
     const val SELECTED_LANG = "lang"
     const val SELECTED_LANG_CODE = "langCode"
-    const val PARAM_LINE_ID = "lineCode"
+    const val PARAM_LINE_ID = "lineId"
     const val GITHUB_LINK = "https://github.com/mikezerb"
     const val PRIVACY_LINK =
         "https://www.freeprivacypolicy.com/live/832465f4-1b1a-41e7-8a7e-f7d12212df72"

@@ -60,18 +60,16 @@ class BusLineRepositoryImpl @Inject constructor(
         emit(Resource.Success(distinctBusLines))
     }
 
-    override fun getLineFromDB(searchTxt: String): Flow<Resource<List<Line>>> = flow {
+    override fun getLineFromDB(searchTxt: String): Flow<Resource<Line>> = flow {
         emit(Resource.Loading())
 
-        val busLines = lineDao.searchBusLines(searchTxt).map { it.toBusLine() }
+        val busLines = lineDao.searchBusLines(searchTxt).toBusLine()
         emit(Resource.Loading(data = busLines))
 
-        val isDbEmpty = busLines.isEmpty() && searchTxt.isBlank()
+        val isDbEmpty = busLines.LineID.isEmpty() && searchTxt.isBlank()
 
         if (!isDbEmpty) {
-            // Filter the bus lines to get distinct LineIDs
-            val distinctBusLines = busLines.distinctBy { it.LineID }
-            emit(Resource.Success(distinctBusLines))
+            emit(Resource.Success(busLines))
         }
 
         try {

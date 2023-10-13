@@ -6,9 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
-import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.Route
-import com.example.athenabus.domain.use_case.bus_lines.GetStopArrivalUseCase
 import com.example.athenabus.domain.use_case.get_route.GetRoutesForStopsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn

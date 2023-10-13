@@ -6,11 +6,11 @@ import com.example.athenabus.domain.repository.RouteRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetRouteUseCase @Inject constructor(
+class GetRouteFromLineIdUseCase @Inject constructor(
     private val repository: RouteRepository
 ) {
 
-    operator fun invoke(lineCode: String): Flow<Resource<List<Route>>> {
-        return repository.getRoutesByID(lineCode)
+    operator fun invoke(lineId: String): Flow<Resource<List<Route>>> {
+        return repository.getRoutesByID(lineId)
     }
 }

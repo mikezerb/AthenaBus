@@ -10,7 +10,7 @@ class GetLineFromIDUseCase @Inject constructor(
     private val repository: BusLineRepository,
 ) {
 
-    operator fun invoke(lineId: String): Flow<Resource<List<Line>>> {
+    operator fun invoke(lineId: String): Flow<Resource<Line>> {
         return repository.getLineFromDB(lineId)
     }
 }
