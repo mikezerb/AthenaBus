@@ -4,6 +4,15 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
@@ -11,6 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CloudUpload
 import androidx.compose.material.icons.outlined.ColorLens
+import androidx.compose.material.icons.outlined.Contrast
 import androidx.compose.material.icons.outlined.DarkMode
 import androidx.compose.material.icons.outlined.Language
 import androidx.compose.material.icons.outlined.PrivacyTip
@@ -49,8 +59,7 @@ fun SettingsScreen(
     themeViewModel: ThemeViewModel = hiltViewModel()
 ) {
     // Observe the dark theme setting
-    val darkThemeState by themeViewModel.themeState.collectAsState()
-    val dynamicState by themeViewModel.dynamicState.collectAsState()
+    val themeState by themeViewModel.themeState.collectAsState()
     var isOtherMode by remember { mutableStateOf(false) }
     var langFlag by remember { mutableStateOf(false) }
 
@@ -66,8 +75,21 @@ fun SettingsScreen(
                 title = R.string.theme_settings_theme_title,
                 subtitle = R.string.theme_settings_theme_subtitle,
                 icon = { Icon(imageVector = Icons.Outlined.DarkMode, contentDescription = null) },
-                isChecked = darkThemeState.isDarkMode,
+                isChecked = themeState.isDarkMode,
                 onCheckedChange = { themeViewModel.toggleTheme() }
+            )
+            SwitchPreference(
+                title = R.string.theme_settings_amoled_theme_title,
+                subtitle = R.string.theme_settings_theme_subtitle,
+                icon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Contrast,
+                        contentDescription = null
+                    )
+                },
+                isChecked = themeState.isAmoledMode,
+                enabled = themeState.isDarkMode,
+                onCheckedChange = { themeViewModel.setAmoledBlack() }
             )
             if (supportsDynamic()) {
                 SwitchPreference(
@@ -79,7 +101,7 @@ fun SettingsScreen(
                             contentDescription = null
                         )
                     },
-                    isChecked = dynamicState.isDynamicColor,
+                    isChecked = themeState.isDynamicMode,
                     onCheckedChange = { themeViewModel.toggleDynamicColors() }
                 )
             }

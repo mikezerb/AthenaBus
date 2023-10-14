@@ -1,5 +1,6 @@
 package com.example.athenabus.presentation.bus_list
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -109,7 +110,7 @@ fun NewBusLineListScreen(
     Surface {
         Column(
             modifier = Modifier
-                .fillMaxSize()
+                .fillMaxSize().background(MaterialTheme.colorScheme.background)
         ) {
             DockedSearchBar(
                 modifier = Modifier

@@ -20,7 +20,9 @@
     <!-- strings for settings   -->
     <string name="theme_settings_theme_section">Εμφάνιση</string>
     <string name="theme_settings_theme_title">Σκούρο θέμα</string>
+    <string name="theme_settings_amoled_theme_title">Μαύρο Θέμα</string>
     <string name="theme_settings_theme_subtitle">Αλλαγή εμφάνισης της εφαρμογής</string>
+    <string name="theme_settings_amoled_theme_subtitle">Αλλαγή εμφάνισης σε μαύρο</string>
 
     <string name="theme_settings_color_title">Δυναμικά χρώματα</string>
     <string name="theme_settings_color_subtitle">Αλλαγή χρωμάτων της εφαρμογής</string>

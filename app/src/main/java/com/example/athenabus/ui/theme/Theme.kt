@@ -2,6 +2,7 @@ package com.example.athenabus.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -11,12 +12,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.athenabus.presentation.settings_screen.ThemeViewModel
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
 private val DarkColorScheme = darkColorScheme(
@@ -99,27 +102,42 @@ fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 @Composable
 fun AthenaBusTheme(
     themeViewModel: ThemeViewModel = hiltViewModel(),
+    // Dynamic color is available on Android 12+
+    dynamicColor: Boolean = true,
+    amoled: Boolean = false,
+    appTheme: AppColorTheme.AppTheme = AppColorTheme.AppTheme.Blue,
     content: @Composable () -> Unit
 ) {
+
     val themeState by themeViewModel.themeState.collectAsState()
-    val dynamicState by themeViewModel.dynamicState.collectAsState()
+    val darkTheme: Boolean = themeState.isDarkMode
+    val amoledTheme = themeState.isAmoledMode
+    val dynamicColorMode = themeState.isDynamicMode
+    val appColorScheme = AppColorTheme()
+    val currentTheme = appColorScheme.getTheme(appTheme, darkTheme)
+    val colorScheme = when {
+        dynamicColorMode && supportsDynamic() -> {
+            val context = LocalContext.current
 
-    val colorScheme = if (dynamicState.isDynamicColor) {
-        when {
-            supportsDynamic() -> {
-                val context = LocalContext.current
-                if (themeState.isDarkMode) dynamicDarkColorScheme(context) else dynamicLightColorScheme(
-                    context
+            when {
+                darkTheme && amoledTheme -> dynamicDarkColorScheme(context).copy(
+                    background = Color.Black,
+                    surface = Color.Black
                 )
-            }
 
-            themeState.isDarkMode -> DarkColorScheme
-            else -> LightColorScheme
+                darkTheme && !amoledTheme -> dynamicDarkColorScheme(context)
+                else -> dynamicLightColorScheme(context)
+
+            }
         }
-    } else {
-        if (themeState.isDarkMode) DarkColorScheme else LightColorScheme
+
+        darkTheme && amoledTheme -> currentTheme.copy(background = Color.Black, surface = Color.Black)
+        darkTheme -> currentTheme
+        else -> currentTheme
     }
+
     val view = LocalView.current
+    val systemUiController = rememberSystemUiController()
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
@@ -132,6 +150,14 @@ fun AthenaBusTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content
+        content = {
+            SideEffect {
+                systemUiController.setSystemBarsColor(
+                    color = Color.Transparent,
+                    darkIcons = !darkTheme
+                )
+            }
+            content()
+        }
     )
 }

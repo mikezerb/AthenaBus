@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.di.AppLanguage
 import com.example.athenabus.di.DataStoreUtil
+import com.example.athenabus.di.DataStoreUtil.Companion.IS_AMOLED_THEME_KEY
 import com.example.athenabus.di.DataStoreUtil.Companion.IS_DARK_MODE_KEY
 import com.example.athenabus.di.DataStoreUtil.Companion.IS_DYNAMIC_MODE_KEY
 import com.example.athenabus.di.DataStoreUtil.Companion.SELECTED_LANGUAGE
@@ -20,40 +21,45 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class ThemeViewModel @Inject constructor(dataStoreUtil: DataStoreUtil) : ViewModel() {
-
-    private val _themeState = MutableStateFlow(ThemeState(false))
-    val themeState: StateFlow<ThemeState> = _themeState
-    private val _dynamicState = MutableStateFlow(DynamicState(supportsDynamic()))
-    val dynamicState: StateFlow<DynamicState> = _dynamicState
-
-    private val _langState = MutableStateFlow(LanguageState("Greek", "el"))
-    val langState: StateFlow<LanguageState> = _langState
+class ThemeViewModel @Inject constructor(
+    dataStoreUtil: DataStoreUtil
+) : ViewModel() {
 
     private val dataStore = dataStoreUtil.dataStore
+
+    private val _themeState = MutableStateFlow(
+        ThemeState(
+            isDarkMode = false,
+            isAmoledMode = false,
+            isDynamicMode = supportsDynamic()
+        )
+    )
+    val themeState: StateFlow<ThemeState> = _themeState
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             dataStore.data.map { preferences ->
-                ThemeState(preferences[IS_DARK_MODE_KEY] ?: false)
+                Log.d(
+                    "ThemeState",
+                    "IS_DARK_MODE_KEY: ${preferences[IS_DARK_MODE_KEY]}, ${preferences[IS_AMOLED_THEME_KEY]}, ${preferences[IS_DYNAMIC_MODE_KEY]}"
+                )
+                ThemeState(
+                    preferences[IS_DARK_MODE_KEY] ?: false,
+                    preferences[IS_AMOLED_THEME_KEY] ?: false,
+                    preferences[IS_DYNAMIC_MODE_KEY] ?: supportsDynamic()
+                )
             }.collect {
                 _themeState.value = it
             }
-            dataStore.data.map { preferences ->
-                DynamicState(preferences[IS_DYNAMIC_MODE_KEY] ?: true)
-            }.collect {
-                _dynamicState.value = it
-            }
-            dataStore.data.map { preferences ->
-                LanguageState(
-                    preferences[SELECTED_LANGUAGE] ?: "Greek",
-                    preferences[SELECTED_LANGUAGE_CODE] ?: "el"
-                )
-            }.collect {
-                _langState.value = it
+        }
+    }
+
+    fun setAmoledBlack() {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStore.edit { settings ->
+                settings[IS_AMOLED_THEME_KEY] = !(settings[IS_AMOLED_THEME_KEY] ?: false)
             }
         }
-
     }
 
     fun toggleTheme() {
@@ -66,10 +72,13 @@ class ThemeViewModel @Inject constructor(dataStoreUtil: DataStoreUtil) : ViewMod
 
     fun toggleDynamicColors() {
         viewModelScope.launch {
-            Log.d("dynamic", "Try to toggle dynamic color")
             dataStore.edit { preferences ->
-                Log.d("dynamic", "Dynamic preference is: " + preferences[IS_DYNAMIC_MODE_KEY])
-                preferences[IS_DYNAMIC_MODE_KEY] = !(preferences[IS_DYNAMIC_MODE_KEY] ?: false)
+                preferences[IS_DYNAMIC_MODE_KEY] =
+                    !(preferences[IS_DYNAMIC_MODE_KEY] ?: supportsDynamic())
+                Log.d(
+                    "toggleDynamicColors",
+                    "IS_DYNAMIC_MODE_KEY: ${preferences[IS_DYNAMIC_MODE_KEY]}"
+                )
             }
         }
     }
