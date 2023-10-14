@@ -41,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.3"
@@ -79,7 +80,7 @@ dependencies {
     // Location services
     implementation("com.google.android.gms:play-services-location:21.0.1")
     // Maps
-    implementation("com.google.maps.android:maps-compose:3.1.0")
+    implementation("com.google.maps.android:maps-compose:3.1.1")
     implementation("com.google.android.gms:play-services-maps:18.1.0")
     //Splash Api
     implementation("androidx.core:core-splashscreen:1.0.1")
