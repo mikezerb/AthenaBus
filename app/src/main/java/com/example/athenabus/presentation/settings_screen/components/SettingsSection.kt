@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MiscellaneousServices
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -63,7 +64,7 @@ private fun PreviewSettingsSection() {
                     description = R.string.default_setting_desc,
                     onClick = { }
                 )
-                Divider()
+                HorizontalDivider()
                 BasicPreference(
                     title = R.string.default_setting_title,
                     description = R.string.default_setting_desc,

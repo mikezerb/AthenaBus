@@ -78,8 +78,11 @@ fun MainScreen(
         )
         ModalNavigationDrawer(
             gesturesEnabled = drawerState.isOpen,
+
             drawerContent = {
-                ModalDrawerSheet {
+                ModalDrawerSheet(
+                    drawerTonalElevation = 4.dp,
+                ){
                     Spacer(modifier = Modifier.height(16.dp))
                     DrawerHeader(modifier = Modifier.fillMaxWidth().padding(8.dp))
                     Spacer(modifier = Modifier.height(16.dp))

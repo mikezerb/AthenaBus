@@ -7,7 +7,8 @@ import com.example.athenabus.data.local.entity.RouteEntity
 
 @Database(
     entities = [BusLineEntity::class, RouteEntity::class],
-    version = 1
+    version = 1,
+    exportSchema = false
 )
 abstract class TelematicsDatabase : RoomDatabase() {
     abstract val dao: TelematicsDao

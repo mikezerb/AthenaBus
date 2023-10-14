@@ -17,6 +17,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
@@ -86,7 +87,7 @@ fun BusLineListScreen(
                     style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                Divider(
+                HorizontalDivider(
                     modifier = Modifier
                         .padding(bottom = 4.dp)
                         .padding(horizontal = 4.dp),
@@ -135,7 +136,7 @@ fun BusLineListScreen(
                                     navController.navigate(Route.RoutesDetailScreen.route)
                                 }
                             )
-                            Divider(
+                            HorizontalDivider(
                                 thickness = .8.dp,
                                 modifier = Modifier.padding(horizontal = 10.dp),
                                 color = MaterialTheme.colorScheme.primary
@@ -168,7 +169,7 @@ fun BusLineListScreen(
 //                            )
 //                        }
                     },
-                    onToggleFavorite = { favorite_line ->
+                    onToggleFavorite = { _ ->
 
                     }
                 )

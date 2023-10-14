@@ -28,6 +28,10 @@ import com.example.athenabus.presentation.common.FavoriteButton
 import com.example.athenabus.sample.SampleLineProvider
 import com.example.athenabus.ui.theme.AthenaBusTheme
 
+val trolleyList: List<String> = listOf(
+    "10", "11", "12", "15",
+    "16", "17", "18", "19", "19Β", "20", "21", "24", "25"
+)
 @Composable
 fun BusLineItem(
     busLine: Line,
@@ -93,10 +97,9 @@ fun BusLineItem(
 @Preview
 @Composable
 fun BusLineItemPreview(@PreviewParameter(SampleLineProvider::class) line: Line) {
-    AthenaBusTheme {
-        BusLineItem(
-            busLine = line,
-            onItemClick = { },
-            onToggleFavorite = { })
-    }
+    BusLineItem(
+        busLine = line,
+        onItemClick = { },
+        onToggleFavorite = { })
+
 }
