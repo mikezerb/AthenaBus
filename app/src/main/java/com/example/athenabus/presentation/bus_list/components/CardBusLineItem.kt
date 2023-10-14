@@ -26,7 +26,6 @@ import androidx.compose.ui.unit.dp
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.presentation.common.FavoriteButton
 import com.example.athenabus.sample.SampleLineProvider
-import com.example.athenabus.ui.theme.AthenaBusTheme
 
 val trolleyList: List<String> = listOf(
     "10", "11", "12", "15",
