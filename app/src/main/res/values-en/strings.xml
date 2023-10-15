@@ -15,10 +15,10 @@
     <string name="search_place_holder">Search</string>
     <string name="default_setting_section">Settings Section</string>
     <string name="theme_settings_theme_section">Theme</string>
-    <string name="theme_settings_theme_title">Dark Mode</string>
-    <string name="theme_settings_amoled_theme_title">Amoled Mode</string>
+    <string name="theme_settings_theme_title">Dark Theme</string>
+    <string name="theme_settings_amoled_theme_title">Black Theme</string>
     <string name="theme_settings_theme_subtitle">Change app appearance to dark</string>
-    <string name="theme_settings_amoled_theme_subtitle">Change app appearance to pure dark</string>
+    <string name="theme_settings_amoled_theme_subtitle">Change app appearance to black</string>
 
     <string name="theme_settings_color_title">Dynamic Color</string>
     <string name="theme_settings_color_subtitle">Enable/disable dynamic colors</string>
