@@ -29,10 +29,9 @@ fun StopsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        val options : MutableList<String> = mutableListOf()
-        if(routes.isNotEmpty()){
-            routes.forEach {
-                    route ->
+        val options: MutableList<String> = mutableListOf()
+        if (routes.isNotEmpty()) {
+            routes.forEach { route ->
                 options += route.RouteDescr
             }
         }

@@ -66,7 +66,7 @@ fun LineDetailsScreen(
     LaunchedEffect(key1 = Unit) {
         viewModel.getLine(lineId)
     }
-    LaunchedEffect(key1 = Unit){
+    LaunchedEffect(key1 = Unit) {
         routeViewModel.getLineCodes(lineId)
     }
 
@@ -75,7 +75,14 @@ fun LineDetailsScreen(
             title = stringResource(R.string.stops_tab_title),
             selectedIcon = Icons.Filled.DirectionsBus,
             unSelectedIcon = Icons.Outlined.DirectionsBus,
-            screen = { state.line?.let { StopsScreen(line = it, routes = routeState.availableRoutes) } }
+            screen = {
+                state.line?.let {
+                    StopsScreen(
+                        line = it,
+                        routes = routeState.availableRoutes
+                    )
+                }
+            }
         ),
         TabItem(
             title = stringResource(R.string.schedule_tab_title),

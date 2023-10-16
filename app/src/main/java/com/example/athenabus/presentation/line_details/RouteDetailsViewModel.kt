@@ -32,12 +32,18 @@ class RouteDetailsViewModel @Inject constructor(
         getRouteFromLineIdUseCase(lineId).onEach { result ->
             when (result) {
                 is Resource.Success -> {
-                    Log.d("getLineCodes", "Found: " + result.data?.size.toString() + " with lineID: " + lineId)
+                    Log.d(
+                        "getLineCodes",
+                        "Found: " + result.data?.size.toString() + " with lineID: " + lineId
+                    )
                     _state.value = RouteDetailsState(availableRoutes = result.data ?: emptyList())
                 }
 
                 is Resource.Error -> {
-                    Log.d("getLineCodes", "Error found: " + result.message + " with lineID: " + lineId)
+                    Log.d(
+                        "getLineCodes",
+                        "Error found: " + result.message + " with lineID: " + lineId
+                    )
                     _state.value = RouteDetailsState(error = result.message ?: "Unexpected error")
                 }
 

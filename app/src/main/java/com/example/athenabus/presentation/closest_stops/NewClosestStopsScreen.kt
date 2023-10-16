@@ -438,7 +438,12 @@ fun NewClosestStopsScreen(
                                             onClick = { }, //  closestStopsViewModel.getStopArrival(stopCode = stop.StopCode)
                                             routes = (routesForStopViewModel.routesForStops[stop.StopCode]
                                                 ?: emptyList()).fastDistinctBy { it.RouteCode },
-                                            arrivals = fillArrivalDetail(arrivalsForStopViewModel.arrivalsForStop[stop.StopCode]?: emptyList(), routesForStopViewModel.routesForStops[stop.StopCode]?: emptyList()),
+                                            arrivals = fillArrivalDetail(
+                                                arrivalsForStopViewModel.arrivalsForStop[stop.StopCode]
+                                                    ?: emptyList(),
+                                                routesForStopViewModel.routesForStops[stop.StopCode]
+                                                    ?: emptyList()
+                                            ),
                                             expanded = stop.StopCode.toInt() == expandedItem,
                                             onExpandClick = { id ->
                                                 expandedItem = if (expandedItem == id) {

@@ -142,8 +142,7 @@ class AppColorTheme {
     )
 
 
-
-enum class AppTheme {
+    enum class AppTheme {
         Green,
         Blue,
         Peach,

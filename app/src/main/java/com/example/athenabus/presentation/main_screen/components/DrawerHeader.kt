@@ -11,7 +11,6 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -44,7 +43,7 @@ fun DrawerHeader(
             Row(
                 modifier = Modifier.padding(20.dp)
             ) {
-                IconButton(onClick = onClick ) {
+                IconButton(onClick = onClick) {
                     Icon(
                         imageVector = Icons.Filled.Info,
                         contentDescription = null,
@@ -62,7 +61,6 @@ fun HeaderPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         DrawerHeader(Modifier.fillMaxWidth())
     }
-
 
 
 }

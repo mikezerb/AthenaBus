@@ -38,7 +38,8 @@ class RoutesForStopViewModel @Inject constructor(
 
                         // Cache the fetched routes in the HashMap.
                         routesForStops[stopCode] = routes
-                        _state.value = RoutesForStopState(routesForStop = result.data ?: emptyList())
+                        _state.value =
+                            RoutesForStopState(routesForStop = result.data ?: emptyList())
                     }
 
                     is Resource.Error -> {

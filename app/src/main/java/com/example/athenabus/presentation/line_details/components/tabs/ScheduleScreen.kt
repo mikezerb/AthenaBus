@@ -13,11 +13,13 @@ import com.example.athenabus.domain.model.Line
 
 @Composable
 fun ScheduleScreen(
-    modifier: Modifier= Modifier,
-    line : Line,
+    modifier: Modifier = Modifier,
+    line: Line,
 ) {
     Column(
-        modifier = modifier.fillMaxSize().padding(4.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(4.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {

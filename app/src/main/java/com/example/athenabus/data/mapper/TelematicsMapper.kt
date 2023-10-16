@@ -49,7 +49,7 @@ fun RouteDtoItem.toRoute(): Route {
 }
 
 
-fun WebGetRouteDtoItem.toRoute(): Route{
+fun WebGetRouteDtoItem.toRoute(): Route {
     return Route(
         RouteCode = RouteCode,
         RouteDescr = RouteDescr,

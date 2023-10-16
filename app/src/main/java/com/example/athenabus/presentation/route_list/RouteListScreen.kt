@@ -10,7 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,7 +49,7 @@ fun RouteListScreen(
                     .align(Alignment.CenterHorizontally)
                     .padding(12.dp)
             )
-            Divider(modifier = Modifier.padding(bottom = 4.dp), thickness = .8.dp)
+            HorizontalDivider(modifier = Modifier.padding(bottom = 4.dp), thickness = .8.dp)
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(state.busRoutes) { bus_route ->
                     BusRouteItem(busRoute = bus_route, onItemClick =

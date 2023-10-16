@@ -1,5 +1,6 @@
 package com.example.athenabus.presentation.about_screen.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
@@ -22,17 +23,17 @@ fun AboutItem(
     button: @Composable (Modifier) -> Unit = { },
 ) {
     ListItem(
+        modifier = modifier.fillMaxWidth(),
         headlineContent = { Text(text = title) },
         leadingContent = { Icon(imageVector = icon, contentDescription = null) },
         supportingContent = { Text(text = subtitle.orEmpty()) },
-        trailingContent = { button(Modifier.padding(4.dp)) }
+        trailingContent = { button(Modifier.padding(start = 4.dp)) }
     )
 }
 
 @Preview
 @Composable
 private fun PreviewAboutItem() {
-
     AboutItem(title = "About me", subtitle = "little stuff about me", icon = Icons.Default.Code,
         button = {
             TextButton(onClick = { }) {

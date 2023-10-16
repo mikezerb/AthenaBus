@@ -20,26 +20,29 @@ sealed class NavDrawerItem(
     val badgeCount: Int? = null,
     val destination: String? = null,
     val link: String? = null,
-){
-    data object HomeDrawer: NavDrawerItem(
+) {
+    data object HomeDrawer : NavDrawerItem(
         title = "All",
         selectedIcon = Icons.Filled.Home,
         unselectedIcon = Icons.Outlined.Home,
         destination = Route.NewBusLineScreen.route
     )
-    data object FavoritesDrawer: NavDrawerItem(
+
+    data object FavoritesDrawer : NavDrawerItem(
         title = "Favorites",
         selectedIcon = Icons.Filled.Favorite,
         unselectedIcon = Icons.Outlined.FavoriteBorder,
         destination = Route.FavoriteScreen.route
     )
-    data object SettingsDrawer: NavDrawerItem(
+
+    data object SettingsDrawer : NavDrawerItem(
         title = "Settings",
         selectedIcon = Icons.Filled.Settings,
         unselectedIcon = Icons.Outlined.Settings,
         destination = Route.SettingsActivityScreen.route
     )
-    data object NewsDrawer: NavDrawerItem(
+
+    data object NewsDrawer : NavDrawerItem(
         title = "OASA News",
         selectedIcon = Icons.Filled.NewReleases,
         unselectedIcon = Icons.Outlined.NewReleases,

@@ -132,7 +132,11 @@ fun AthenaBusTheme(
             }
         }
 
-        darkTheme && amoledTheme -> currentTheme.copy(background = Color.Black, surface = Color.Black)
+        darkTheme && amoledTheme -> currentTheme.copy(
+            background = Color.Black,
+            surface = Color.Black
+        )
+
         darkTheme -> currentTheme
         else -> currentTheme
     }

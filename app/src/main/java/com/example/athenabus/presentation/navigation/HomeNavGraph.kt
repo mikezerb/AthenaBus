@@ -50,8 +50,8 @@ fun HomeNavGraph(navController: NavHostController) {
             composable(route = Route.ClosestStopsActivityScreen.route) {
                 NewClosestStopsScreen(navController = navController)
             }
-            composable(route = Route.AboutActivityScreen.route){
-                AboutScreen(navController = navController)
+            composable(route = Route.AboutActivityScreen.route) {
+                AboutScreen()
             }
             navigation(
                 startDestination = Route.LineDetailActivityScreen.route,

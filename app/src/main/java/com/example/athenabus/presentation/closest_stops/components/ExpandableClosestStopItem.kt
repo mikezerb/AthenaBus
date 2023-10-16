@@ -98,9 +98,7 @@ fun ExpandableClosestStopItem(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column(
-
-                ) {
+                Column {
                     Text(text = stop.StopDescr, style = MaterialTheme.typography.titleSmall)
                     Text(
                         text = "${stop.StopStreet ?: ""} (${stop.StopCode})",

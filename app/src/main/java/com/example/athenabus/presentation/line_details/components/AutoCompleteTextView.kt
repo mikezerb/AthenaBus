@@ -59,7 +59,9 @@ fun AutoCompleteTextField(
             colors = ExposedDropdownMenuDefaults.textFieldColors()
         )
         ExposedDropdownMenu(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             expanded = expanded,
             onDismissRequest = { expanded = false }
         )

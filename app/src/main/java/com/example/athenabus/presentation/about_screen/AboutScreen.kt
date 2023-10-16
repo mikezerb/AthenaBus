@@ -1,7 +1,6 @@
 package com.example.athenabus.presentation.about_screen
 
 import android.content.Context
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.widget.Toast
@@ -16,7 +15,6 @@ import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
 import androidx.compose.material.icons.outlined.BugReport
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material.icons.twotone.DirectionsBus
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,7 +25,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.pm.PackageInfoCompat
@@ -35,7 +32,6 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.presentation.about_screen.components.AboutItem
-import java.lang.Appendable
 
 
 data class AppVersion(
@@ -63,11 +59,9 @@ fun getAppVersion(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutScreen(
-    modifier: Modifier = Modifier,
-    navController: NavController = rememberNavController()
+    modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
     Surface(
@@ -76,8 +70,7 @@ fun AboutScreen(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(8.dp),
+                .fillMaxSize(),
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -88,8 +81,15 @@ fun AboutScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(imageVector = Icons.TwoTone.DirectionsBus, contentDescription = null)
-                Text(text = stringResource(id = R.string.app_name), style = MaterialTheme.typography.headlineMedium)
+                Icon(
+                    imageVector = Icons.TwoTone.DirectionsBus,
+                    contentDescription = null,
+                    modifier = Modifier.padding(8.dp)
+                )
+                Text(
+                    text = stringResource(id = R.string.app_name),
+                    style = MaterialTheme.typography.headlineMedium
+                )
             }
             HorizontalDivider()
             AboutItem(
@@ -120,7 +120,7 @@ fun AboutScreen(
                 }
             )
             AboutItem(
-                title = "Application Version",
+                title = "Version",
                 subtitle = getAppVersion(context = context)?.versionName.toString(),
                 icon = Icons.Outlined.Info,
             )

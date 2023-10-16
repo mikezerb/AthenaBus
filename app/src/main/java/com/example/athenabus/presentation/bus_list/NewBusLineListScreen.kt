@@ -110,7 +110,8 @@ fun NewBusLineListScreen(
     Surface {
         Column(
             modifier = Modifier
-                .fillMaxSize().background(MaterialTheme.colorScheme.background)
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
         ) {
             DockedSearchBar(
                 modifier = Modifier
