@@ -49,6 +49,6 @@
     <string name="night_chip_label">Νυχτερινά</string>
     <string name="aeroplane_chip_label">Αεροδρομίου</string>
     <string name="express_chip_label">Express</string>
-    <string name="about_athenabus">Σχετικά AthenaBus</string>
+    <string name="about_athenabus">Σχετικά</string>
 
 </resources>

@@ -1,15 +1,25 @@
 package com.example.athenabus.presentation.about_screen
 
+import android.content.Context
+import android.content.pm.ApplicationInfo
+import android.content.pm.PackageManager
+import android.os.Build
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material.icons.filled.SentimentSatisfiedAlt
+import androidx.compose.material.icons.outlined.BugReport
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.twotone.DirectionsBus
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -17,10 +27,41 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.content.pm.PackageInfoCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.athenabus.R
 import com.example.athenabus.presentation.about_screen.components.AboutItem
+import java.lang.Appendable
+
+
+data class AppVersion(
+    val versionName: String,
+    val versionNumber: Long,
+)
+
+fun getAppVersion(
+    context: Context,
+): AppVersion? {
+    return try {
+        val packageManager = context.packageManager
+        val packageName = context.packageName
+        val packageInfo = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            packageManager.getPackageInfo(packageName, PackageManager.PackageInfoFlags.of(0))
+        } else {
+            packageManager.getPackageInfo(packageName, 0)
+        }
+        AppVersion(
+            versionName = packageInfo.versionName,
+            versionNumber = PackageInfoCompat.getLongVersionCode(packageInfo),
+        )
+    } catch (e: Exception) {
+        null
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -31,7 +72,7 @@ fun AboutScreen(
     val context = LocalContext.current
     Surface(
         modifier.fillMaxSize(),
-        tonalElevation = 4.dp
+        tonalElevation = 2.dp
     ) {
         Column(
             modifier = Modifier
@@ -40,9 +81,20 @@ fun AboutScreen(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 32.dp),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Icon(imageVector = Icons.TwoTone.DirectionsBus, contentDescription = null)
+                Text(text = stringResource(id = R.string.app_name), style = MaterialTheme.typography.headlineMedium)
+            }
+            HorizontalDivider()
             AboutItem(
                 title = "About Creator",
-                subtitle = "Info about the me",
+                subtitle = "Info about me",
                 icon = Icons.Default.SentimentSatisfiedAlt,
                 button = {
                     TextButton(onClick = {
@@ -53,11 +105,10 @@ fun AboutScreen(
                         Text(text = "View Profile")
                     }
                 })
-            HorizontalDivider()
             AboutItem(
                 title = "Found a Bug?",
                 subtitle = "Feel free to open an issue about any bugs or requests",
-                icon = Icons.Default.BugReport,
+                icon = Icons.Outlined.BugReport,
                 button = {
                     TextButton(onClick = {
                         Toast.makeText(
@@ -67,6 +118,11 @@ fun AboutScreen(
                         Text(text = "Open issue")
                     }
                 }
+            )
+            AboutItem(
+                title = "Application Version",
+                subtitle = getAppVersion(context = context)?.versionName.toString(),
+                icon = Icons.Outlined.Info,
             )
         }
 
