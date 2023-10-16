@@ -39,7 +39,7 @@ fun SwitchPreference(
     Card(
         modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(horizontal = 8.dp, vertical = 4.dp)
     ) {
         Row(
             modifier = Modifier
