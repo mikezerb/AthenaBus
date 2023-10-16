@@ -25,6 +25,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
@@ -56,6 +57,7 @@ fun MaterialTopAppBar(
             || currentRoute == Route.FavoriteScreen.route
             || currentRoute == Route.ClosestStopsActivityScreen.route
             || currentRoute == Route.SettingsActivityScreen.route
+            || currentRoute == Route.AboutActivityScreen.route
 
     if (currentRoute == Route.LineDetailActivityScreen.route) {
         AnimatedVisibility(
@@ -109,12 +111,12 @@ fun MaterialTopAppBar(
             CenterAlignedTopAppBar(
                 title = {
                     Text(
-                        text = title,
+                        text = if(currentRoute == Route.AboutActivityScreen.route) stringResource(R.string.about_athenabus) else title,
                         fontFamily = FontFamily(Font(R.font.poppins_semibold))
                     )
                 },
                 navigationIcon = {
-                    if (currentRoute == Route.SettingsActivityScreen.route) {
+                    if (currentRoute == Route.SettingsActivityScreen.route || currentRoute == Route.AboutActivityScreen.route) {
                         IconButton(onClick = navigateUp) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,

@@ -24,7 +24,8 @@ import com.example.athenabus.R
 
 @Composable
 fun DrawerHeader(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = { },
 ) {
     Surface(
         shape = MaterialTheme.shapes.extraLarge,
@@ -43,7 +44,7 @@ fun DrawerHeader(
             Row(
                 modifier = Modifier.padding(20.dp)
             ) {
-                IconButton(onClick = {  }) {
+                IconButton(onClick = onClick ) {
                     Icon(
                         imageVector = Icons.Filled.Info,
                         contentDescription = null,

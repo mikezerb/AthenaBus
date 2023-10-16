@@ -1,5 +1,7 @@
 package com.example.athenabus.presentation.main_screen
 
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -33,6 +35,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -59,14 +62,21 @@ fun MainScreen(
     var showBottomBar by rememberSaveable { mutableStateOf(true) }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     showBottomBar = when (navBackStackEntry?.destination?.route) {
         Route.SettingsActivityScreen.route -> false // on this screen bottom bar should be hidden
         Route.LineDetailActivityScreen.route -> false // on this screen bottom bar should be hidden
+        Route.AboutActivityScreen.route -> false // on this screen bottom bar should be hidden
         else -> true // in all other cases show bottom bar
     }
 
     val navDrawerItems =
-        listOf(NavDrawerItem.HomeDrawer, NavDrawerItem.SettingsDrawer, NavDrawerItem.NewsDrawer)
+        listOf(
+            NavDrawerItem.HomeDrawer,
+            NavDrawerItem.FavoritesDrawer,
+            NavDrawerItem.SettingsDrawer,
+            NavDrawerItem.NewsDrawer
+        )
     var selectedDrawerItemIndex by rememberSaveable {
         mutableIntStateOf(0)
     }
@@ -78,13 +88,25 @@ fun MainScreen(
         )
         ModalNavigationDrawer(
             gesturesEnabled = drawerState.isOpen,
-
             drawerContent = {
                 ModalDrawerSheet(
                     drawerTonalElevation = 4.dp,
-                ){
+                ) {
                     Spacer(modifier = Modifier.height(16.dp))
-                    DrawerHeader(modifier = Modifier.fillMaxWidth().padding(8.dp))
+                    DrawerHeader(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        onClick = {
+                            scope.launch {
+                                drawerState.close()
+                            }
+                            navController.navigate(route = Route.AboutActivityScreen.route) {
+                                popUpTo(Route.HomeScreen.route)
+                                launchSingleTop = true
+                            }
+                        }
+                    )
                     Spacer(modifier = Modifier.height(16.dp))
                     navDrawerItems.forEachIndexed { index, navItem ->
                         NavigationDrawerItem(
@@ -95,6 +117,19 @@ fun MainScreen(
                                 selectedDrawerItemIndex = index
                                 scope.launch {
                                     drawerState.close()
+                                }
+                                if (navItem.destination != null) {
+                                    navController.navigate(route = navItem.destination) {
+                                        popUpTo(Route.HomeScreen.route)
+                                        launchSingleTop = true
+                                    }
+                                }
+                                if (navItem.link != null) {
+                                    val intent = Intent(
+                                        Intent.ACTION_VIEW,
+                                        Uri.parse(navItem.link)
+                                    )
+                                    context.startActivity(intent)
                                 }
                             },
                             icon = {
@@ -125,7 +160,7 @@ fun MainScreen(
                         title = stringResource(id = R.string.app_name),
                         canNavigateBack = navController.previousBackStackEntry != null,
                         navigateUp = { navController.popBackStack() },
-                        navigationDrawerClick = { scope.launch { drawerState.open() }},
+                        navigationDrawerClick = { scope.launch { drawerState.open() } },
                         onSettingsClick = {
                             navController.navigate(Route.SettingsActivityScreen.route) {
                                 popUpTo(Route.HomeScreen.route)

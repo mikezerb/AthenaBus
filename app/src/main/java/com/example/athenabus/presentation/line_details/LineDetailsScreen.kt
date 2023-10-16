@@ -60,7 +60,7 @@ fun LineDetailsScreen(
     )
     val context = LocalContext.current
     val state = viewModel.state.value
-    val route_state = routeViewModel.state.value
+    val routeState = routeViewModel.state.value
 
     val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = Unit) {
@@ -75,7 +75,7 @@ fun LineDetailsScreen(
             title = stringResource(R.string.stops_tab_title),
             selectedIcon = Icons.Filled.DirectionsBus,
             unSelectedIcon = Icons.Outlined.DirectionsBus,
-            screen = { state.line?.let { StopsScreen(line = it, routes = route_state.availableRoutes) } }
+            screen = { state.line?.let { StopsScreen(line = it, routes = routeState.availableRoutes) } }
         ),
         TabItem(
             title = stringResource(R.string.schedule_tab_title),

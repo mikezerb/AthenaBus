@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.example.athenabus.presentation.about_screen.AboutScreen
 import com.example.athenabus.presentation.bus_list.NewBusLineListScreen
 import com.example.athenabus.presentation.closest_stops.NewClosestStopsScreen
 import com.example.athenabus.presentation.favorites_screen.FavoriteScreen
@@ -23,13 +24,13 @@ fun HomeNavGraph(navController: NavHostController) {
         enterTransition = {
             slideIntoContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                animationSpec = tween(400)
+                animationSpec = tween(500)
             )
         },
         exitTransition = {
             slideOutOfContainer(
                 towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
-                animationSpec = tween(400)
+                animationSpec = tween(500)
             )
         }
     ) {
@@ -48,6 +49,9 @@ fun HomeNavGraph(navController: NavHostController) {
             }
             composable(route = Route.ClosestStopsActivityScreen.route) {
                 NewClosestStopsScreen(navController = navController)
+            }
+            composable(route = Route.AboutActivityScreen.route){
+                AboutScreen(navController = navController)
             }
             navigation(
                 startDestination = Route.LineDetailActivityScreen.route,
@@ -71,6 +75,7 @@ fun HomeNavGraph(navController: NavHostController) {
                     )
                 }
             }
+
         }
     }
 }

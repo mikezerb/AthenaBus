@@ -46,6 +46,7 @@
     <string name="night_chip_label">Night</string>
     <string name="aeroplane_chip_label">Aeroplane</string>
     <string name="express_chip_label">Express</string>
+    <string name="about_athenabus">About AthenaBus</string>
 
 
 </resources>

@@ -15,9 +15,9 @@ import androidx.compose.material.icons.outlined.FollowTheSigns
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,6 +28,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
@@ -59,6 +60,7 @@ fun FavoriteScreen(
 
         var selectedTabIndex by remember { mutableStateOf(0) }
         val pagerState = rememberPagerState { favTabItems.size }
+
         LaunchedEffect(selectedTabIndex) {
             pagerState.animateScrollToPage(selectedTabIndex)
         }
@@ -75,12 +77,17 @@ fun FavoriteScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            TabRow(selectedTabIndex = selectedTabIndex) {
+            PrimaryTabRow(selectedTabIndex = selectedTabIndex) {
                 favTabItems.forEachIndexed { index, tabItem ->
                     Tab(
                         selected = index == selectedTabIndex,
                         onClick = { selectedTabIndex = index },
-                        text = { Text(text = tabItem.title) },
+                        text = {
+                            Text(
+                                text = tabItem.title, maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        },
                         icon = {
                             Icon(
                                 imageVector = if (index == selectedTabIndex) {
