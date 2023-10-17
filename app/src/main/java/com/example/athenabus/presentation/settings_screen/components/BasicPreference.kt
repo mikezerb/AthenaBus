@@ -31,9 +31,9 @@ import com.example.athenabus.ui.theme.AthenaBusTheme
 
 @Composable
 fun BasicPreference(
+    modifier: Modifier = Modifier,
     @StringRes title: Int,
     @StringRes description: Int,
-    modifier: Modifier = Modifier,
     icon: ImageVector? = null,
     onClick: () -> Unit
 ) {
