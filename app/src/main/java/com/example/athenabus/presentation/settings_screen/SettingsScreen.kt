@@ -65,7 +65,12 @@ fun SettingsScreen(
             SwitchPreference(
                 title = R.string.theme_settings_theme_title,
                 subtitle = R.string.theme_settings_theme_subtitle,
-                icon = { Icon(imageVector = Icons.Outlined.DarkMode, contentDescription = null) },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Outlined.DarkMode,
+                        contentDescription = null
+                    )
+                },
                 isChecked = themeState.isDarkMode,
                 onCheckedChange = { themeViewModel.toggleTheme() }
             )
@@ -97,92 +102,91 @@ fun SettingsScreen(
                 )
             }
         }
-        SettingsGroup(title = R.string.default_setting_section) {
-            SwitchPreference(
-                title = R.string.default_setting_title,
-                subtitle = R.string.default_setting_desc,
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.CloudUpload,
-                        contentDescription = null
-                    )
-                },
-                isChecked = isOtherMode,
-                onCheckedChange = { isOtherMode = !isOtherMode }
-            )
-            SwitchPreference(
-                title = R.string.setting_lang_title,
-                subtitle = R.string.setting_lang_desc,
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Language,
-                        contentDescription = null
-                    )
-                },
-                isChecked = langFlag,
-                onCheckedChange = {
-                    if (langFlag) {
-                        changeLanguage("en")
-                    } else {
-                        changeLanguage("el")
-                    }
-                    langFlag = !langFlag
+    }
+    SettingsGroup(title = R.string.default_setting_section) {
+        SwitchPreference(
+            title = R.string.default_setting_title,
+            subtitle = R.string.default_setting_desc,
+            icon = {
+                Icon(
+                    imageVector = Icons.Outlined.CloudUpload,
+                    contentDescription = null
+                )
+            },
+            isChecked = isOtherMode,
+            onCheckedChange = { isOtherMode = !isOtherMode }
+        )
+        SwitchPreference(
+            title = R.string.setting_lang_title,
+            subtitle = R.string.setting_lang_desc,
+            icon = {
+                Icon(
+                    imageVector = Icons.Outlined.Language,
+                    contentDescription = null
+                )
+            },
+            isChecked = langFlag,
+            onCheckedChange = {
+                if (langFlag) {
+                    changeLanguage("en")
+                } else {
+                    changeLanguage("el")
                 }
-            )
-        }
-        SettingsGroup(title = R.string.product_settings_product_section) {
-            BasicPreference(
-                title = R.string.product_settings_github_title,
-                description = R.string.product_settings_github_subtitle,
-                onClick = {
-                    val intent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(Constants.GITHUB_LINK)
-                    )
-                    context.startActivity(intent)
-                },
-                icon = ImageVector.vectorResource(R.drawable.github_icon)
-            )
-            BasicPreference(
-                title = R.string.product_settings_privacy_title,
-                description = R.string.product_settings_privacy_subtitle,
-                onClick = {
-                    val intent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(Constants.PRIVACY_LINK)
-                    )
-                    context.startActivity(intent)
-                },
-                icon = Icons.Outlined.PrivacyTip
-            )
-            BasicPreference(
-                title = R.string.product_settings_privacy_title,
-                description = R.string.product_settings_privacy_subtitle,
-                onClick = {
-                    val intent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(Constants.PRIVACY_LINK)
-                    )
-                    context.startActivity(intent)
-                },
-                icon = Icons.Outlined.PrivacyTip
-            )
-            BasicPreference(
-                title = R.string.product_settings_privacy_title,
-                description = R.string.product_settings_privacy_subtitle,
-                onClick = {
-                    val intent = Intent(
-                        Intent.ACTION_VIEW,
-                        Uri.parse(Constants.PRIVACY_LINK)
-                    )
-                    context.startActivity(intent)
-                },
-                icon = Icons.Outlined.PrivacyTip
-            )
-        }
+                langFlag = !langFlag
+            }
+        )
+    }
+    SettingsGroup(title = R.string.product_settings_product_section) {
+        BasicPreference(
+            title = R.string.product_settings_github_title,
+            description = R.string.product_settings_github_subtitle,
+            onClick = {
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(Constants.GITHUB_LINK)
+                )
+                context.startActivity(intent)
+            },
+            icon = ImageVector.vectorResource(R.drawable.github_icon)
+        )
+        BasicPreference(
+            title = R.string.product_settings_privacy_title,
+            description = R.string.product_settings_privacy_subtitle,
+            onClick = {
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(Constants.PRIVACY_LINK)
+                )
+                context.startActivity(intent)
+            },
+            icon = Icons.Outlined.PrivacyTip
+        )
+        BasicPreference(
+            title = R.string.product_settings_privacy_title,
+            description = R.string.product_settings_privacy_subtitle,
+            onClick = {
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(Constants.PRIVACY_LINK)
+                )
+                context.startActivity(intent)
+            },
+            icon = Icons.Outlined.PrivacyTip
+        )
+        BasicPreference(
+            title = R.string.product_settings_privacy_title,
+            description = R.string.product_settings_privacy_subtitle,
+            onClick = {
+                val intent = Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(Constants.PRIVACY_LINK)
+                )
+                context.startActivity(intent)
+            },
+            icon = Icons.Outlined.PrivacyTip
+        )
     }
 }
-
 
 @Preview(name = "SettingsScreen")
 @Composable
