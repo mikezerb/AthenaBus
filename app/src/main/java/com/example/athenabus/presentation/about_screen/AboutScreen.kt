@@ -26,10 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.core.content.pm.PackageInfoCompat
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.presentation.about_screen.components.AboutItem
 
@@ -84,11 +84,13 @@ fun AboutScreen(
                 Icon(
                     imageVector = Icons.TwoTone.DirectionsBus,
                     contentDescription = null,
-                    modifier = Modifier.padding(8.dp)
+                    modifier = Modifier.padding(8.dp),
+                    tint = MaterialTheme.colorScheme.surfaceTint
                 )
                 Text(
                     text = stringResource(id = R.string.app_name),
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.headlineMedium,
+                    fontFamily = FontFamily(Font(R.font.poppins_light))
                 )
             }
             HorizontalDivider()

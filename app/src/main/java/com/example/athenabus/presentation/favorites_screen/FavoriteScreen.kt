@@ -33,6 +33,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
+import com.example.athenabus.presentation.common.EmptyScreen
 import com.example.athenabus.presentation.common.TabItem
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -107,10 +108,7 @@ fun FavoriteScreen(
                     .weight(1f)
             ) { index ->
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = favTabItems[index].title)
-                    DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
-
-                    }
+                    EmptyScreen(title = "No favorite ${favTabItems[index].title} found")
                 }
             }
         }
