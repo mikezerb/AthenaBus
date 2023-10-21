@@ -10,6 +10,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideIn
 import androidx.compose.animation.slideOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -185,7 +186,7 @@ fun NewClosestStopsScreen(
     val mapProperties = MapProperties(
         // Only enable if user has accepted location permissions.
         isMyLocationEnabled = locationValue.currentLocation != null,
-        mapStyleOptions = if (darkThemeState.isDarkMode) {
+        mapStyleOptions = if (darkThemeState.appTheme == 2 || isSystemInDarkTheme()) {
             MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark)
         } else {
             MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style)

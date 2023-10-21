@@ -54,5 +54,8 @@
     <string name="theme_yellow">Yellow</string>
     <string name="theme_lavender">Lavender</string>
     <string name="theme_black_and_white">Black and white</string>
+    <string name="follow_system">Follow System</string>
+    <string name="theme_off">Off</string>
+    <string name="theme_on">On</string>
 
 </resources>

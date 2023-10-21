@@ -2,6 +2,7 @@ package com.example.athenabus.ui.theme
 
 import android.app.Activity
 import android.os.Build
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -109,35 +110,39 @@ fun AthenaBusTheme(
     appTheme: AppColorTheme.AppTheme = AppColorTheme.AppTheme.Blue,
     content: @Composable () -> Unit
 ) {
-
     val themeState by themeViewModel.themeState.collectAsState()
-    val darkTheme: Boolean = themeState.isDarkMode
     val amoledTheme = themeState.isAmoledMode
+    val dark = when (themeState.appTheme) {
+        0 -> isSystemInDarkTheme()
+        1 -> false
+        2 -> true
+        else -> isSystemInDarkTheme()
+    }
     val dynamicColorMode = themeState.isDynamicMode
     val appColorScheme = AppColorTheme()
-    val currentTheme = appColorScheme.getTheme(appTheme, darkTheme)
+    val currentTheme = appColorScheme.getTheme(appTheme, dark)
     val colorScheme = when {
         dynamicColorMode && supportsDynamic() -> {
             val context = LocalContext.current
 
             when {
-                darkTheme && amoledTheme -> dynamicDarkColorScheme(context).copy(
+                dark && amoledTheme -> dynamicDarkColorScheme(context).copy(
                     background = Color.Black,
                     surface = Color.Black
                 )
 
-                darkTheme && !amoledTheme -> dynamicDarkColorScheme(context)
+                dark && !amoledTheme -> dynamicDarkColorScheme(context)
                 else -> dynamicLightColorScheme(context)
 
             }
         }
 
-        darkTheme && amoledTheme -> currentTheme.copy(
+        dark && amoledTheme -> currentTheme.copy(
             background = Color.Black,
             surface = Color.Black
         )
 
-        darkTheme -> currentTheme
+        dark -> currentTheme
         else -> currentTheme
     }
 
@@ -148,7 +153,7 @@ fun AthenaBusTheme(
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()
             WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars =
-                themeState.isDarkMode
+                dark
         }
     }
 
@@ -159,7 +164,7 @@ fun AthenaBusTheme(
             SideEffect {
                 systemUiController.setSystemBarsColor(
                     color = Color.Transparent,
-                    darkIcons = !darkTheme
+                    darkIcons = !dark
                 )
             }
             content()

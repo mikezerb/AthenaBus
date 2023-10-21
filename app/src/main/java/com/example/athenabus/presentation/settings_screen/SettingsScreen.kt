@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.rememberScrollState
@@ -19,13 +20,13 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.os.LocaleListCompat
@@ -35,7 +36,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.common.Constants
 import com.example.athenabus.presentation.settings_screen.components.BasicPreference
-import com.example.athenabus.presentation.settings_screen.components.DropdownPreference
+import com.example.athenabus.presentation.settings_screen.components.OptionsPreference
 import com.example.athenabus.presentation.settings_screen.components.SettingsGroup
 import com.example.athenabus.presentation.settings_screen.components.SwitchPreference
 
@@ -57,29 +58,47 @@ fun SettingsScreen(
     var langFlag by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
-    var expanded by remember { mutableStateOf(false) }
-    var selectedIndex by remember { mutableIntStateOf(0) }
-    val options = listOf("Follow System", "Off", "On")
+//    var expanded by remember { mutableStateOf(false) }
+//    var selectedIndex by remember { mutableIntStateOf(0) }
+    val options = listOf(
+        stringResource(R.string.follow_system),
+        stringResource(R.string.theme_off),
+        stringResource(R.string.theme_on)
+    )
     Column(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
     ) {
         SettingsGroup(title = R.string.theme_settings_theme_section) {
-            DropdownPreference(
+//            DropdownPreference(
+//                title = R.string.theme_settings_theme_title,
+//                description = R.string.theme_settings_theme_subtitle,
+//                options = options,
+//                expanded = expanded,
+//                selected = selectedIndex,
+//                onSelect = { index ->
+//                    selectedIndex = index
+//                    expanded = false
+//                },
+//                onDismiss = {
+//                    expanded = false
+//                },
+//                onClick = { expanded = true },
+//                icon = {
+//                    Icon(
+//                        imageVector = Icons.Outlined.DarkMode,
+//                        contentDescription = null
+//                    )
+//                }
+//            )
+            OptionsPreference(
                 title = R.string.theme_settings_theme_title,
-                description = R.string.theme_settings_theme_subtitle,
                 options = options,
-                expanded = expanded,
-                selected = selectedIndex,
+                selected = themeState.appTheme,
                 onSelect = { index ->
-                    selectedIndex = index
-                    expanded = false
+                    themeViewModel.setAppTheme(index)
                 },
-                onDismiss = {
-                    expanded = false
-                },
-                onClick = { expanded = true },
                 icon = {
                     Icon(
                         imageVector = Icons.Outlined.DarkMode,
@@ -87,31 +106,32 @@ fun SettingsScreen(
                     )
                 }
             )
-            SwitchPreference(
-                title = R.string.theme_settings_theme_title,
-                subtitle = R.string.theme_settings_theme_subtitle,
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.DarkMode,
-                        contentDescription = null
-                    )
-                },
-                isChecked = themeState.isDarkMode,
-                onCheckedChange = { themeViewModel.toggleTheme() }
-            )
-            SwitchPreference(
-                title = R.string.theme_settings_amoled_theme_title,
-                subtitle = R.string.theme_settings_theme_subtitle,
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Contrast,
-                        contentDescription = null
-                    )
-                },
-                isChecked = themeState.isAmoledMode,
-                enabled = themeState.isDarkMode,
-                onCheckedChange = { themeViewModel.setAmoledBlack() }
-            )
+//            SwitchPreference(
+//                title = R.string.theme_settings_theme_title,
+//                subtitle = R.string.theme_settings_theme_subtitle,
+//                icon = {
+//                    Icon(
+//                        imageVector = Icons.Outlined.DarkMode,
+//                        contentDescription = null
+//                    )
+//                },
+//                isChecked = themeState.isDarkMode,
+//                onCheckedChange = { themeViewModel.toggleTheme() }
+//            )
+            if (themeState.appTheme == 2 || (themeState.appTheme == 0 && isSystemInDarkTheme())) {
+                SwitchPreference(
+                    title = R.string.theme_settings_amoled_theme_title,
+                    subtitle = R.string.theme_settings_theme_subtitle,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Contrast,
+                            contentDescription = null
+                        )
+                    },
+                    isChecked = themeState.isAmoledMode,
+                    onCheckedChange = { themeViewModel.setAmoledBlack() }
+                )
+            }
             if (supportsDynamic()) {
                 SwitchPreference(
                     title = R.string.theme_settings_color_title,

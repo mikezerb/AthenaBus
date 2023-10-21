@@ -56,6 +56,9 @@
     <string name="theme_yellow">Κίτρινο</string>
     <string name="theme_lavender">Μωβ</string>
     <string name="theme_black_and_white">Ασπρόμαυρο</string>
+    <string name="follow_system">Αυτόματο</string>
+    <string name="theme_off">Off</string>
+    <string name="theme_on">On</string>
 
 
 </resources>

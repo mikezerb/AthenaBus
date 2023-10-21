@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.di.AppLanguage
 import com.example.athenabus.di.DataStoreUtil
+import com.example.athenabus.di.DataStoreUtil.Companion.APP_THEME_KEY
 import com.example.athenabus.di.DataStoreUtil.Companion.IS_AMOLED_THEME_KEY
 import com.example.athenabus.di.DataStoreUtil.Companion.IS_DARK_MODE_KEY
 import com.example.athenabus.di.DataStoreUtil.Companion.IS_DYNAMIC_MODE_KEY
@@ -29,9 +30,9 @@ class ThemeViewModel @Inject constructor(
 
     private val _themeState = MutableStateFlow(
         ThemeState(
-            isDarkMode = false,
             isAmoledMode = false,
-            isDynamicMode = supportsDynamic()
+            isDynamicMode = supportsDynamic(),
+            appTheme = 0
         )
     )
     val themeState: StateFlow<ThemeState> = _themeState
@@ -41,12 +42,12 @@ class ThemeViewModel @Inject constructor(
             dataStore.data.map { preferences ->
                 Log.d(
                     "ThemeState",
-                    "IS_DARK_MODE_KEY: ${preferences[IS_DARK_MODE_KEY]}, ${preferences[IS_AMOLED_THEME_KEY]}, ${preferences[IS_DYNAMIC_MODE_KEY]}"
+                    "${preferences[IS_AMOLED_THEME_KEY]}, ${preferences[IS_DYNAMIC_MODE_KEY]}"
                 )
                 ThemeState(
-                    preferences[IS_DARK_MODE_KEY] ?: false,
                     preferences[IS_AMOLED_THEME_KEY] ?: false,
-                    preferences[IS_DYNAMIC_MODE_KEY] ?: supportsDynamic()
+                    preferences[IS_DYNAMIC_MODE_KEY] ?: supportsDynamic(),
+                    preferences[APP_THEME_KEY] ?: 0
                 )
             }.collect {
                 _themeState.value = it
@@ -62,10 +63,10 @@ class ThemeViewModel @Inject constructor(
         }
     }
 
-    fun toggleTheme() {
+    fun setAppTheme(theme :Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            dataStore.edit { preferences ->
-                preferences[IS_DARK_MODE_KEY] = !(preferences[IS_DARK_MODE_KEY] ?: false)
+            dataStore.edit { settings ->
+                settings[APP_THEME_KEY] = theme
             }
         }
     }

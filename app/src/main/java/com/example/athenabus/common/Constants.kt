@@ -7,6 +7,7 @@ object Constants {
     const val APP_ENTRY = "appEntry"
     const val DARK_MODE = "darkMode"
     const val AMOLED_MODE = "amoledMode"
+    const val APP_THEME = "appTheme"
     const val DYNAMIC_MODE = "dynamicMode"
     const val SELECTED_LANG = "lang"
     const val SELECTED_LANG_CODE = "langCode"
