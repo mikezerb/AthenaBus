@@ -58,7 +58,7 @@ fun PreferenceSection(
         Text(
             text = stringResource(id = title),
             modifier = Modifier
-                .padding(start = 20.dp, top = 16.dp, end = 8.dp),
+                .padding(start = 16.dp, top = 16.dp, end = 12.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary
@@ -67,7 +67,6 @@ fun PreferenceSection(
             content()
         }
     }
-
 }
 
 @Preview

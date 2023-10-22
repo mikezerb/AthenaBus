@@ -60,7 +60,7 @@ fun LocaleDropdownMenuPreference(
                 Text(
                     text = stringResource(id = description),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.primary
                 )
             }
         },
@@ -71,7 +71,7 @@ fun LocaleDropdownMenuPreference(
                     modifier = Modifier.padding(4.dp),
                     text = options[selected].selectedLang,
                     style = MaterialTheme.typography.labelLarge,
-                    color = MaterialTheme.colorScheme.secondary
+                    color = MaterialTheme.colorScheme.primary
                 )
                 ExposedDropdownMenuDefaults.TrailingIcon(
                     expanded = expanded
