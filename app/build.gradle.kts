@@ -80,12 +80,12 @@ dependencies {
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.10.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.0-alpha07")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.6.0-alpha08")
     // Location services
     implementation("com.google.android.gms:play-services-location:21.0.1")
     // Maps
     implementation("com.google.maps.android:maps-compose:3.1.1")
-    implementation("com.google.android.gms:play-services-maps:18.1.0")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
     //Splash Api
     implementation("androidx.core:core-splashscreen:1.0.1")
     // Preferences DataStore (SharedPreferences like APIs)
@@ -115,7 +115,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
     implementation("com.google.accompanist:accompanist-permissions:0.32.0")
     //Compose Foundation
-    implementation("androidx.compose.foundation:foundation:1.6.0-alpha07")
+    implementation("androidx.compose.foundation:foundation:1.6.0-alpha08")
     // Retrofit
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
