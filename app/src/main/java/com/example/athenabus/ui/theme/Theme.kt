@@ -1,7 +1,11 @@
 package com.example.athenabus.ui.theme
 
 import android.app.Activity
+import android.app.LocaleManager
+import android.content.Context
 import android.os.Build
+import android.os.LocaleList
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -16,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.core.os.LocaleListCompat
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.athenabus.presentation.settings.ThemeViewModel
@@ -100,6 +105,18 @@ private val LightColorScheme = lightColorScheme(
 
 // For checking API support, we could do a simple build SDK version check
 fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+
+
+fun localeSelection(context: Context, localeTag: String) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        context.getSystemService(LocaleManager::class.java).applicationLocales =
+            LocaleList.forLanguageTags(localeTag)
+    } else {
+        AppCompatDelegate.setApplicationLocales(
+            LocaleListCompat.forLanguageTags(localeTag)
+        )
+    }
+}
 
 @Composable
 fun AthenaBusTheme(

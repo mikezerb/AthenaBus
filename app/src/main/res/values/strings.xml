@@ -13,10 +13,10 @@
     <string name="search_place_holder">Αναζήτηση</string>
     <string name="default_setting_title">Ρύθμιση</string>
     <string name="default_setting_desc">Αυτό είναι μία ρύθμιση για δοκιμή</string>
-    <string name="setting_lang_title">Ρύθμιση</string>
-    <string name="setting_lang_desc">Αυτό είναι μία ρύθμιση για δοκιμή</string>
+    <string name="setting_lang_title">Γλώσσα εφαρμογής</string>
+    <string name="setting_lang_desc">Αλλαγή της γλώσσας της εφαρμογής</string>
     <string name="favorite_btn_add" translatable="false">Add</string>
-    <string name="default_setting_section">Κατηγορία ρύθμισης</string>
+    <string name="default_setting_section">Ρυθμίσεις Εφαρμογής</string>
     <!-- strings for settings   -->
     <string name="theme_settings_theme_section">Εμφάνιση</string>
     <string name="theme_settings_theme_title">Σκούρο θέμα</string>
@@ -64,5 +64,15 @@
         <item quantity="other">λεπτά</item>
     </plurals>
 
-
+    <string name="en" translatable="false">English</string>
+    <string name="el" translatable="false">Ελληνικά</string>
+    <string name="language">English</string>
+    <string name="all_drawer_title">Όλα</string>
+    <string name="favorites_drawer_title">Αγαπημένα</string>
+    <string name="settings_drawer_title">Ρυθμίσεις</string>
+    <string name="oasa_news_drawer_title">Νέα του OASA</string>
+    <string name="product_settings_version_title">Έκδοση</string>
+    <string name="application_settings_section">Ρυθμίσεις Εφαρμογής</string>
+    <string name="application_refresh_setting_title">Ενημέρωση δεδομένων</string>
+    <string name="application_refresh_setting_desc">Χειροκίνητη ενημέρωση δεδομένων ΟΑΣΑ</string>
 </resources>

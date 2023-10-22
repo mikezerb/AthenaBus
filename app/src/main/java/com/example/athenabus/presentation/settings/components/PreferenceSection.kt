@@ -1,5 +1,6 @@
 package com.example.athenabus.presentation.settings.components
 
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -10,9 +11,12 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Brightness4
 import androidx.compose.material.icons.outlined.Brightness4
 import androidx.compose.material.icons.outlined.Contrast
+import androidx.compose.material.icons.outlined.Translate
 import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.MotionPhotosAuto
+import androidx.compose.material.icons.rounded.Refresh
+import androidx.compose.material.icons.rounded.Update
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -27,11 +31,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.athenabus.R
+import com.example.athenabus.di.AppLanguage
 
 @Composable
 fun PreferenceSection(
@@ -69,6 +75,14 @@ private fun PreviewPreferenceSection() {
         var selectedIndex by remember { mutableIntStateOf(2) }
         val list =
             listOf(Icons.Rounded.MotionPhotosAuto, Icons.Rounded.LightMode, Icons.Rounded.DarkMode)
+
+        var expanded by remember { mutableStateOf(false) }
+        var dropdownIndex by remember { mutableIntStateOf(0) }
+        val localeOptions: List<AppLanguage> = listOf(
+            AppLanguage(selectedLang = stringResource(id = R.string.el), selectedLangCode = "el"),
+            AppLanguage(selectedLang = stringResource(id = R.string.en), selectedLangCode = "en"),
+        )
+        val context = LocalContext.current
         PreferenceSection(
             modifier = Modifier.padding(it),
             title = R.string.default_setting_section
@@ -85,6 +99,20 @@ private fun PreviewPreferenceSection() {
                     )
                 }
 
+            )
+            HorizontalDivider()
+            BasicPreferenceItem(
+                title = R.string.application_refresh_setting_title,
+                description = R.string.application_refresh_setting_desc,
+                onClick = {
+                    Toast.makeText(context, "Update data", Toast.LENGTH_SHORT).show()
+                },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Refresh,
+                        contentDescription = null
+                    )
+                }
             )
             HorizontalDivider()
             BasicPreferenceItem(
@@ -112,6 +140,27 @@ private fun PreviewPreferenceSection() {
                 },
                 isChecked = true,
                 onCheckedChange = { }
+            )
+            HorizontalDivider()
+            LocaleDropdownMenuPreference(
+                title = R.string.setting_lang_title,
+                description = R.string.setting_lang_desc,
+                options = localeOptions,
+                expanded = expanded,
+                selected = dropdownIndex,
+                onSelect = { index ->
+                    dropdownIndex = index
+                    expanded = false
+                    Toast.makeText(context, "Selected ${list[index]}", Toast.LENGTH_SHORT).show()
+                },
+                onDismiss = { expanded = false },
+                onClick = { expanded = true },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Outlined.Translate,
+                        contentDescription = null
+                    )
+                }
             )
         }
     }

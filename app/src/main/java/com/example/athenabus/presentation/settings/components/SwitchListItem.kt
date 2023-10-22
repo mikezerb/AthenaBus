@@ -37,7 +37,8 @@ fun SwitchListItem(
         supportingContent = {
             Text(
                 text = stringResource(id = subtitle),
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
+                color = MaterialTheme.colorScheme.secondary
             )
         },
         leadingContent = icon,

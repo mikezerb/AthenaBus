@@ -31,8 +31,8 @@
     <string name="favorites_nav_bar">Favorites</string>
     <string name="closest_stops_nav_bar">Closest Stops</string>
     <string name="settings_nav_bar">Settings</string>
-    <string name="setting_lang_title">English Language</string>
-    <string name="setting_lang_desc">Αυτό είναι μία ρύθμιση για δοκιμή</string>
+    <string name="setting_lang_title">App language</string>
+    <string name="setting_lang_desc">Change the app language</string>
     <string name="search_stops">Search Stops</string>
     <string name="km">km</string>
     <string name="available_routes">available routes</string>
@@ -61,4 +61,12 @@
         <item quantity="one">minute</item>
         <item quantity="other">minutes</item>
     </plurals>
+    <string name="language">English</string>
+    <string name="all_drawer_title">All</string>
+    <string name="favorites_drawer_title">Favorites</string>
+    <string name="settings_drawer_title">Settings</string>
+    <string name="oasa_news_drawer_title">OASA News</string>
+    <string name="product_settings_version_title">Version</string>
+    <string name="application_refresh_setting_title">Update Data</string>
+    <string name="application_refresh_setting_desc">Manual update OASA data</string>
 </resources>

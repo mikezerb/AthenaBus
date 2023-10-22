@@ -39,10 +39,6 @@ class ThemeViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             dataStore.data.map { preferences ->
-                Log.d(
-                    "ThemeState",
-                    "${preferences[IS_AMOLED_THEME_KEY]}, ${preferences[IS_DYNAMIC_MODE_KEY]}"
-                )
                 ThemeState(
                     preferences[IS_AMOLED_THEME_KEY] ?: false,
                     preferences[IS_DYNAMIC_MODE_KEY] ?: supportsDynamic(),

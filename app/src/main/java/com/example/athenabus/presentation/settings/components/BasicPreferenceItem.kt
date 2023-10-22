@@ -13,12 +13,17 @@ import androidx.compose.ui.res.stringResource
 fun BasicPreferenceItem(
     modifier: Modifier = Modifier,
     @StringRes title: Int,
-    @StringRes description: Int,
+    @StringRes description: Int? = null,
+    subtitle: String? = null,
     icon: @Composable (() -> Unit)? = null,
-    onClick: () -> Unit
+    onClick: (() -> Unit)? = null
 ) {
     ListItem(
-        modifier = modifier.clickable { onClick() },
+        modifier = if (onClick != null){
+            Modifier.clickable { onClick() }
+        } else {
+            Modifier
+        },
         headlineContent = {
             Text(
                 text = stringResource(id = title),
@@ -26,10 +31,13 @@ fun BasicPreferenceItem(
             )
         },
         supportingContent = {
-            Text(
-                text = stringResource(id = description),
-                style = MaterialTheme.typography.bodyMedium
-            )
+            if (description != null || subtitle != null) {
+                Text(
+                    text = description?.let { stringResource(id = it) } ?: subtitle.orEmpty(),
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+            }
         },
         leadingContent = icon,
     )

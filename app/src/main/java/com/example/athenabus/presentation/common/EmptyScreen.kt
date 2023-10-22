@@ -12,9 +12,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.athenabus.R
 
 @Composable
 fun EmptyScreen(
@@ -22,7 +25,7 @@ fun EmptyScreen(
     title: String,
     content: @Composable () -> Unit = { }
 ) {
-    val listFaces = listOf("(・へ・)", "¯\\_ (ツ) _/¯", "(╯° □°）", "ಥ_ಥ")
+    val listFaces = listOf("(・へ・)", "(='X'=)", "(^-^*)", "(·_·)", "¯\\_ (ツ) _/¯", "(╯° □°）", "ಥ_ಥ")
     val emptyExpression by remember { mutableStateOf(listFaces.random()) }
 
     Column(
@@ -34,6 +37,7 @@ fun EmptyScreen(
         Text(
             text = emptyExpression,
             style = MaterialTheme.typography.displaySmall,
+            fontFamily = FontFamily(Font(R.font.poppins_regular)),
             color = MaterialTheme.colorScheme.surfaceTint
         )
         Text(

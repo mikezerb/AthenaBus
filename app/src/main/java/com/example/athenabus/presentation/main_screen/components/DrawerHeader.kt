@@ -61,6 +61,4 @@ fun HeaderPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         DrawerHeader(Modifier.fillMaxWidth())
     }
-
-
 }
