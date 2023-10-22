@@ -67,6 +67,7 @@
     <string name="settings_drawer_title">Settings</string>
     <string name="oasa_news_drawer_title">OASA News</string>
     <string name="product_settings_version_title">Version</string>
+    <string name="application_settings_section">App Settings</string>
     <string name="application_refresh_setting_title">Update Data</string>
     <string name="application_refresh_setting_desc">Manual update OASA data</string>
 </resources>
