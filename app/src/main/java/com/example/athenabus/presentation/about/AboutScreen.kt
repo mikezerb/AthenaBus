@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.about_screen
+package com.example.athenabus.presentation.about
 
 import android.content.Context
 import android.content.pm.PackageManager
@@ -31,7 +31,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.core.content.pm.PackageInfoCompat
 import com.example.athenabus.R
-import com.example.athenabus.presentation.about_screen.components.AboutItem
+import com.example.athenabus.presentation.about.components.AboutItem
 
 
 data class AppVersion(

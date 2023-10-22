@@ -9,7 +9,7 @@ import androidx.navigation.navigation
 import com.example.athenabus.presentation.main_screen.MainScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingViewModel
-import com.example.athenabus.presentation.settings_screen.SettingsScreen
+import com.example.athenabus.presentation.settings.SettingsScreen
 
 @Composable
 fun NavGraph(

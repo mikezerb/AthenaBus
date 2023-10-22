@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.settings_screen
+package com.example.athenabus.presentation.settings
 
 data class ThemeState(
     val isAmoledMode: Boolean,

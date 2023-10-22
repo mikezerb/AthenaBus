@@ -67,7 +67,7 @@ import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.closest_stops.components.EnableLocation
 import com.example.athenabus.presentation.closest_stops.components.ExpandableClosestStopItem
-import com.example.athenabus.presentation.settings_screen.ThemeViewModel
+import com.example.athenabus.presentation.settings.ThemeViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.android.gms.maps.CameraUpdateFactory

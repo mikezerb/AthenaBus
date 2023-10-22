@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.settings_screen.components
+package com.example.athenabus.presentation.settings.components
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable

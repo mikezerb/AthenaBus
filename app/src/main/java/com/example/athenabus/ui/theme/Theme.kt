@@ -18,7 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.example.athenabus.presentation.settings_screen.ThemeViewModel
+import com.example.athenabus.presentation.settings.ThemeViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 

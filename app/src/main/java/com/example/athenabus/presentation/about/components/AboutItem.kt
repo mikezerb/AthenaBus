@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.about_screen.components
+package com.example.athenabus.presentation.about.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

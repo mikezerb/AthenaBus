@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.settings_screen
+package com.example.athenabus.presentation.settings
 
 import android.util.Log
 import androidx.datastore.preferences.core.edit
@@ -8,7 +8,6 @@ import com.example.athenabus.di.AppLanguage
 import com.example.athenabus.di.DataStoreUtil
 import com.example.athenabus.di.DataStoreUtil.Companion.APP_THEME_KEY
 import com.example.athenabus.di.DataStoreUtil.Companion.IS_AMOLED_THEME_KEY
-import com.example.athenabus.di.DataStoreUtil.Companion.IS_DARK_MODE_KEY
 import com.example.athenabus.di.DataStoreUtil.Companion.IS_DYNAMIC_MODE_KEY
 import com.example.athenabus.di.DataStoreUtil.Companion.SELECTED_LANGUAGE
 import com.example.athenabus.di.DataStoreUtil.Companion.SELECTED_LANGUAGE_CODE

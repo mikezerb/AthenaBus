@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.settings_screen
+package com.example.athenabus.presentation.settings
 
 import android.content.Intent
 import android.net.Uri
@@ -38,10 +38,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.common.Constants
-import com.example.athenabus.presentation.settings_screen.components.BasicPreferenceItem
-import com.example.athenabus.presentation.settings_screen.components.ChoicePreference
-import com.example.athenabus.presentation.settings_screen.components.PreferenceSection
-import com.example.athenabus.presentation.settings_screen.components.SwitchListItem
+import com.example.athenabus.presentation.settings.components.BasicPreferenceItem
+import com.example.athenabus.presentation.settings.components.ChoicePreference
+import com.example.athenabus.presentation.settings.components.PreferenceSection
+import com.example.athenabus.presentation.settings.components.SwitchListItem
 
 fun supportsDynamic(): Boolean = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
 
