@@ -165,7 +165,7 @@ fun AthenaBusTheme(
 
     val view = LocalView.current
     val systemUiController = rememberSystemUiController()
-    if (!view.isInEditMode) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && !view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
             window.statusBarColor = colorScheme.primary.toArgb()

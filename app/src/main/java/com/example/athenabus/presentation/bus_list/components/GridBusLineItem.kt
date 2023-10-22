@@ -36,6 +36,10 @@ fun GridBusLineItem(
             .fillMaxWidth()
             .padding(4.dp)
             .clickable { onItemClick(busLine) },
+        border = BorderStroke(
+            width = 1.dp,
+            color = MaterialTheme.colorScheme.surfaceContainer
+        )
     ) {
         Box(modifier = Modifier) {
             Column(

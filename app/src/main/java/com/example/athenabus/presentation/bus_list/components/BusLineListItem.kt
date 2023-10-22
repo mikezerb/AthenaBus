@@ -52,7 +52,6 @@ fun BusLineListItem(
             Text(
                 text = busLine.LineDescr,
                 style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.secondary,
                 textAlign = TextAlign.Start,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
