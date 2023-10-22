@@ -46,7 +46,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
-import com.example.athenabus.presentation.bus_list.components.BusLineItem
+import com.example.athenabus.presentation.bus_list.components.BusLineListItem
 import com.example.athenabus.presentation.bus_list.components.ChangeLayoutButton
 import com.example.athenabus.presentation.bus_list.components.GridBusLineItem
 import com.example.athenabus.presentation.navigation.Route
@@ -303,7 +303,7 @@ fun NewBusLineListScreen(
                         .fillMaxSize()
                 ) {
                     items(filterLines()) { line ->
-                        BusLineItem(
+                        BusLineListItem(
                             busLine = line, onItemClick =
                             {
                                 navController.navigate(Route.LineDetailsActivity.route + "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}") // &lineDesc=${line.LineDescr}&isFav=${line.isFavorite}

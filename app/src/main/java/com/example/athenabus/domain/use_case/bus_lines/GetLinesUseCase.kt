@@ -6,7 +6,7 @@ import com.example.athenabus.domain.repository.BusLineRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class getLinesUseCase @Inject constructor(
+class GetLinesUseCase @Inject constructor(
     private val repository: BusLineRepository,
 ) {
 

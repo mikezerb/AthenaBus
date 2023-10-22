@@ -20,6 +20,13 @@ class SampleLineProvider : PreviewParameterProvider<Line> {
             isFavorite = false
         ),
         Line(
+            LineCode = "1574",
+            LineID = "21",
+            LineDescr = "ΠΛΑΤΕΙΑ ΚΑΝΙΓΓΟΣ - ΓΚΥΖH (ΑΠΟ ΓΚΥΖΗ)",
+            LineDescrEng = "PLATEIA KANIGKOS - GKIZI (FROM GKIZI TO PLATEIA KANIGKOS)",
+            isFavorite = false
+        ),
+        Line(
             LineCode = "960",
             LineID = "608",
             LineDescr = "ΓΑΛΑΤΣΙ - ΑΚΑΔΗΜΙΑ - ΝΕΚΡ. ΖΩΓΡΑΦΟΥ",

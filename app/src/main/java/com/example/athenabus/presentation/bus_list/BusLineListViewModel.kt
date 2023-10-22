@@ -8,7 +8,7 @@ import com.example.athenabus.common.Resource
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.use_case.bus_lines.GetLinesFromSearchUseCase
 import com.example.athenabus.domain.use_case.bus_lines.ToggleFavoriteLineUseCase
-import com.example.athenabus.domain.use_case.bus_lines.getLinesUseCase
+import com.example.athenabus.domain.use_case.bus_lines.GetLinesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class BusLineListViewModel @Inject constructor(
-    private val getLinesUseCase: getLinesUseCase,
+    private val getLinesUseCase: GetLinesUseCase,
     private val getLinesFromSearchUseCase: GetLinesFromSearchUseCase,
     private val toggleFavoriteLineUseCase: ToggleFavoriteLineUseCase
 ) : ViewModel() {
