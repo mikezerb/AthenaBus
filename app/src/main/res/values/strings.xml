@@ -27,7 +27,7 @@
     <string name="theme_settings_color_title">Δυναμικά χρώματα</string>
     <string name="theme_settings_color_subtitle">Αλλαγή χρωμάτων της εφαρμογής</string>
 
-    <string name="product_settings_product_section">Other</string>
+    <string name="product_settings_product_section">Διάφορα</string>
     <string name="product_settings_github_title">Επισκεφθείτε το Github</string>
     <string name="product_settings_github_subtitle">Δείτε τις τελευταίες ενημερώσεις και συνεισφέρετε στο έργο ανοικτού κώδικα</string>
     <string name="product_settings_privacy_title">Πολιτική Απορρήτου</string>

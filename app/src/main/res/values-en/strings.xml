@@ -22,7 +22,7 @@
 
     <string name="theme_settings_color_title">Dynamic Color</string>
     <string name="theme_settings_color_subtitle">Enable/disable dynamic colors</string>
-    <string name="product_settings_product_section">Διάφορα</string>
+    <string name="product_settings_product_section">Other</string>
     <string name="product_settings_github_title">Visit Github</string>
     <string name="product_settings_github_subtitle">See the latest updates and contribute to our open-source project</string>
     <string name="product_settings_privacy_title">Privacy Policy</string>
