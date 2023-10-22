@@ -26,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -69,7 +70,7 @@ fun ExpandableClosestStopItem(
         arrivals.groupBy { it.route_code }.forEach {
             var times = ""
             it.value.forEachIndexed { index, arrival ->
-                times += "${arrival.btime2} ${stringResource(id = R.string.min)}"
+                times += "${arrival.btime2} ${pluralStringResource(id = R.plurals.minutes_arrive, count = arrival.btime2.toInt())}"
                 times += if (index < it.value.size - 1) {
                     " & "
                 } else

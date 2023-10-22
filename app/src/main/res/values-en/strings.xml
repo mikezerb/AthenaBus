@@ -57,5 +57,8 @@
     <string name="follow_system">Follow System</string>
     <string name="theme_off">Off</string>
     <string name="theme_on">On</string>
-
+    <plurals name="minutes_arrive">
+        <item quantity="one">minute</item>
+        <item quantity="other">minutes</item>
+    </plurals>
 </resources>

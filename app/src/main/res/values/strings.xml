@@ -59,6 +59,10 @@
     <string name="follow_system">Αυτόματο</string>
     <string name="theme_off">Off</string>
     <string name="theme_on">On</string>
+    <plurals name="minutes_arrive">
+        <item quantity="one">λεπτό</item>
+        <item quantity="other">λεπτά</item>
+    </plurals>
 
 
 </resources>
