@@ -15,4 +15,5 @@ interface BusLineRepository {
     fun getStopsFromXY(latitude: String, longitude: String): Flow<Resource<List<Stop>>>
     fun getStopArrivals(stopCode: String): Flow<Resource<List<Arrival>>>
     fun getRoutesForStop(stopCode: String): Flow<Resource<List<Route>>>
+    fun getStopsFromRoute(routeCode: String): Flow<Resource<List<Stop>>>
 }

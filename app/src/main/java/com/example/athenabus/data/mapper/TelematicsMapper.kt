@@ -6,7 +6,9 @@ import com.example.athenabus.data.remote.dto.ArrivalStopDtoItem
 import com.example.athenabus.data.remote.dto.ClosestStopDtoItem
 import com.example.athenabus.data.remote.dto.LineDtoItem
 import com.example.athenabus.data.remote.dto.RouteDtoItem
+import com.example.athenabus.data.remote.dto.WebGetRouteDto
 import com.example.athenabus.data.remote.dto.WebGetRouteDtoItem
+import com.example.athenabus.data.remote.dto.WebGetStopsDtoItem
 import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Route
@@ -64,6 +66,44 @@ fun WebGetRouteDtoItem.toRoute(): Route {
         hidden = ""
     )
 }
+
+fun WebGetStopsDtoItem.ToStop(): Stop {
+    return Stop(
+        StopCode = StopCode,
+        StopID = StopID,
+        StopDescr = StopDescr,
+        StopDescrEng = StopDescrEng,
+        StopStreet = StopStreet,
+        StopLat = StopLat,
+        StopLng = StopLng,
+        distance = ""
+    )
+}
+
+/*
+
+val StopCode: String,
+    val StopDescr: String,
+    val StopDescrEng: String?,
+    val StopStreet: String?,
+    val StopLat: String,
+    val StopLng: String,
+    val StopID: String,
+    val distance: String
+
+val RouteStopOrder: String,
+    val StopAmea: String,
+    val StopCode: String,
+    val StopDescr: String,
+    val StopDescrEng: String,
+    val StopHeading: String,
+    val StopID: String,
+    val StopLat: String,
+    val StopLng: String,
+    val StopStreet: String,
+    val StopStreetEng: Any,
+    val StopType: String
+ */
 /*
 
 

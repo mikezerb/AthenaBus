@@ -5,6 +5,9 @@
       <entry key="DefaultPreview">
         <State />
       </entry>
+      <entry key="Preview">
+        <State />
+      </entry>
       <entry key="PreviewChoicePreference">
         <State />
       </entry>
@@ -15,20 +18,7 @@
         <State />
       </entry>
       <entry key="app">
-        <State>
-          <targetSelectedWithDropDown>
-            <Target>
-              <type value="QUICK_BOOT_TARGET" />
-              <deviceKey>
-                <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\mikeaposto\.android\avd\Pixel_6_API_34.avd" />
-                </Key>
-              </deviceKey>
-            </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-10-22T12:53:08.476059600Z" />
-        </State>
+        <State />
       </entry>
     </value>
   </component>

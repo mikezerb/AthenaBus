@@ -20,6 +20,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.athenabus.domain.model.Route
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,22 +28,22 @@ fun AutoCompleteTextField(
     modifier: Modifier = Modifier,
     initialText: String,
     itemList: List<String> = emptyList(),
-    onQuery: (String) -> Unit = { },
+    mapList: Map<String, String> = emptyMap(),
+    routes: List<Route> = emptyList<Route>(),
+    selectedOption: String = "",
+    onSelect: (Route) -> Unit = { },
+    onClick: () -> Unit,
     onClearResults: () -> Unit = { },
+    expanded: Boolean,
+    onExpanded: (Boolean) -> Unit = { },
+    onDismiss: () -> Unit,
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    var selectedOption by remember {
-        if (itemList.isNotEmpty())
-            mutableStateOf(itemList[0])
-        else mutableStateOf("")
-    }
-
     ExposedDropdownMenuBox(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),
         expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
+        onExpandedChange = onExpanded ,
     ) {
         TextField(
             modifier = Modifier
@@ -63,23 +64,20 @@ fun AutoCompleteTextField(
                 .fillMaxWidth()
                 .padding(8.dp),
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = onDismiss
         )
         {
-            itemList.forEach { item ->
+            routes.forEach { route ->
                 DropdownMenuItem(
                     modifier = Modifier.fillMaxWidth(),
                     text = {
-                        Text(text = item)
+                        Text(text = route.RouteDescr)
                     },
                     onClick = {
-                        selectedOption = item
-                        expanded = false
+                        onSelect(route)
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
-
                 )
-
             }
         }
     }
@@ -88,9 +86,39 @@ fun AutoCompleteTextField(
 @Preview(showBackground = true)
 @Composable
 private fun Preview() {
-    val options = listOf("Option 1", "Option 2", "Option 3", "Option 4", "Option 5")
+    var expanded by remember { mutableStateOf(false) }
+    var selectedRoute by remember {
+        mutableStateOf("")
+    }
+    var selectedRouteCode by remember {
+        mutableStateOf("")
+    }
+    val routes = listOf(
+        Route(
+            RouteCode = "123", LineCode = "", RouteDescr = "Route 1", RouteDescrEng = "",
+            RouteDistance = "", LineID = "", RouteType = "", LineDescr = "", LineDescrEng = "",
+            MasterLineCode = "", hidden = ""
+        ),
+        Route(
+            RouteCode = "456", LineCode = "", RouteDescr = "Route 2", RouteDescrEng = "",
+            RouteDistance = "", LineID = "", RouteType = "", LineDescr = "", LineDescrEng = "",
+            MasterLineCode = "", hidden = ""
+        ),
+    )
     Column(Modifier.fillMaxSize()) {
-        AutoCompleteTextField(initialText = "Choose Direction", itemList = options)
-
+        AutoCompleteTextField(
+            routes = routes,
+            initialText = "Choose direction",
+            onDismiss = { expanded = false },
+            onClick = { expanded = true },
+            onSelect = { i ->
+                selectedRoute = i.RouteDescr
+                selectedRouteCode = i.RouteCode
+                expanded = false
+            },
+            selectedOption = selectedRoute,
+            onExpanded = { expanded = !expanded },
+            expanded = expanded
+        )
     }
 }

@@ -4,7 +4,9 @@ import com.example.athenabus.data.remote.dto.ArrivalStopDto
 import com.example.athenabus.data.remote.dto.ClosestStopDto
 import com.example.athenabus.data.remote.dto.LineDto
 import com.example.athenabus.data.remote.dto.RouteDto
+import com.example.athenabus.data.remote.dto.StopRoutesDto
 import com.example.athenabus.data.remote.dto.WebGetRouteDto
+import com.example.athenabus.data.remote.dto.WebGetStopsDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -23,7 +25,7 @@ interface OASATelematicsAPI {
     suspend fun getStopsForRoute(
         @Query("act") action: String = "webGetStops",
         @Query("p1") routeCode: String
-    ): RouteDto
+    ): WebGetStopsDto
 
     @GET("api/")
     suspend fun getClosestStops(

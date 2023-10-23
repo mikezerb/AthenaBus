@@ -2,6 +2,7 @@ package com.example.athenabus.data.repository
 
 import com.example.athenabus.common.Resource
 import com.example.athenabus.data.local.TelematicsLineDao
+import com.example.athenabus.data.mapper.ToStop
 import com.example.athenabus.data.mapper.toArrival
 import com.example.athenabus.data.mapper.toBusLine
 import com.example.athenabus.data.mapper.toBusLineEntity
@@ -159,6 +160,18 @@ class BusLineRepositoryImpl @Inject constructor(
         try {
             val arrivals = api.webRoutesForStop(stopCode = stopCode).map { it.toRoute() }
             emit(Resource.Success(data = arrivals))
+        } catch (e: HttpException) {
+            emit(Resource.Error(message = e.localizedMessage ?: "error"))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An error occurred"))
+        }
+    }
+
+    override fun getStopsFromRoute(routeCode: String): Flow<Resource<List<Stop>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val stops = api.getStopsForRoute(routeCode = routeCode).map { it.ToStop() }
+            emit(Resource.Success(data = stops))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "error"))
         } catch (e: Exception) {
