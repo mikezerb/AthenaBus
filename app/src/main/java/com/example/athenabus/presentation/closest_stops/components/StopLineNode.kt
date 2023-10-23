@@ -23,6 +23,7 @@ import com.example.athenabus.presentation.closest_stops.components.defaults.Circ
 import com.example.athenabus.presentation.closest_stops.components.defaults.LineParameters
 import com.example.athenabus.presentation.closest_stops.components.defaults.LineParametersDefaults.linearGradient
 import com.example.athenabus.presentation.closest_stops.components.defaults.circleParameters
+import com.example.athenabus.presentation.line_details.components.StopListItem
 import com.example.athenabus.sample.SampleStopProvider
 
 @Composable
@@ -104,7 +105,7 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                 endColor = MaterialTheme.colorScheme.surfaceTint
             )
         ) { modifier ->
-            ClosestStopItem(modifier = modifier.align(Alignment.Center), stop = Stop(
+            StopListItem(modifier = modifier.align(Alignment.Center), stop = Stop(
                 StopCode = "124",
                 StopDescr = "Δοκιμή Στάσης",
                 StopDescrEng = "",
@@ -113,7 +114,7 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                 StopLat = "38.0400",
                 StopLng = "23.7614",
                 distance = "0.004502298261997398"
-            ), onClick = { })
+            ), onItemClick = { })
         }
         StopLineNode(
             position = StopLineNodePosition.MIDDLE,
@@ -125,7 +126,7 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                 endColor = MaterialTheme.colorScheme.surfaceTint
             )
         ) { modifier ->
-            ClosestStopItem(modifier = modifier, stop = Stop(
+            StopListItem(modifier = modifier, stop = Stop(
                 StopCode = "124",
                 StopDescr = "Επόμενη στάση",
                 StopDescrEng = "",
@@ -134,10 +135,10 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                 StopLng = "23.7614",
                 StopStreet = "ΠΕΙΡΑΙΩΣ",
                 distance = "0.004502298261997398"
-            ), onClick = { })
+            ), onItemClick = { })
         }
         StopLineNode(position = StopLineNodePosition.LAST) { modifier ->
-            ClosestStopItem(
+            StopListItem(
                 modifier = modifier,
                 stop = Stop(
                     StopCode = "124",
@@ -149,7 +150,7 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                     StopStreet = "ΠΕΙΡΑΙΩΣ",
                     distance = "0.004502298261997398"
                 ),
-                onClick = { }
+                onItemClick = { }
             )
         }
     }

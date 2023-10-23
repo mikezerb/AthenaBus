@@ -24,7 +24,6 @@ fun StopListItem(
     onItemClick: (Stop) -> Unit,
 ) {
     ListItem(
-        tonalElevation = 4.dp,
         modifier = modifier
             .clickable { onItemClick(stop) }
             .fillMaxWidth()
@@ -37,7 +36,7 @@ fun StopListItem(
                 text = stop.StopDescr,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
-                maxLines = 2,
+                maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
         },

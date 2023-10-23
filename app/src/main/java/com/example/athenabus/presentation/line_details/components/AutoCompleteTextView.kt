@@ -39,9 +39,7 @@ fun AutoCompleteTextField(
     onDismiss: () -> Unit,
 ) {
     ExposedDropdownMenuBox(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp),
+        modifier = modifier,
         expanded = expanded,
         onExpandedChange = onExpanded ,
     ) {
