@@ -23,6 +23,7 @@ import com.example.athenabus.presentation.closest_stops.components.defaults.Circ
 import com.example.athenabus.presentation.closest_stops.components.defaults.LineParameters
 import com.example.athenabus.presentation.closest_stops.components.defaults.LineParametersDefaults.linearGradient
 import com.example.athenabus.presentation.closest_stops.components.defaults.circleParameters
+import com.example.athenabus.presentation.line_details.components.StopItem
 import com.example.athenabus.presentation.line_details.components.StopListItem
 import com.example.athenabus.sample.SampleStopProvider
 
@@ -30,7 +31,7 @@ import com.example.athenabus.sample.SampleStopProvider
 fun StopLineNode(
     position: StopLineNodePosition,
     contentStartOffset: Dp = 16.dp,
-    spacer: Dp = 16.dp,
+    spacer: Dp = 12.dp,
     circleParameters: CircleParameters = CircleParameters(
         12.dp,
         MaterialTheme.colorScheme.surfaceTint
@@ -73,8 +74,10 @@ fun StopLineNode(
         content(
             Modifier
                 .defaultMinSize(minHeight = circleParameters.radius * 2)
+                .align(Alignment.TopStart).fillMaxWidth()
+                .fillMaxWidth()
                 .padding(
-                    start = circleParameters.radius * 2 + contentStartOffset,
+                    start = circleParameters.radius + contentStartOffset,
                     bottom = if (position != StopLineNodePosition.LAST) spacer else 0.dp
                 )
         )
@@ -105,7 +108,7 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                 endColor = MaterialTheme.colorScheme.surfaceTint
             )
         ) { modifier ->
-            StopListItem(modifier = modifier.align(Alignment.Center), stop = Stop(
+            StopItem(modifier = modifier, stop = Stop(
                 StopCode = "124",
                 StopDescr = "Δοκιμή Στάσης",
                 StopDescrEng = "",
@@ -126,7 +129,7 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
                 endColor = MaterialTheme.colorScheme.surfaceTint
             )
         ) { modifier ->
-            StopListItem(modifier = modifier, stop = Stop(
+            StopItem(modifier = modifier, stop = Stop(
                 StopCode = "124",
                 StopDescr = "Επόμενη στάση",
                 StopDescrEng = "",
@@ -138,7 +141,7 @@ fun StopLinePreview(@PreviewParameter(SampleStopProvider::class) stop: Stop) {
             ), onItemClick = { })
         }
         StopLineNode(position = StopLineNodePosition.LAST) { modifier ->
-            StopListItem(
+            StopItem(
                 modifier = modifier,
                 stop = Stop(
                     StopCode = "124",

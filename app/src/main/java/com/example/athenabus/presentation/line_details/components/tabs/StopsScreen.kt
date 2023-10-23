@@ -28,6 +28,7 @@ import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.line_details.RouteStopsViewModel
 import com.example.athenabus.presentation.line_details.components.AutoCompleteTextField
+import com.example.athenabus.presentation.line_details.components.StopItem
 import com.example.athenabus.presentation.line_details.components.StopListItem
 
 @Composable
@@ -93,7 +94,7 @@ fun StopsScreen(
                 contentPadding = PaddingValues(0.dp)
             ) {
                 items(state.stops) { stop ->
-                    StopListItem(
+                    StopItem(
                         stop = stop,
                         onItemClick = {
                             Toast.makeText(

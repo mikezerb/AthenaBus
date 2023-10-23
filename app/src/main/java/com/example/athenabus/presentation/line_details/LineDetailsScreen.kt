@@ -98,7 +98,6 @@ fun LineDetailsScreen(
         exit = slideOutVertically()
     ) {
         Surface {
-
             var selectedTabIndex by remember { mutableStateOf(0) }
             val pagerState = rememberPagerState { tabItems.size }
 
@@ -137,9 +136,11 @@ fun LineDetailsScreen(
                         .fillMaxWidth()
                         .weight(1f)
                 ) { index ->
+                    if(routeState.isLoading){
+                        CircularProgressIndicator()
+                    }
                     tabItems[index].screen()    // [pagerState.currentPage]
                 }
-
             }
             AnimatedVisibility(
                 visible = state.isLoading,
