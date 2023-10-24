@@ -22,14 +22,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.line_details.RouteStopsViewModel
 import com.example.athenabus.presentation.line_details.components.AutoCompleteTextField
 import com.example.athenabus.presentation.line_details.components.StopItem
-import com.example.athenabus.presentation.line_details.components.StopListItem
 
 @Composable
 fun StopsScreen(
@@ -68,7 +69,7 @@ fun StopsScreen(
                 .fillMaxWidth()
                 .padding(4.dp),
             routes = routes,
-            initialText = "Choose direction",
+            initialText = stringResource(id = R.string.choose_direction),
             onDismiss = { expanded = false },
             onClick = { expanded = true },
             onSelect = { i ->
@@ -85,7 +86,11 @@ fun StopsScreen(
         if (state.isLoading) {
             CircularProgressIndicator()
         } else if (state.error.isNotEmpty()) {
-            Text(text = state.error, style = MaterialTheme.typography.headlineMedium)
+            Text(
+                text = state.error,
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.error
+            )
         } else {
             LazyColumn(
                 modifier = Modifier

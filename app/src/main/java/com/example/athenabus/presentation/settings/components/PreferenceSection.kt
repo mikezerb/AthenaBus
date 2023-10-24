@@ -6,10 +6,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Brightness4
 import androidx.compose.material.icons.outlined.Brightness4
@@ -19,7 +16,6 @@ import androidx.compose.material.icons.rounded.DarkMode
 import androidx.compose.material.icons.rounded.LightMode
 import androidx.compose.material.icons.rounded.MotionPhotosAuto
 import androidx.compose.material.icons.rounded.Refresh
-import androidx.compose.material.icons.rounded.Update
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
@@ -58,7 +54,7 @@ fun PreferenceSection(
         Text(
             text = stringResource(id = title),
             modifier = Modifier
-                .padding(start = 16.dp, top = 16.dp, end = 12.dp),
+                .padding(start = 16.dp, top = 16.dp, bottom = 8.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary

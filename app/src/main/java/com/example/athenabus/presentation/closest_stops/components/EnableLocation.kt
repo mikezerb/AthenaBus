@@ -15,7 +15,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.athenabus.R
@@ -50,14 +52,15 @@ fun EnableLocation(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Text(
-                    text = "Allow your location",
+                    text = stringResource(R.string.allow_your_location),
                     style = MaterialTheme.typography.headlineSmall
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "We need your location to give you the closest stops",
+                    text = stringResource(R.string.location_enable_desc),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
+                    textAlign = TextAlign.Center
                 )
             }
         }
@@ -69,7 +72,7 @@ fun EnableLocation(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(16.dp),
-                text = "Enable Location"
+                text = stringResource(R.string.enable_location_btn)
             )
         }
 

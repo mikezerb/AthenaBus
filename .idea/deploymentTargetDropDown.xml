@@ -2,10 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="PreviewTestMapUI - TestMapUI">
-        <State />
-      </entry>
-      <entry key="Unnamed">
+      <entry key="app">
         <State />
       </entry>
     </value>

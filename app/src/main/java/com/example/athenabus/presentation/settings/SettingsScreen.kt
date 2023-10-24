@@ -9,6 +9,14 @@ import android.os.LocaleList
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,6 +41,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -75,7 +84,6 @@ fun SettingsScreen(
     // Observe the dark theme setting
     val themeState by themeViewModel.themeState.collectAsState()
     val settingsState by settingsViewModel.settingState.collectAsState()
-    var isOtherMode by remember { mutableStateOf(false) }
 
     val localeOptions: List<AppLanguage> = listOf(
         AppLanguage(selectedLang = stringResource(id = R.string.el), selectedLangCode = "el"),
@@ -101,6 +109,9 @@ fun SettingsScreen(
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
+            .animateContentSize(
+                animationSpec = tween(durationMillis = 300, easing = LinearOutSlowInEasing)
+            )
     ) {
         PreferenceSection(title = R.string.theme_settings_theme_section) {
             ChoicePreference(
@@ -117,25 +128,38 @@ fun SettingsScreen(
                     )
                 }
             )
-
             HorizontalDivider()
-
-            if (themeState.appTheme == 2 || (themeState.appTheme == 0 && isSystemInDarkTheme())) {
-                SwitchListItem(
-                    title = R.string.theme_settings_amoled_theme_title,
-                    subtitle = R.string.theme_settings_theme_subtitle,
-                    icon = {
-                        Icon(
-                            imageVector = Icons.Outlined.Contrast,
-                            contentDescription = null
-                        )
-                    },
-                    isChecked = themeState.isAmoledMode,
-                    onCheckedChange = { themeViewModel.setAmoledBlack() }
+            AnimatedVisibility(
+                visible = themeState.appTheme == 2 || (themeState.appTheme == 0 && isSystemInDarkTheme()),
+                enter = expandVertically(
+                    expandFrom = Alignment.Top,
+                    animationSpec = tween(durationMillis = 200)
+                ) + fadeIn(
+                    initialAlpha = 0.3f, animationSpec = tween(200)
+                ),
+                exit = shrinkVertically(
+                    shrinkTowards = Alignment.Top,
+                    animationSpec = tween(durationMillis = 200)
                 )
-
-                HorizontalDivider()
-
+                        + fadeOut(
+                    animationSpec = tween(200)
+                ),
+            ) {
+                Column {
+                    SwitchListItem(
+                        title = R.string.theme_settings_amoled_theme_title,
+                        subtitle = R.string.theme_settings_theme_subtitle,
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Outlined.Contrast,
+                                contentDescription = null
+                            )
+                        },
+                        isChecked = themeState.isAmoledMode,
+                        onCheckedChange = { themeViewModel.setAmoledBlack() }
+                    )
+                    HorizontalDivider()
+                }
             }
             if (supportsDynamic()) {
                 SwitchListItem(

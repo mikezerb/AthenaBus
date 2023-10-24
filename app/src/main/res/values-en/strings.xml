@@ -35,7 +35,10 @@
     <string name="setting_lang_desc">Change the app language</string>
     <string name="search_stops">Search Stops</string>
     <string name="km">km</string>
-    <string name="available_routes">available routes</string>
+    <plurals name="available_routes">
+        <item quantity="one">available route</item>
+        <item quantity="other">available routes</item>
+    </plurals>
     <string name="arriving_buses">arriving buses</string>
     <string name="min">min</string>
     <string name="distance">Distance</string>
@@ -61,6 +64,10 @@
         <item quantity="one">minute</item>
         <item quantity="other">minutes</item>
     </plurals>
+    <plurals name="upcoming_arrive">
+        <item quantity="one">upcoming</item>
+        <item quantity="other">upcoming</item>
+    </plurals>
     <string name="language">English</string>
     <string name="all_drawer_title">All</string>
     <string name="favorites_drawer_title">Favorites</string>
@@ -70,4 +77,10 @@
     <string name="application_settings_section">App Settings</string>
     <string name="application_refresh_setting_title">Update Data</string>
     <string name="application_refresh_setting_desc">Manual update OASA data</string>
+    <string name="available_stops">Available stops</string>
+    <string name="update_location">Update Location</string>
+    <string name="allow_your_location">Allow your location</string>
+    <string name="location_enable_desc">We need your location to give you the closest stops</string>
+    <string name="enable_location_btn">Allow location</string>
+
 </resources>

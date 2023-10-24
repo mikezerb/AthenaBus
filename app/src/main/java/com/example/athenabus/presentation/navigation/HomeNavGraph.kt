@@ -23,7 +23,7 @@ fun HomeNavGraph(navController: NavHostController) {
         startDestination = Route.NewBusLine.route,
         enterTransition = {
             slideIntoContainer(
-                towards = AnimatedContentTransitionScope.SlideDirection.Companion.Left,
+                towards = AnimatedContentTransitionScope.SlideDirection.Companion.Right,
                 animationSpec = tween(500)
             )
         },

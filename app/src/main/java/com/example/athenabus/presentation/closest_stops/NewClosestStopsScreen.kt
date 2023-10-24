@@ -44,6 +44,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -103,7 +104,7 @@ fun NewClosestStopsScreen(
     )
 
     var expandedItem by remember {
-        mutableStateOf(-1)
+        mutableIntStateOf(-1)
     }
 
     val scope = rememberCoroutineScope()
@@ -234,7 +235,7 @@ fun NewClosestStopsScreen(
                                 Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
                                 Spacer(modifier = Modifier.width(4.dp))
                                 Text(
-                                    text = "Update Location",
+                                    text = stringResource(id = R.string.update_location),
                                     style = MaterialTheme.typography.labelSmall
                                 )
                             }

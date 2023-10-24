@@ -37,10 +37,10 @@ import com.example.athenabus.domain.model.Stop
 
 @Composable
 fun ExpandableClosestStopItem(
+    modifier: Modifier = Modifier,
     stop: Stop,
     routes: List<Route> = emptyList(),
     arrivals: List<Arrival> = emptyList(),
-    modifier: Modifier = Modifier,
     expanded: Boolean,
     onClick: () -> Unit = { },
     onExpandClick: (id: Int) -> Unit = { }
@@ -148,9 +148,9 @@ fun ExpandableClosestStopItem(
                             .padding(start = 12.dp)
                     ) {
                         Text(
-                            text = routes.size.toString() + " ${stringResource(id = R.string.available_routes)}" + "\n" +
+                            text = routes.size.toString() + " ${pluralStringResource(id = R.plurals.available_routes, count = routes.size)}" + "\n" +
                                     available_routes + "\n" +
-                                    arrivals.size.toString() + " ${stringResource(id = R.string.arriving_buses)}" + "\n" +
+                                    arrivals.size.toString() + " ${pluralStringResource(id = R.plurals.upcoming_arrive, count = arrivals.size)}" + "\n" +
                                     arrivalsBuses,
                             style = MaterialTheme.typography.labelMedium
                         )
@@ -204,19 +204,19 @@ val MasterLineCode: String
             RouteDistance = "",
             LineDescrEng = "",
         ),
-        Route(
-            RouteCode = "",
-            LineCode = "",
-            RouteDescr = "GALATSI - AKADIMIA - NEKR. ZOGRAFOY (SATURDAY AFTER MIDNIGHT TRIPS",
-            RouteDescrEng = "",
-            RouteType = "",
-            LineID = "235",
-            hidden = "",
-            LineDescr = "NEKR. ZOGRAFOU - AKADIMIA - GALATSI",
-            MasterLineCode = "",
-            RouteDistance = "",
-            LineDescrEng = "",
-        ),
+//        Route(
+//            RouteCode = "",
+//            LineCode = "",
+//            RouteDescr = "GALATSI - AKADIMIA - NEKR. ZOGRAFOY (SATURDAY AFTER MIDNIGHT TRIPS",
+//            RouteDescrEng = "",
+//            RouteType = "",
+//            LineID = "235",
+//            hidden = "",
+//            LineDescr = "NEKR. ZOGRAFOU - AKADIMIA - GALATSI",
+//            MasterLineCode = "",
+//            RouteDistance = "",
+//            LineDescrEng = "",
+//        ),
 
         )
     ExpandableClosestStopItem(stop = stop, routes = availableRoutes, expanded = true)

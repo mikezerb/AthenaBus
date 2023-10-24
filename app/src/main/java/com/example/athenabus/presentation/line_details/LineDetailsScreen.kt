@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +18,7 @@ import androidx.compose.material.icons.filled.Timeline
 import androidx.compose.material.icons.outlined.DirectionsBus
 import androidx.compose.material.icons.outlined.Timeline
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
@@ -24,12 +26,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -58,11 +59,9 @@ fun LineDetailsScreen(
         "LineDetailsScreen",
         "LineID: $lineId, LineCode: $lineCode, lineDesc: $lineDesc isFav = $isFav"
     )
-    val context = LocalContext.current
     val state = viewModel.state.value
     val routeState = routeViewModel.state.value
 
-    val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = Unit) {
         viewModel.getLine(lineId)
     }
@@ -98,7 +97,7 @@ fun LineDetailsScreen(
         exit = slideOutVertically()
     ) {
         Surface {
-            var selectedTabIndex by remember { mutableStateOf(0) }
+            var selectedTabIndex by remember { mutableIntStateOf(0) }
             val pagerState = rememberPagerState { tabItems.size }
 
             LaunchedEffect(selectedTabIndex) {
@@ -134,12 +133,21 @@ fun LineDetailsScreen(
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .fillMaxSize()
                         .weight(1f)
                 ) { index ->
-                    if(routeState.isLoading){
-                        CircularProgressIndicator()
+                    if (routeState.isLoading) {
+                        Box(
+                            modifier = Modifier.fillMaxSize(),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            LinearProgressIndicator(
+                                modifier = Modifier.align(Alignment.Center)
+                            )
+                        }
+                    } else {
+                        tabItems[index].screen()    // [pagerState.currentPage]
                     }
-                    tabItems[index].screen()    // [pagerState.currentPage]
                 }
             }
             AnimatedVisibility(

@@ -38,8 +38,11 @@
     <string name="settings_nav_bar">Ρυθμίσεις</string>
     <string name="search_stops">Αναζήτηση Στάσεων</string>
     <string name="km">χλμ</string>
-    <string name="available_routes">διαθέσιμες γραμμές</string>
-    <string name="arriving_buses">ανερχόμενα λεωφορία</string>
+    <plurals name="available_routes">
+        <item quantity="one">διαθέσιμη γραμμή</item>
+        <item quantity="other">διαθέσιμες γραμμές</item>
+    </plurals>
+    <string name="arriving_buses">ανερχόμενα λεωφορεία</string>
     <string name="min">λεπτά</string>
     <string name="distance">Απόσταση</string>
     <string name="choose_direction">Επιλογή διαδρομής</string>
@@ -63,6 +66,10 @@
         <item quantity="one">λεπτό</item>
         <item quantity="other">λεπτά</item>
     </plurals>
+    <plurals name="upcoming_arrive">
+        <item quantity="one">ανερχόμενο λεωφορείο</item>
+        <item quantity="other">ανερχόμενα λεωφορεία</item>
+    </plurals>
 
     <string name="en" translatable="false">English</string>
     <string name="el" translatable="false">Ελληνικά</string>
@@ -75,4 +82,9 @@
     <string name="application_settings_section">Ρυθμίσεις Εφαρμογής</string>
     <string name="application_refresh_setting_title">Ενημέρωση δεδομένων</string>
     <string name="application_refresh_setting_desc">Χειροκίνητη ενημέρωση δεδομένων ΟΑΣΑ</string>
+    <string name="available_stops">Διαθέσιμες στάσεις</string>
+    <string name="update_location">Ενημέρωση τοποθεσίας</string>
+    <string name="allow_your_location">Επιτρέψτε την τοποθεσία σας</string>
+    <string name="location_enable_desc">Χρειαζόμαστε την τοποθεσία σας για να βρούμε τις πλησιέστερες στάσεις</string>
+    <string name="enable_location_btn">Ενεργοποίηση τοποθεσίας</string>
 </resources>
