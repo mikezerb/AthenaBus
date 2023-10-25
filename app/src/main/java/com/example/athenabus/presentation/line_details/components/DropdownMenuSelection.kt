@@ -1,5 +1,5 @@
-package com.example.athenabus.presentation.line_details.components
-
+import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,26 +14,24 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.athenabus.domain.model.Route
+import com.example.athenabus.domain.model.Line
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AutoCompleteTextField(
+fun DropdownMenuSelection(
     modifier: Modifier = Modifier,
     initialText: String,
     itemList: List<String> = emptyList(),
-    mapList: Map<String, String> = emptyMap(),
-    routes: List<Route> = emptyList<Route>(),
     selectedOption: String = "",
-    onSelect: (Route) -> Unit = { },
-    onClick: () -> Unit,
-    onClearResults: () -> Unit = { },
+    onClick: (String, Int) -> Unit,
     expanded: Boolean,
     onExpanded: (Boolean) -> Unit = { },
     onDismiss: () -> Unit,
@@ -41,7 +39,7 @@ fun AutoCompleteTextField(
     ExposedDropdownMenuBox(
         modifier = modifier,
         expanded = expanded,
-        onExpandedChange = onExpanded ,
+        onExpandedChange = onExpanded,
     ) {
         OutlinedTextField(
             modifier = Modifier
@@ -64,14 +62,14 @@ fun AutoCompleteTextField(
             onDismissRequest = onDismiss
         )
         {
-            routes.forEach { route ->
+            itemList.forEachIndexed { index, item ->
                 DropdownMenuItem(
                     modifier = Modifier.fillMaxWidth(),
                     text = {
-                        Text(text = route.RouteDescr)
+                        Text(text = item)
                     },
                     onClick = {
-                        onSelect(route)
+                        onClick(item, index)
                     },
                     contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding
                 )
@@ -82,38 +80,46 @@ fun AutoCompleteTextField(
 
 @Preview(showBackground = true)
 @Composable
-private fun Preview() {
+private fun SelectItemPreview() {
     var expanded by remember { mutableStateOf(false) }
-    var selectedRoute by remember {
+    var selected by remember {
         mutableStateOf("")
     }
-    var selectedRouteCode by remember {
-        mutableStateOf("")
+    var selectedLine by remember {
+        mutableIntStateOf(0)
     }
+
+    val context = LocalContext.current
+
     val routes = listOf(
-        Route(
-            RouteCode = "123", LineCode = "", RouteDescr = "Route 1", RouteDescrEng = "",
-            RouteDistance = "", LineID = "", RouteType = "", LineDescr = "", LineDescrEng = "",
-            MasterLineCode = "", hidden = ""
+        Line(
+            LineID = "123", LineCode = "123", LineDescr = "APO - PROS", LineDescrEng = "",
+            isFavorite = false
         ),
-        Route(
-            RouteCode = "456", LineCode = "", RouteDescr = "Route 2", RouteDescrEng = "",
-            RouteDistance = "", LineID = "", RouteType = "", LineDescr = "", LineDescrEng = "",
-            MasterLineCode = "", hidden = ""
+        Line(
+            LineID = "123", LineCode = "456", LineDescr = "PROS - APO", LineDescrEng = "",
+            isFavorite = false
         ),
     )
-    Column(Modifier.fillMaxSize()) {
-        AutoCompleteTextField(
-            routes = routes,
+    Column(
+        Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)) {
+        DropdownMenuSelection(
+            itemList = routes.map { it.LineDescr },
             initialText = "Choose direction",
             onDismiss = { expanded = false },
-            onClick = { expanded = true },
-            onSelect = { i ->
-                selectedRoute = i.RouteDescr
-                selectedRouteCode = i.RouteCode
+            onClick = { line, index ->
+                selected = line
+                selectedLine = index
                 expanded = false
+                Toast.makeText(
+                    context,
+                    "Selected ${routes[selectedLine].LineCode}",
+                    Toast.LENGTH_SHORT
+                ).show()
             },
-            selectedOption = selectedRoute,
+            selectedOption = selected,
             onExpanded = { expanded = !expanded },
             expanded = expanded
         )

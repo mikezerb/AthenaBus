@@ -53,7 +53,7 @@ fun LineDetailsScreen(
     lineDesc: String = "",
     isFav: Boolean = false,
     viewModel: LineDetailsViewModel = hiltViewModel(),
-    routeViewModel: RouteDetailsViewModel = hiltViewModel()
+    routeViewModel: RouteDetailsViewModel = hiltViewModel(),
 ) {
     Log.d(
         "LineDetailsScreen",
@@ -87,7 +87,8 @@ fun LineDetailsScreen(
             title = stringResource(R.string.schedule_tab_title),
             selectedIcon = Icons.Filled.Timeline,
             unSelectedIcon = Icons.Outlined.Timeline,
-            screen = { state.line?.let { ScheduleScreen(line = it) } }
+            // TODO: pass all available lines from lineID
+            screen = { state.line?.let { ScheduleScreen(line = it, lines = emptyList()) } }
         )
     )
 

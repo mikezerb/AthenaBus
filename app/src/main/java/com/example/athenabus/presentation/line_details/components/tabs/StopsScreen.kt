@@ -1,5 +1,6 @@
 package com.example.athenabus.presentation.line_details.components.tabs
 
+import DropdownMenuSelection
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -29,7 +30,6 @@ import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.line_details.RouteStopsViewModel
-import com.example.athenabus.presentation.line_details.components.AutoCompleteTextField
 import com.example.athenabus.presentation.line_details.components.StopItem
 
 @Composable
@@ -42,6 +42,9 @@ fun StopsScreen(
     var expanded by remember { mutableStateOf(false) }
     var selectedRoute by remember {
         mutableStateOf("")
+    }
+    var selected by remember {
+        mutableStateOf(0)
     }
     var selectedRouteCode by remember {
         mutableStateOf("")
@@ -64,17 +67,16 @@ fun StopsScreen(
             }
         }
 
-        AutoCompleteTextField(
+        DropdownMenuSelection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(4.dp),
-            routes = routes,
+            itemList = routes.map { it.RouteDescr },
             initialText = stringResource(id = R.string.choose_direction),
             onDismiss = { expanded = false },
-            onClick = { expanded = true },
-            onSelect = { i ->
-                selectedRoute = i.RouteDescr
-                selectedRouteCode = i.RouteCode
+            onClick = { route, i ->
+                selectedRoute = route
+                selectedRouteCode = routes[i].RouteCode
                 expanded = false
                 viewModel.getStops(selectedRouteCode)
             },
