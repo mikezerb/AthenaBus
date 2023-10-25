@@ -64,6 +64,7 @@ fun LineDetailsScreen(
 
     LaunchedEffect(key1 = Unit) {
         viewModel.getLine(lineId)
+        viewModel.getAvailableLines(lineId)
     }
     LaunchedEffect(key1 = Unit) {
         routeViewModel.getLineCodes(lineId)
@@ -88,7 +89,7 @@ fun LineDetailsScreen(
             selectedIcon = Icons.Filled.Timeline,
             unSelectedIcon = Icons.Outlined.Timeline,
             // TODO: pass all available lines from lineID
-            screen = { state.line?.let { ScheduleScreen(line = it, lines = emptyList()) } }
+            screen = { state.line?.let { ScheduleScreen(line = it, lines = state.availableLines) } }
         )
     )
 
@@ -126,7 +127,7 @@ fun LineDetailsScreen(
                             selected = index == selectedTabIndex,
                             onClick = {
                                 selectedTabIndex = index
-                            }, //  { scope.launch { pagerState.animateScrollToPage(index) } }
+                            },
                         )
                     }
                 }

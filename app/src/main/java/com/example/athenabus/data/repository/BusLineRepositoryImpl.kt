@@ -103,13 +103,9 @@ class BusLineRepositoryImpl @Inject constructor(
         val busLinesFromDB = lineDao.getLineCodesFromLineID(lineID)
 
         if (busLinesFromDB.isNotEmpty()) {
-
             emit(Resource.Success(busLinesFromDB))
-
         } else {
-
             try {
-
                 val busLinesFromAPI = api.getBusLines()
                 lineDao.clearBusLines()
                 lineDao.insertBusLines(busLinesFromAPI.map { it.toBusLineEntity() })
@@ -121,6 +117,22 @@ class BusLineRepositoryImpl @Inject constructor(
             } catch (e: Exception) {
                 emit(Resource.Error(message = e.message ?: "An error occurred"))
             }
+        }
+    }
+
+    override fun getLinesFromLineID(lineID: String): Flow<Resource<List<Line>>> = flow {
+        emit(Resource.Loading())
+
+        try {
+
+            val availableLines = lineDao.getLinesFromLineID(query = lineID).map { it.toBusLine() }
+
+            emit(Resource.Success(availableLines))
+
+        } catch (e: HttpException) {
+            emit(Resource.Error(message = e.localizedMessage ?: "error"))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An error occurred"))
         }
     }
 

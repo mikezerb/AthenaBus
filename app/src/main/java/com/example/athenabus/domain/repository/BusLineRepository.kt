@@ -12,6 +12,7 @@ interface BusLineRepository {
     fun getBusLines(): Flow<Resource<List<Line>>>
     fun getLineFromDB(searchTxt: String): Flow<Resource<Line>>
     fun getLineCodesFromLineID(lineID: String): Flow<Resource<List<String>>>
+    fun getLinesFromLineID(lineID: String): Flow<Resource<List<Line>>>
     suspend fun toggleFavoriteLine(lineID: String)
     fun getStopsFromXY(latitude: String, longitude: String): Flow<Resource<List<Stop>>>
     fun getStopArrivals(stopCode: String): Flow<Resource<List<Arrival>>>

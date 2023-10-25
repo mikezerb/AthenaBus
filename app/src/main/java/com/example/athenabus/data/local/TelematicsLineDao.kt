@@ -32,6 +32,16 @@ interface TelematicsLineDao {
 
     @Query(
         """
+            SELECT * 
+            FROM BusLineEntity
+            WHERE LineID LIKE '%' || UPPER(:query) || '%'
+        """
+    )
+    suspend fun getLinesFromLineID(query: String): List<BusLineEntity>
+
+
+    @Query(
+        """
             SELECT LineCode 
             FROM BusLineEntity
             WHERE LineID = UPPER(:query) 
