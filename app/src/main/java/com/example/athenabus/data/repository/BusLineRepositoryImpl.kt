@@ -2,14 +2,15 @@ package com.example.athenabus.data.repository
 
 import com.example.athenabus.common.Resource
 import com.example.athenabus.data.local.TelematicsLineDao
-import com.example.athenabus.data.mapper.ToStop
 import com.example.athenabus.data.mapper.toArrival
 import com.example.athenabus.data.mapper.toBusLine
 import com.example.athenabus.data.mapper.toBusLineEntity
+import com.example.athenabus.data.mapper.toDailySchedule
 import com.example.athenabus.data.mapper.toRoute
 import com.example.athenabus.data.mapper.toStop
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.domain.model.Arrival
+import com.example.athenabus.domain.model.DailySchedule
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.domain.model.Stop
@@ -170,8 +171,20 @@ class BusLineRepositoryImpl @Inject constructor(
     override fun getStopsFromRoute(routeCode: String): Flow<Resource<List<Stop>>> = flow {
         emit(Resource.Loading())
         try {
-            val stops = api.getStopsForRoute(routeCode = routeCode).map { it.ToStop() }
+            val stops = api.getStopsForRoute(routeCode = routeCode).map { it.toStop() }
             emit(Resource.Success(data = stops))
+        } catch (e: HttpException) {
+            emit(Resource.Error(message = e.localizedMessage ?: "error"))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An error occurred"))
+        }
+    }
+
+    override fun getDailySchedules(lineCode: String): Flow<Resource<DailySchedule>> = flow {
+        emit(Resource.Loading())
+        try {
+            val schedule = api.getDailySchedule(lineCode = lineCode).toDailySchedule()
+            emit(Resource.Success(data = schedule))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "error"))
         } catch (e: Exception) {

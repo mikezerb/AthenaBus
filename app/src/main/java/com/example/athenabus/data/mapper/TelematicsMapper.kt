@@ -4,12 +4,17 @@ import com.example.athenabus.data.local.entity.BusLineEntity
 import com.example.athenabus.data.local.entity.RouteEntity
 import com.example.athenabus.data.remote.dto.ArrivalStopDtoItem
 import com.example.athenabus.data.remote.dto.ClosestStopDtoItem
+import com.example.athenabus.data.remote.dto.Come
+import com.example.athenabus.data.remote.dto.DailyScheduleDto
+import com.example.athenabus.data.remote.dto.Go
 import com.example.athenabus.data.remote.dto.LineDtoItem
 import com.example.athenabus.data.remote.dto.RouteDtoItem
-import com.example.athenabus.data.remote.dto.WebGetRouteDto
 import com.example.athenabus.data.remote.dto.WebGetRouteDtoItem
 import com.example.athenabus.data.remote.dto.WebGetStopsDtoItem
 import com.example.athenabus.domain.model.Arrival
+import com.example.athenabus.domain.model.ComeUI
+import com.example.athenabus.domain.model.DailySchedule
+import com.example.athenabus.domain.model.GoUI
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.domain.model.Stop
@@ -67,7 +72,7 @@ fun WebGetRouteDtoItem.toRoute(): Route {
     )
 }
 
-fun WebGetStopsDtoItem.ToStop(): Stop {
+fun WebGetStopsDtoItem.toStop(): Stop {
     return Stop(
         StopCode = StopCode,
         StopID = StopID,
@@ -80,46 +85,6 @@ fun WebGetStopsDtoItem.ToStop(): Stop {
     )
 }
 
-/*
-
-val StopCode: String,
-    val StopDescr: String,
-    val StopDescrEng: String?,
-    val StopStreet: String?,
-    val StopLat: String,
-    val StopLng: String,
-    val StopID: String,
-    val distance: String
-
-val RouteStopOrder: String,
-    val StopAmea: String,
-    val StopCode: String,
-    val StopDescr: String,
-    val StopDescrEng: String,
-    val StopHeading: String,
-    val StopID: String,
-    val StopLat: String,
-    val StopLng: String,
-    val StopStreet: String,
-    val StopStreetEng: Any,
-    val StopType: String
- */
-/*
-
-
-val RouteCode: String,
-    val LineCode: String,
-    val RouteDescr: String,
-    val RouteDescrEng: String,
-    val RouteDistance: String,
-    val RouteType: String,
-    val LineID: String,
-    val LineDescr: String,
-    val LineDescrEng: String,
-    val MasterLineCode: String,
-    val hidden: String,
- */
-
 fun RouteDtoItem.toRouteEntity(): RouteEntity {
     return RouteEntity(
         RouteCode = RouteCode,
@@ -130,18 +95,6 @@ fun RouteDtoItem.toRouteEntity(): RouteEntity {
         RouteType = RouteType
     )
 }
-
-//fun RouteEntity.toRoute(): Route {
-//    return Route(
-//        RouteCode = RouteCode,
-//        LineCode = LineCode,
-//        RouteDescr = RouteDescr,
-//        RouteDescrEng = RouteDescrEng,
-//        RouteDistance = RouteDistance,
-//        RouteType = RouteType,
-//        LineID = LineID
-//    )
-//}
 
 fun Route.toRouteEntity(): RouteEntity {
     return RouteEntity(
@@ -186,21 +139,21 @@ fun ArrivalStopDtoItem.toArrival(): Arrival {
     )
 }
 
-//fun Arrival.addRoute(route: Route): Arrival {
-//    return Arrival(
-//        route_code = route_code,
-//        btime2 = btime2,
-//        veh_code = veh_code,
-//        RouteCode = route.RouteCode,
-//        LineCode = route.LineCode,
-//        RouteDescr = route.RouteDescr,
-//        RouteDescrEng = route.RouteDescrEng,
-//        RouteDistance = route.RouteDistance,
-//        RouteType = route.RouteType,
-//        LineID = route.LineID?.toString(),
-//        hidden = route.hidden,
-//        LineDescr = route.LineDescr,
-//        LineDescrEng = route.LineDescrEng,
-//        MasterLineCode = route.MasterLineCode
-//    )
-//}
+fun DailyScheduleDto.toDailySchedule(): DailySchedule {
+    return DailySchedule(
+        come = come.map { it.toComeUI() },
+        go = go.map { it.toGoUI() }
+    )
+}
+
+fun Go.toGoUI(): GoUI {
+    return GoUI(
+        time = sdd_start1
+    )
+}
+
+fun Come.toComeUI(): ComeUI {
+    return ComeUI(
+        time = sdd_start1
+    )
+}
