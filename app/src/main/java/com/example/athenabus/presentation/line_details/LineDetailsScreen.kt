@@ -62,11 +62,10 @@ fun LineDetailsScreen(
     val state = viewModel.state.value
     val routeState = routeViewModel.state.value
 
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(true, key2 = lineId) {
         viewModel.getLine(lineId)
-        viewModel.getAvailableLines(lineId)
     }
-    LaunchedEffect(key1 = Unit) {
+    LaunchedEffect(key1 = true, key2 = lineId) {
         routeViewModel.getLineCodes(lineId)
     }
 
@@ -88,8 +87,7 @@ fun LineDetailsScreen(
             title = stringResource(R.string.schedule_tab_title),
             selectedIcon = Icons.Filled.Timeline,
             unSelectedIcon = Icons.Outlined.Timeline,
-            // TODO: pass all available lines from lineID
-            screen = { state.line?.let { ScheduleScreen(line = it, lines = state.availableLines) } }
+            screen = { state.line?.let { ScheduleScreen(line = it) } }
         )
     )
 

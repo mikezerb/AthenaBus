@@ -154,6 +154,6 @@ fun Go.toGoUI(): GoUI {
 
 fun Come.toComeUI(): ComeUI {
     return ComeUI(
-        time = sdd_start1
+        time = sdd_start1 ?: "122"
     )
 }

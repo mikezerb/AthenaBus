@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.line_details
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -40,24 +39,4 @@ class LineDetailsViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
-
-    fun getAvailableLines(lineId: String){
-        getLinesFromLineIDUseCase(lineId).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    val busLines = result.data ?: emptyList()
-                    _state.value = LineDetailsState(availableLines = busLines)
-                }
-
-                is Resource.Error -> {
-                    _state.value = LineDetailsState(error = result.message ?: "Unexpected error")
-                }
-
-                is Resource.Loading -> {
-                    _state.value = LineDetailsState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
 }

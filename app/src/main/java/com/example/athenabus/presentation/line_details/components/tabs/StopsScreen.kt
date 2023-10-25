@@ -15,7 +15,6 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +39,7 @@ fun StopsScreen(
     viewModel: RouteStopsViewModel = hiltViewModel(),
 ) {
     var expanded by remember { mutableStateOf(false) }
+
     var selectedRoute by remember {
         mutableStateOf("")
     }
@@ -59,14 +59,6 @@ fun StopsScreen(
     ) {
         val options: MutableList<String> = mutableListOf()
 
-        LaunchedEffect(key1 = Unit) {
-            if (routes.isNotEmpty()) {
-                routes.forEach { route ->
-                    options += route.RouteDescr
-                }
-            }
-        }
-
         DropdownMenuSelection(
             modifier = Modifier
                 .fillMaxWidth()
@@ -77,7 +69,7 @@ fun StopsScreen(
             onClick = { route, i ->
                 selectedRoute = route
                 selectedRouteCode = routes[i].RouteCode
-                expanded = false
+                expanded = !expanded
                 viewModel.getStops(selectedRouteCode)
             },
             selectedOption = selectedRoute,

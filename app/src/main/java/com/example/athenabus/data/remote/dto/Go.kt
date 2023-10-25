@@ -11,7 +11,7 @@ data class Go(
     val sdd_code: String,
     val sdd_kp1: String,
     val sdd_kp2: String,
-    val sdd_line1: String,
+    val sdd_line1: String?,
     val sdd_line2: String,
     val sdd_sort: String,
     val sdd_start1: String,
