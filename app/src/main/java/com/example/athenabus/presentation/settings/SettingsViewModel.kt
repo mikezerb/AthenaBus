@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.settings
 
-import android.util.Log
 import androidx.datastore.preferences.core.edit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -23,7 +22,7 @@ class SettingsViewModel @Inject constructor(
 
     private val _settingState = MutableStateFlow(
         SettingsState(
-            lanCode = "el"
+            lanCode = determineLanCode()
         )
     )
 
@@ -33,7 +32,7 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             dataStore.data.map { preferences ->
                 SettingsState(
-                    preferences[DataStoreUtil.SELECTED_LANGUAGE_CODE] ?: "el"
+                    preferences[DataStoreUtil.SELECTED_LANGUAGE_CODE] ?: determineLanCode()
                 )
             }.collect {
                 _settingState.value = it
@@ -44,7 +43,6 @@ class SettingsViewModel @Inject constructor(
     fun saveSelectedLang(appLang: AppLanguage) {
         viewModelScope.launch(Dispatchers.IO) {
             dataStore.edit { preferences ->
-                Log.d("lang", "lang is: " + preferences[DataStoreUtil.SELECTED_LANGUAGE_CODE])
                 preferences[DataStoreUtil.SELECTED_LANGUAGE_CODE] = appLang.selectedLangCode
             }
         }

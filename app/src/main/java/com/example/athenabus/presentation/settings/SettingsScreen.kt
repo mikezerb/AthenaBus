@@ -6,7 +6,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.LocaleList
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.AnimatedVisibility
@@ -72,7 +71,6 @@ private fun changeLanguage(context: Context, code: AppLanguage) {
         val appLocale: LocaleListCompat = LocaleListCompat.forLanguageTags(code.selectedLangCode)
         AppCompatDelegate.setApplicationLocales(appLocale)
     }
-
 }
 
 @Composable
@@ -89,13 +87,10 @@ fun SettingsScreen(
         AppLanguage(selectedLang = stringResource(id = R.string.el), selectedLangCode = "el"),
         AppLanguage(selectedLang = stringResource(id = R.string.en), selectedLangCode = "en"),
     )
-    Log.d("LANG", settingsState.lanCode)
-
     val selectedLang = when (settingsState.lanCode) {
         "en" -> 1
         else -> 0
     }
-
     var langExpanded by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
