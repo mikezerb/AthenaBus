@@ -38,7 +38,7 @@ class BusLineListViewModel @Inject constructor(
                     val busLines = result.data ?: emptyList()
                     allBusLines.clear()
                     allBusLines.addAll(busLines)
-                    _state.value = BusLineListState(bus_lines = busLines)
+                    _state.value = BusLineListState(busLines = busLines)
                 }
 
                 is Resource.Error -> {
@@ -59,7 +59,7 @@ class BusLineListViewModel @Inject constructor(
         } else {
             getLinesFromSearchUseCase(allBusLines, query)
         }
-        _state.value = BusLineListState(bus_lines = filteredBusLines)
+        _state.value = BusLineListState(busLines = filteredBusLines)
     }
 
     suspend fun toggleFavoriteLine(query: String) {

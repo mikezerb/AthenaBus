@@ -49,7 +49,6 @@ fun BusLineListItem(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 style = MaterialTheme.typography.headlineMedium
             )
-
         },
         headlineContent = { // Display Line Description
             Text(

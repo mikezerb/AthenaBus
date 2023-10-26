@@ -115,11 +115,11 @@ fun NewBusLineListScreen(
     }
 
     val searchedList = remember(
-        state.bus_lines,
+        state.busLines,
         searchQuery.value,
         selectedFilter
     ) {
-        state.bus_lines.filter { busLine ->
+        state.busLines.filter { busLine ->
             val lineId = busLine.LineID
             val startsWithSearchQuery = lineId.startsWith(searchQuery.value, true)
 

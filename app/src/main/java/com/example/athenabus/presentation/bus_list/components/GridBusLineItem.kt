@@ -64,7 +64,7 @@ fun GridBusLineItem(
                     )
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                // Display Line Description
+                
                 Text(
                     text = busLine.LineDescr,
                     style = MaterialTheme.typography.bodySmall,
