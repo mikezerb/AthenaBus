@@ -19,7 +19,6 @@ fun ChangeLayoutButton(
 
     IconButton(
         onClick = onClick,
-//        modifier = Modifier.padding(4.dp)
     ) {
         Icon(
             imageVector = layoutIcon,
