@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.bus_list.components
 
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.GridView
 import androidx.compose.material.icons.outlined.ViewAgenda
@@ -8,9 +7,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 
 @Composable
 fun ChangeLayoutButton(
@@ -22,7 +19,7 @@ fun ChangeLayoutButton(
 
     IconButton(
         onClick = onClick,
-        modifier = Modifier.padding(4.dp)
+//        modifier = Modifier.padding(4.dp)
     ) {
         Icon(
             imageVector = layoutIcon,

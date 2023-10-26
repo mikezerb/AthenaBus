@@ -1,29 +1,24 @@
 package com.example.athenabus.presentation.bus_list
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
-import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Done
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DockedSearchBar
-import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +26,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -45,13 +41,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.athenabus.R
-import com.example.athenabus.domain.model.Line
 import com.example.athenabus.presentation.bus_list.components.BusLineList
-import com.example.athenabus.presentation.bus_list.components.BusLineListItem
 import com.example.athenabus.presentation.bus_list.components.ChangeLayoutButton
-import com.example.athenabus.presentation.bus_list.components.GridBusLineItem
-import com.example.athenabus.presentation.navigation.Route
-import kotlinx.coroutines.launch
+import com.example.athenabus.presentation.bus_list.components.ShowFilterButton
+import com.example.athenabus.presentation.bus_list.components.SingleLineFilters
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -62,9 +55,11 @@ fun NewBusLineListScreen(
 ) {
     val state = viewModel.state.value
     var isGridViewEnabled by rememberSaveable { mutableStateOf(false) }
+    var isShowFilterEnabled by rememberSaveable { mutableStateOf(false) }
     val onToggleGridView: (Boolean) -> Unit = { isEnabled ->
         isGridViewEnabled = isEnabled
     }
+
     // Create a MutableState to store the search query
     val searchQuery = rememberSaveable { mutableStateOf("") }
     val scope = rememberCoroutineScope()
@@ -84,28 +79,66 @@ fun NewBusLineListScreen(
     val aeroplaneList: List<String> = listOf("Χ93", "Χ95", "Χ96", "Χ97")
     val expressList: List<String> = listOf("Ε14", "Ε90", "Χ14")
 
-    fun filterLines(): List<Line> {
-        return when {
-            trolleySelected -> state.bus_lines.filter { trolleyList.contains(it.LineID) }
-                .filter { it.LineID.startsWith(searchQuery.value, true) }
+    val singleFilters = listOf(
+        stringResource(id = R.string.buses_chip_label),
+        stringResource(id = R.string.trolley_chip_label),
+    )
+    val multiFilters = listOf(
+        stringResource(id = R.string._24hour_chip_label),
+        stringResource(id = R.string.night_chip_label),
+        stringResource(id = R.string.aeroplane_chip_label),
+        stringResource(id = R.string.express_chip_label),
+    )
 
-            busesSelected -> state.bus_lines.filter { !trolleyList.contains(it.LineID) }
-                .filter { it.LineID.startsWith(searchQuery.value, true) }
+    val allFilterLabels = listOf(
+        stringResource(id = R.string.buses_chip_label),
+        stringResource(id = R.string.trolley_chip_label),
+        stringResource(id = R.string._24hour_chip_label),
+        stringResource(id = R.string.night_chip_label),
+        stringResource(id = R.string.aeroplane_chip_label),
+        stringResource(id = R.string.express_chip_label),
+    )
 
-            n24Selected -> state.bus_lines.filter { h24List.contains(it.LineID) }
-                .filter { it.LineID.startsWith(searchQuery.value, true) }
+    val selectedMultiFilters = remember {
+        mutableStateListOf("")
+    }
+    val selectedSingleFilter = remember {
+        mutableStateListOf<String>() // initially, first item is selected
+    }
 
-            nightSelected -> state.bus_lines.filter { nightList.contains(it.LineID) }
-                .filter { it.LineID.startsWith(searchQuery.value, true) }
+    var lineFilter = remember {
+        mutableStateListOf("")
+    }
 
-            aeroplaneSelected -> state.bus_lines.filter { aeroplaneList.contains(it.LineID) }
-                .filter { it.LineID.startsWith(searchQuery.value, true) }
+    var selectedFilter by remember {
+        mutableStateOf("") // initially, first item is selected
+    }
 
-            expressSelected -> state.bus_lines.filter { expressList.contains(it.LineID) }
-                .filter { it.LineID.startsWith(searchQuery.value, true) }
+    val searchedList = remember(
+        state.bus_lines,
+        searchQuery.value,
+        selectedFilter
+    ) {
+        state.bus_lines.filter { busLine ->
+            val lineId = busLine.LineID
+            val startsWithSearchQuery = lineId.startsWith(searchQuery.value, true)
 
-            else -> state.bus_lines.filter { it.LineID.startsWith(searchQuery.value, true) }
-        }.sortedBy { it.LineID }
+            if (selectedFilter.contains(singleFilters[0])) {
+                startsWithSearchQuery && !trolleyList.contains(lineId)
+            } else if (selectedFilter.contains(singleFilters[1])) {
+                startsWithSearchQuery && trolleyList.contains(lineId)
+            } else if (selectedFilter.contains(multiFilters[0])) {
+                startsWithSearchQuery && h24List.contains(lineId)
+            } else if (selectedFilter.contains(multiFilters[1])) {
+                startsWithSearchQuery && nightList.contains(lineId)
+            } else if (selectedFilter.contains(multiFilters[2])) {
+                startsWithSearchQuery && aeroplaneList.contains(lineId)
+            } else if (selectedFilter.contains(multiFilters[3])) {
+                startsWithSearchQuery && expressList.contains(lineId)
+            } else {
+                startsWithSearchQuery
+            }
+        }
     }
 
     Surface {
@@ -116,7 +149,7 @@ fun NewBusLineListScreen(
         ) {
             DockedSearchBar(
                 modifier = Modifier
-                    .align(Alignment.Start)
+                    .align(Alignment.CenterHorizontally)
                     .fillMaxWidth()
                     .padding(8.dp),
                 query = searchQuery.value,
@@ -145,144 +178,68 @@ fun NewBusLineListScreen(
                             Icon(imageVector = Icons.Outlined.Close, contentDescription = null)
                         }
                     } else {
-                        ChangeLayoutButton(
-                            enableGridView = isGridViewEnabled,
-                            onClick = { onToggleGridView(!isGridViewEnabled) })
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            ShowFilterButton(showFilterView = isShowFilterEnabled,
+                                onClick = {
+                                    selectedFilter = "" // remove selected filters
+                                    isShowFilterEnabled = !isShowFilterEnabled
+                                }
+                            )
+                            ChangeLayoutButton(
+                                enableGridView = isGridViewEnabled,
+                                onClick = { onToggleGridView(!isGridViewEnabled) }
+                            )
+                        }
                     }
                 }
             )
             { }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
-                    .horizontalScroll(
-                        rememberScrollState()
-                    ),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+            AnimatedVisibility(
+                visible = isShowFilterEnabled,
+                enter = expandVertically(
+                    expandFrom = Alignment.Top,
+                    animationSpec = tween(durationMillis = 100)
+                ) + fadeIn(
+                    initialAlpha = 0.3f, animationSpec = tween(100)
+                ),
+                exit = shrinkVertically(
+                    shrinkTowards = Alignment.Top,
+                    animationSpec = tween(durationMillis = 100)
+                ) + fadeOut(
+                    animationSpec = tween(100)
+                )
             ) {
-                ElevatedFilterChip(
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { trolleySelected = !trolleySelected },
-                    label = {
-                        Text(stringResource(R.string.trolley_chip_label))
-                    },
-                    selected = trolleySelected,
-                    leadingIcon = if (trolleySelected) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
+                Column {
+                    SingleLineFilters(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        selected = selectedFilter,
+                        labels = singleFilters,
+                        onClick = { item ->
+                            selectedFilter = if (selectedFilter == item) "" else item
                         }
-                    } else {
-                        null
-                    },
-                )
-                ElevatedFilterChip(
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { busesSelected = !busesSelected },
-                    label = {
-                        Text(stringResource(R.string.buses_chip_label))
-                    },
-                    selected = busesSelected,
-                    leadingIcon = if (busesSelected) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
+                    )
+                    SingleLineFilters(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 8.dp),
+                        selected = selectedFilter,
+                        labels = multiFilters,
+                        onClick = { item ->
+                            selectedFilter = if (selectedFilter == item) "" else item
                         }
-                    } else {
-                        null
-                    },
-                )
-                ElevatedFilterChip(
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { n24Selected = !n24Selected },
-                    label = {
-                        Text(stringResource(R.string._24hour_chip_label))
-                    },
-                    selected = n24Selected,
-                    leadingIcon = if (n24Selected) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
-                    } else {
-                        null
-                    },
-                )
-                ElevatedFilterChip(
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { nightSelected = !nightSelected },
-                    label = {
-                        Text(stringResource(R.string.night_chip_label))
-                    },
-                    selected = nightSelected,
-                    leadingIcon = if (nightSelected) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
-                    } else {
-                        null
-                    },
-                )
-                ElevatedFilterChip(
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { aeroplaneSelected = !aeroplaneSelected },
-                    label = {
-                        Text(stringResource(R.string.aeroplane_chip_label))
-                    },
-                    selected = aeroplaneSelected,
-                    leadingIcon = if (aeroplaneSelected) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
-                    } else {
-                        null
-                    },
-                )
-                ElevatedFilterChip(
-                    modifier = Modifier.padding(horizontal = 4.dp),
-                    onClick = { expressSelected = !expressSelected },
-                    label = {
-                        Text(stringResource(R.string.express_chip_label))
-                    },
-                    selected = expressSelected,
-                    leadingIcon = if (expressSelected) {
-                        {
-                            Icon(
-                                imageVector = Icons.Filled.Done,
-                                contentDescription = "Done icon",
-                                modifier = Modifier.size(FilterChipDefaults.IconSize)
-                            )
-                        }
-                    } else {
-                        null
-                    },
-                )
+                    )
+                }
             }
             BusLineList(
                 modifier = Modifier.fillMaxSize(),
+                navController = navController,
                 isGridLayout = isGridViewEnabled,
-                lines = state.bus_lines,
+                lines = searchedList,
                 search = searchQuery.value,
-                typeFilter = emptyList()
             )
             if (state.error.isNotBlank()) {
                 Text(
