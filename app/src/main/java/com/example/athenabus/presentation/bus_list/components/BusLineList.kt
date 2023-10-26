@@ -10,8 +10,10 @@ import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.presentation.common.EmptyScreen
 import com.example.athenabus.presentation.navigation.Route
@@ -28,7 +30,7 @@ fun BusLineList(
     if (lines.isEmpty()) {
         EmptyScreen(
             modifier = Modifier.fillMaxSize(),
-            title = "Cannot find $search"
+            title = stringResource(R.string.cannot_find, search)
         )
     } else {
         AnimatedVisibility(
