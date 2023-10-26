@@ -46,6 +46,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
+import com.example.athenabus.presentation.bus_list.components.BusLineList
 import com.example.athenabus.presentation.bus_list.components.BusLineListItem
 import com.example.athenabus.presentation.bus_list.components.ChangeLayoutButton
 import com.example.athenabus.presentation.bus_list.components.GridBusLineItem
@@ -276,47 +277,13 @@ fun NewBusLineListScreen(
                     },
                 )
             }
-            if (isGridViewEnabled) {
-                LazyVerticalStaggeredGrid(
-                    columns = StaggeredGridCells.Fixed(2),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(0.dp, 5.dp, 0.dp, 0.dp)
-                ) {
-                    items(filterLines()) { line ->
-                        GridBusLineItem(
-                            busLine = line, onItemClick =
-                            {
-                                navController.navigate(Route.LineDetailsActivity.route + "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}") // &lineDesc=${line.LineDescr}&isFav=${line.isFavorite}
-                            },
-                            onToggleFavorite = { _ ->
-                                scope.launch {
-                                    viewModel.toggleFavoriteLine(query = line.LineID)
-                                }
-                            }
-                        )
-                    }
-                }
-            } else {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                ) {
-                    items(filterLines()) { line ->
-                        BusLineListItem(
-                            busLine = line, onItemClick =
-                            {
-                                navController.navigate(Route.LineDetailsActivity.route + "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}") // &lineDesc=${line.LineDescr}&isFav=${line.isFavorite}
-                            },
-                            onToggleFavorite = { _ ->
-                                scope.launch {
-                                    viewModel.toggleFavoriteLine(query = line.LineID)
-                                }
-                            }
-                        )
-                    }
-                }
-            }
+            BusLineList(
+                modifier = Modifier.fillMaxSize(),
+                isGridLayout = isGridViewEnabled,
+                lines = state.bus_lines,
+                search = searchQuery.value,
+                typeFilter = emptyList()
+            )
             if (state.error.isNotBlank()) {
                 Text(
                     text = state.error,
