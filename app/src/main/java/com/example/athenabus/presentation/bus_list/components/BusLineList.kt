@@ -26,7 +26,7 @@ fun BusLineList(
     lines: List<Line>,
     search: String,
 ) {
-    if (lines.isEmpty()) {
+    if (lines.isEmpty() && search.isNotBlank()) {
         EmptyScreen(
             modifier = Modifier.fillMaxSize(),
             title = stringResource(R.string.cannot_find, search)

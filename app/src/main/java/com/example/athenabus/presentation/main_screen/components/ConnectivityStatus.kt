@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.athenabus.R
+import com.example.athenabus.data.network.ConnectionStatus
 import com.example.athenabus.data.network.NetworkConnectivityObserver
 import kotlinx.coroutines.delay
 
@@ -39,10 +40,10 @@ fun ConnectivityStatus(
 ) {
     val connectivityObserver = NetworkConnectivityObserver(context)
     val networkStatus by connectivityObserver.observe()
-        .collectAsState(initial = com.example.athenabus.data.network.ConnectionStatus.Initial)
+        .collectAsState(initial = ConnectionStatus.Initial)
 
     val isConnected =
-        networkStatus === com.example.athenabus.data.network.ConnectionStatus.Available
+        networkStatus === ConnectionStatus.Available || networkStatus === ConnectionStatus.Initial
 
     var visibility by remember { mutableStateOf(false) }
 
@@ -50,7 +51,7 @@ fun ConnectivityStatus(
         visibility = if (!isConnected) {
             true
         } else {
-            delay(800)
+            delay(500)
             false
         }
     }
