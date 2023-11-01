@@ -25,7 +25,6 @@ fun BusLineList(
     isGridLayout: Boolean = false,
     lines: List<Line>,
     search: String,
-    typeFilter: List<String> = emptyList()
 ) {
     if (lines.isEmpty()) {
         EmptyScreen(

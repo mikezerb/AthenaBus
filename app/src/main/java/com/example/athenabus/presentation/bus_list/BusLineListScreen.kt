@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,7 +50,7 @@ import com.example.athenabus.presentation.bus_list.components.SingleLineFilters
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NewBusLineListScreen(
+fun BusLineListScreen(
     navController: NavController,
     viewModel: BusLineListViewModel = hiltViewModel(),
 ) {
@@ -140,62 +141,67 @@ fun NewBusLineListScreen(
             }
         }
     }
-
     Surface {
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
-            DockedSearchBar(
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                query = searchQuery.value,
-                onQueryChange = {
-                    searchQuery.value = it
-                },
-                onSearch = {},
-                active = false,
-                onActiveChange = {},
-                placeholder = { Text(text = stringResource(id = R.string.search_place_holder)) },
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Search,
-                        contentDescription = stringResource(id = R.string.search_place_holder),
-                        tint = MaterialTheme.colorScheme.surfaceTint
-                    )
-                },
-                trailingIcon = {
-                    if (searchQuery.value.isNotEmpty()) {
-                        IconButton(
-                            onClick = {
-                                searchQuery.value = ""
-                            },
-                            modifier = Modifier.padding(horizontal = 12.dp)
-                        ) {
-                            Icon(imageVector = Icons.Outlined.Close, contentDescription = null)
-                        }
-                    } else {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            ShowFilterButton(showFilterView = isShowFilterEnabled,
+            Row(
+                Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                DockedSearchBar(
+                    modifier = Modifier
+                        .padding(8.dp),
+                    query = searchQuery.value,
+                    onQueryChange = {
+                        searchQuery.value = it
+                    },
+                    onSearch = {},
+                    active = false,
+                    onActiveChange = {},
+                    placeholder = { Text(text = stringResource(id = R.string.search_place_holder)) },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Search,
+                            contentDescription = stringResource(id = R.string.search_place_holder),
+                            tint = MaterialTheme.colorScheme.surfaceTint
+                        )
+                    },
+                    trailingIcon = {
+                        if (searchQuery.value.isNotEmpty()) {
+                            IconButton(
                                 onClick = {
-                                    selectedFilter = "" // remove selected filters
-                                    isShowFilterEnabled = !isShowFilterEnabled
-                                }
-                            )
-                            ChangeLayoutButton(
-                                enableGridView = isGridViewEnabled,
-                                onClick = { onToggleGridView(!isGridViewEnabled) }
-                            )
+                                    searchQuery.value = ""
+                                },
+                                modifier = Modifier.padding(horizontal = 12.dp)
+                            ) {
+                                Icon(imageVector = Icons.Outlined.Close, contentDescription = null)
+                            }
+                        } else {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                ChangeLayoutButton(
+                                    enableGridView = isGridViewEnabled,
+                                    onClick = { onToggleGridView(!isGridViewEnabled) }
+                                )
+                            }
                         }
                     }
-                }
-            )
-            { }
+                )
+                { }
+                ShowFilterButton(
+                    modifier = Modifier.padding(end = 8.dp),
+                    showFilterView = isShowFilterEnabled,
+                    onClick = {
+                        selectedFilter = "" // remove selected filters
+                        isShowFilterEnabled = !isShowFilterEnabled
+                    }
+                )
+            }
             AnimatedVisibility(
                 visible = isShowFilterEnabled,
                 enter = expandVertically(

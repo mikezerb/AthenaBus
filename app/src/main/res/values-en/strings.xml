@@ -83,5 +83,7 @@
     <string name="location_enable_desc">We need your location to give you the closest stops</string>
     <string name="enable_location_btn">Allow location</string>
     <string name="cannot_find">Cannot find %1$s</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="back_online">Back Online</string>
 
 </resources>

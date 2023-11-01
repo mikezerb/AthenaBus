@@ -5,11 +5,33 @@
       <entry key="Preview">
         <State />
       </entry>
+      <entry key="PreviewBusTypeFilters">
+        <State />
+      </entry>
+      <entry key="PreviewShowFilterButton">
+        <State />
+      </entry>
+      <entry key="PreviewTypeFilterItem">
+        <State />
+      </entry>
       <entry key="SelectItemPreview">
         <State />
       </entry>
       <entry key="app">
-        <State />
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\mikeaposto\.android\avd\Pixel_6_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2023-10-26T14:26:11.858969900Z" />
+        </State>
       </entry>
     </value>
   </component>

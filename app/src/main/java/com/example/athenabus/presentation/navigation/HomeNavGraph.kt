@@ -20,7 +20,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.example.athenabus.presentation.about.AboutScreen
-import com.example.athenabus.presentation.bus_list.NewBusLineListScreen
+import com.example.athenabus.presentation.bus_list.BusLineListScreen
 import com.example.athenabus.presentation.closest_stops.NewClosestStopsScreen
 import com.example.athenabus.presentation.favorites.FavoriteScreen
 import com.example.athenabus.presentation.line_details.LineDetailsScreen
@@ -49,7 +49,7 @@ fun HomeNavGraph(navController: NavHostController) {
             route = Route.NewBusLine.route,
         ) {
             composable(route = Route.NewBusLineScreen.route) {
-                NewBusLineListScreen(navController)
+                BusLineListScreen(navController)
             }
             composable(route = Route.FavoriteScreen.route) {
                 FavoriteScreen(navController)

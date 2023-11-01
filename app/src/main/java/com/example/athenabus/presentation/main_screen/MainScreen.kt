@@ -5,7 +5,7 @@ import android.net.Uri
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -45,6 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.presentation.common.MaterialBottomNavBar
 import com.example.athenabus.presentation.common.MaterialTopAppBar
+import com.example.athenabus.presentation.main_screen.components.ConnectivityStatus
 import com.example.athenabus.presentation.main_screen.components.DrawerHeader
 import com.example.athenabus.presentation.main_screen.components.NavDrawerItem
 import com.example.athenabus.presentation.navigation.HomeNavGraph
@@ -63,6 +64,9 @@ fun MainScreen(
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+//    val connectivityObserver = NetworkConnectivityObserver(context)
+//    val networkStatus by connectivityObserver.observe()
+//        .collectAsState(initial = ConnectionStatus.Initial)
     showBottomBar = when (navBackStackEntry?.destination?.route) {
         Route.SettingsActivityScreen.route -> false // on this screen bottom bar should be hidden
         Route.LineDetailActivityScreen.route -> false // on this screen bottom bar should be hidden
@@ -183,7 +187,8 @@ fun MainScreen(
                     }
                 },
             ) {
-                Box(modifier = Modifier.padding(it)) {
+                Column(Modifier.padding(it)) {
+                    ConnectivityStatus(context)
                     HomeNavGraph(navController = navController)
                 }
             }
