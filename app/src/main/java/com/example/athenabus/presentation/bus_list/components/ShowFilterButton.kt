@@ -1,6 +1,7 @@
 package com.example.athenabus.presentation.bus_list.components
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.FilterAltOff
 import androidx.compose.material.icons.outlined.FilterAlt
 import androidx.compose.material3.Icon
@@ -21,7 +22,7 @@ fun ShowFilterButton(
     onClick: () -> Unit
 ) {
     val filterIcon =
-        if (showFilterView) Icons.Default.FilterAltOff else Icons.Outlined.FilterAlt
+        if (showFilterView) Icons.Default.FilterAltOff else Icons.Default.FilterAlt
 
     IconButton(
         modifier = modifier,

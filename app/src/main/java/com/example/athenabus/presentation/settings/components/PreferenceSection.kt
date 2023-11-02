@@ -54,7 +54,7 @@ fun PreferenceSection(
         Text(
             text = stringResource(id = title),
             modifier = Modifier
-                .padding(start = 16.dp, top = 16.dp, bottom = 8.dp),
+                .padding(start = 16.dp, top = 12.dp, bottom = 4.dp),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.titleSmall,
             color = MaterialTheme.colorScheme.primary
@@ -81,86 +81,97 @@ private fun PreviewPreferenceSection() {
             AppLanguage(selectedLang = stringResource(id = R.string.en), selectedLangCode = "en"),
         )
         val context = LocalContext.current
-        PreferenceSection(
-            modifier = Modifier.padding(it),
-            title = R.string.default_setting_section
-        ) {
-            ChoicePreference(
-                title = R.string.theme_settings_theme_title,
-                options = list,
-                selected = selectedIndex,
-                onSelect = { i -> selectedIndex = i },
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Brightness4,
-                        contentDescription = null
-                    )
-                }
-
-            )
-            HorizontalDivider()
-            BasicPreferenceItem(
-                title = R.string.application_refresh_setting_title,
-                description = R.string.application_refresh_setting_desc,
-                onClick = {
-                    Toast.makeText(context, "Update data", Toast.LENGTH_SHORT).show()
-                },
-                icon = {
-                    Icon(
-                        imageVector = Icons.Rounded.Refresh,
-                        contentDescription = null
-                    )
-                }
-            )
-            HorizontalDivider()
-            BasicPreferenceItem(
-                modifier = Modifier.background(MaterialTheme.colorScheme.surface),
-                title = R.string.default_setting_title,
-                description = R.string.default_setting_desc,
-                onClick = { }
-            )
-            HorizontalDivider()
-            BasicPreferenceItem(
-                icon = { Icon(imageVector = Icons.Default.Brightness4, contentDescription = null) },
-                title = R.string.default_setting_title,
-                description = R.string.default_setting_desc,
-                onClick = { }
-            )
-            HorizontalDivider()
-            SwitchListItem(
-                title = R.string.theme_settings_amoled_theme_title,
-                subtitle = R.string.theme_settings_theme_subtitle,
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Contrast,
-                        contentDescription = null
-                    )
-                },
-                isChecked = true,
-                onCheckedChange = { }
-            )
-            HorizontalDivider()
-            LocaleDropdownMenuPreference(
-                title = R.string.setting_lang_title,
-                description = R.string.setting_lang_desc,
-                options = localeOptions,
-                expanded = expanded,
-                selected = dropdownIndex,
-                onSelect = { index ->
-                    dropdownIndex = index
-                    expanded = false
-                    Toast.makeText(context, "Selected ${list[index]}", Toast.LENGTH_SHORT).show()
-                },
-                onDismiss = { expanded = false },
-                onClick = { expanded = true },
-                icon = {
-                    Icon(
-                        imageVector = Icons.Outlined.Translate,
-                        contentDescription = null
-                    )
-                }
-            )
+        Column {
+            PreferenceSection(
+                modifier = Modifier.padding(it),
+                title = R.string.default_setting_section
+            ) {
+                ChoicePreference(
+                    title = R.string.theme_settings_theme_title,
+                    options = list,
+                    selected = selectedIndex,
+                    onSelect = { i -> selectedIndex = i },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Brightness4,
+                            contentDescription = null
+                        )
+                    }
+                )
+                HorizontalDivider()
+                BasicPreferenceItem(
+                    title = R.string.application_refresh_setting_title,
+                    description = R.string.application_refresh_setting_desc,
+                    onClick = {
+                        Toast.makeText(context, "Update data", Toast.LENGTH_SHORT).show()
+                    },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Rounded.Refresh,
+                            contentDescription = null
+                        )
+                    }
+                )
+                HorizontalDivider()
+                BasicPreferenceItem(
+                    modifier = Modifier.background(MaterialTheme.colorScheme.surface),
+                    title = R.string.default_setting_title,
+                    description = R.string.default_setting_desc,
+                    onClick = { }
+                )
+                HorizontalDivider()
+            }
+            PreferenceSection(
+                modifier = Modifier.padding(it),
+                title = R.string.default_setting_section
+            ) {
+                BasicPreferenceItem(
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Default.Brightness4,
+                            contentDescription = null
+                        )
+                    },
+                    title = R.string.default_setting_title,
+                    description = R.string.default_setting_desc,
+                    onClick = { }
+                )
+                HorizontalDivider()
+                SwitchListItem(
+                    title = R.string.theme_settings_amoled_theme_title,
+                    subtitle = R.string.theme_settings_theme_subtitle,
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Contrast,
+                            contentDescription = null
+                        )
+                    },
+                    isChecked = true,
+                    onCheckedChange = { }
+                )
+                HorizontalDivider()
+                LocaleDropdownMenuPreference(
+                    title = R.string.setting_lang_title,
+                    description = R.string.setting_lang_desc,
+                    options = localeOptions,
+                    expanded = expanded,
+                    selected = dropdownIndex,
+                    onSelect = { index ->
+                        dropdownIndex = index
+                        expanded = false
+                        Toast.makeText(context, "Selected ${list[index]}", Toast.LENGTH_SHORT)
+                            .show()
+                    },
+                    onDismiss = { expanded = false },
+                    onClick = { expanded = true },
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Translate,
+                            contentDescription = null
+                        )
+                    }
+                )
+            }
         }
     }
-
 }

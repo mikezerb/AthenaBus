@@ -10,10 +10,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material.icons.outlined.Search
@@ -148,13 +150,15 @@ fun BusLineListScreen(
                 .background(MaterialTheme.colorScheme.background)
         ) {
             Row(
-                Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
+                Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 DockedSearchBar(
                     modifier = Modifier
-                        .padding(8.dp),
+                        .weight(1f),
                     query = searchQuery.value,
                     onQueryChange = {
                         searchQuery.value = it
@@ -193,8 +197,9 @@ fun BusLineListScreen(
                     }
                 )
                 { }
+                Spacer(modifier = Modifier.width(8.dp)) // Add a spacer for spacing
                 ShowFilterButton(
-                    modifier = Modifier.padding(end = 8.dp),
+                    modifier = Modifier.padding(end = 4.dp),
                     showFilterView = isShowFilterEnabled,
                     onClick = {
                         selectedFilter = "" // remove selected filters

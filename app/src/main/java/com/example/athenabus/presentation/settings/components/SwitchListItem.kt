@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.outlined.Contrast
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -15,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.athenabus.R
 
 @Composable
 fun SwitchListItem(
@@ -66,5 +68,16 @@ fun SwitchListItem(
 @Preview(name = "SwitchListItem")
 @Composable
 private fun PreviewSwitchListItem() {
-
+    SwitchListItem(
+        title = R.string.theme_settings_amoled_theme_title,
+        subtitle = R.string.theme_settings_theme_subtitle,
+        icon = {
+            Icon(
+                imageVector = Icons.Outlined.Contrast,
+                contentDescription = null
+            )
+        },
+        isChecked = true,
+        onCheckedChange = { }
+    )
 }

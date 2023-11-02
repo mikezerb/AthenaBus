@@ -48,7 +48,7 @@ fun ConnectivityStatus(
 
     LaunchedEffect(isConnected) {
         if (!isConnected) {
-            delay(700)
+            delay(800)
         }
         visibility = !isConnected
     }

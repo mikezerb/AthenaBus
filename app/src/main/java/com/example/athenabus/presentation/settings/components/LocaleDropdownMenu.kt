@@ -6,7 +6,9 @@ import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Translate
@@ -17,7 +19,6 @@ import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -110,9 +111,8 @@ fun DefaultPreview() {
     var expanded by remember { mutableStateOf(false) }
     var selectedIndex by remember { mutableIntStateOf(0) }
     val context = LocalContext.current
-    Scaffold {
+    Column(Modifier.fillMaxWidth()) {
         LocaleDropdownMenuPreference(
-            modifier = Modifier.padding(it),
             title = R.string.setting_lang_title,
             description = R.string.setting_lang_desc,
             options = localeOptions,
@@ -121,7 +121,11 @@ fun DefaultPreview() {
             onSelect = { index ->
                 selectedIndex = index
                 expanded = false
-                Toast.makeText(context, "Selected ${localeOptions[index].selectedLang} + ${localeOptions[index].selectedLangCode}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Selected ${localeOptions[index].selectedLang} + ${localeOptions[index].selectedLangCode}",
+                    Toast.LENGTH_SHORT
+                ).show()
             },
             onDismiss = { expanded = false },
             onClick = { expanded = true },
