@@ -40,20 +40,17 @@ fun ConnectivityStatus(
 ) {
     val connectivityObserver = NetworkConnectivityObserver(context)
     val networkStatus by connectivityObserver.observe()
-        .collectAsState(initial = ConnectionStatus.Initial)
+        .collectAsState(initial = ConnectionStatus.Unavailable)
 
-    val isConnected =
-        networkStatus === ConnectionStatus.Available || networkStatus === ConnectionStatus.Initial
+    val isConnected = networkStatus === ConnectionStatus.Available
 
     var visibility by remember { mutableStateOf(false) }
 
     LaunchedEffect(isConnected) {
-        visibility = if (!isConnected) {
-            true
-        } else {
-            delay(500)
-            false
+        if (!isConnected) {
+            delay(700)
         }
+        visibility = !isConnected
     }
 
     AnimatedVisibility(
@@ -78,10 +75,10 @@ fun ConnectivityStatusBox(isConnected: Boolean) {
         label = "errorTextColor"
     )
 
-    val message =
-        if (isConnected) stringResource(R.string.back_online)
-        else
-            stringResource(R.string.no_internet_connection)
+    val message = if (isConnected)
+        stringResource(R.string.back_online)
+    else
+        stringResource(R.string.no_internet_connection)
 
     val iconResource = if (isConnected) {
         Icons.Default.Wifi
