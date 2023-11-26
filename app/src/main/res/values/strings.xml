@@ -90,4 +90,5 @@
     <string name="cannot_find">Δεν βρέθηκε το %1$s</string>
     <string name="no_internet_connection">Δεν υπάρχει σύνδεση στο διαδίκτυο</string>
     <string name="back_online">Επιτυχής σύνδεση</string>
+    <string name="press_again_to_exit">Πατήστε ξανά για έξοδο</string>
 </resources>

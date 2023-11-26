@@ -43,6 +43,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
+import com.example.athenabus.presentation.common.BackPressAction
 import com.example.athenabus.presentation.common.MaterialBottomNavBar
 import com.example.athenabus.presentation.common.MaterialTopAppBar
 import com.example.athenabus.presentation.main_screen.components.ConnectivityStatus
@@ -58,6 +59,7 @@ import kotlinx.coroutines.launch
 fun MainScreen(
     navController: NavHostController = rememberNavController()
 ) {
+    BackPressAction()
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     var showBottomBar by rememberSaveable { mutableStateOf(true) }
