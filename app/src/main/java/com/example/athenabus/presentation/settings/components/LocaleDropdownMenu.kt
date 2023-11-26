@@ -71,7 +71,7 @@ fun LocaleDropdownMenuPreference(
                 Text(
                     modifier = Modifier.padding(4.dp),
                     text = options[selected].selectedLang,
-                    style = MaterialTheme.typography.labelLarge,
+                    style = MaterialTheme.typography.titleSmall,
                     color = MaterialTheme.colorScheme.primary
                 )
                 ExposedDropdownMenuDefaults.TrailingIcon(

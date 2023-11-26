@@ -77,7 +77,6 @@ fun LineDetailsScreen(
             screen = {
                 state.line?.let {
                     StopsScreen(
-                        line = it,
                         routes = routeState.availableRoutes
                     )
                 }
