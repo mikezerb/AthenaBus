@@ -70,7 +70,12 @@ fun ExpandableClosestStopItem(
         arrivals.groupBy { it.route_code }.forEach {
             var times = ""
             it.value.forEachIndexed { index, arrival ->
-                times += "${arrival.btime2} ${pluralStringResource(id = R.plurals.minutes_arrive, count = arrival.btime2.toInt())}"
+                times += "${arrival.btime2} ${
+                    pluralStringResource(
+                        id = R.plurals.minutes_arrive,
+                        count = arrival.btime2.toInt()
+                    )
+                }"
                 times += if (index < it.value.size - 1) {
                     " & "
                 } else
@@ -148,9 +153,19 @@ fun ExpandableClosestStopItem(
                             .padding(start = 12.dp)
                     ) {
                         Text(
-                            text = routes.size.toString() + " ${pluralStringResource(id = R.plurals.available_routes, count = routes.size)}" + "\n" +
+                            text = routes.size.toString() + " ${
+                                pluralStringResource(
+                                    id = R.plurals.available_routes,
+                                    count = routes.size
+                                )
+                            }" + "\n" +
                                     available_routes + "\n" +
-                                    arrivals.size.toString() + " ${pluralStringResource(id = R.plurals.upcoming_arrive, count = arrivals.size)}" + "\n" +
+                                    arrivals.size.toString() + " ${
+                                pluralStringResource(
+                                    id = R.plurals.upcoming_arrive,
+                                    count = arrivals.size
+                                )
+                            }" + "\n" +
                                     arrivalsBuses,
                             style = MaterialTheme.typography.labelMedium
                         )
@@ -218,6 +233,6 @@ val MasterLineCode: String
 //            LineDescrEng = "",
 //        ),
 
-        )
+    )
     ExpandableClosestStopItem(stop = stop, routes = availableRoutes, expanded = true)
 }

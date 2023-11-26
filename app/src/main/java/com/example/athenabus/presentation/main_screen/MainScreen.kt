@@ -117,7 +117,7 @@ fun MainScreen(
                     navDrawerItems.forEachIndexed { index, navItem ->
                         NavigationDrawerItem(
                             modifier = Modifier.padding(NavigationDrawerItemDefaults.ItemPadding),
-                            label = { Text(text = stringResource(id = navItem.title))},
+                            label = { Text(text = stringResource(id = navItem.title)) },
                             selected = index == selectedDrawerItemIndex,
                             onClick = {
                                 selectedDrawerItemIndex = index

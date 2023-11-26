@@ -26,9 +26,11 @@ class RouteStopsViewModel @Inject constructor(
                     val stops = result.data ?: emptyList()
                     _state.value = RouteStopsState(stops = stops)
                 }
+
                 is Resource.Error -> {
                     _state.value = RouteStopsState(error = result.message ?: "Unexpected error")
                 }
+
                 is Resource.Loading -> {
                     _state.value = RouteStopsState(isLoading = true)
                 }

@@ -58,7 +58,7 @@ class ThemeViewModel @Inject constructor(
         }
     }
 
-    fun setAppTheme(theme :Int) {
+    fun setAppTheme(theme: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             dataStore.edit { settings ->
                 settings[APP_THEME_KEY] = theme

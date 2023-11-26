@@ -25,9 +25,10 @@ fun BackPressAction() {
     var backPressState by remember { mutableStateOf<BackPress>(BackPress.Idle) }
     val context = LocalContext.current
 
-    if(showToast){
-        Toast.makeText(context, stringResource(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
-        showToast= false
+    if (showToast) {
+        Toast.makeText(context, stringResource(R.string.press_again_to_exit), Toast.LENGTH_SHORT)
+            .show()
+        showToast = false
     }
 
     LaunchedEffect(key1 = backPressState) {

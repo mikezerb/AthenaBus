@@ -19,7 +19,7 @@ fun BasicPreferenceItem(
     onClick: (() -> Unit)? = null
 ) {
     ListItem(
-        modifier = if (onClick != null){
+        modifier = if (onClick != null) {
             Modifier.clickable { onClick() }
         } else {
             Modifier

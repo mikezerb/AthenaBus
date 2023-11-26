@@ -16,8 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModel @Inject constructor(
     dataStoreUtil: DataStoreUtil
-) : ViewModel()
-{
+) : ViewModel() {
     private val dataStore = dataStoreUtil.dataStore
 
     private val _settingState = MutableStateFlow(

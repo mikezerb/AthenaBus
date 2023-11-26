@@ -24,7 +24,6 @@ import com.example.athenabus.presentation.closest_stops.components.defaults.Line
 import com.example.athenabus.presentation.closest_stops.components.defaults.LineParametersDefaults.linearGradient
 import com.example.athenabus.presentation.closest_stops.components.defaults.circleParameters
 import com.example.athenabus.presentation.line_details.components.StopItem
-import com.example.athenabus.presentation.line_details.components.StopListItem
 import com.example.athenabus.sample.SampleStopProvider
 
 @Composable
@@ -74,7 +73,8 @@ fun StopLineNode(
         content(
             Modifier
                 .defaultMinSize(minHeight = circleParameters.radius * 2)
-                .align(Alignment.TopStart).fillMaxWidth()
+                .align(Alignment.TopStart)
+                .fillMaxWidth()
                 .fillMaxWidth()
                 .padding(
                     start = circleParameters.radius + contentStartOffset,

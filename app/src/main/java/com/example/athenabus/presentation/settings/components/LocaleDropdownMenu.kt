@@ -103,7 +103,7 @@ fun LocaleDropdownMenuPreference(
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    val localeOptions : List<AppLanguage> = listOf(
+    val localeOptions: List<AppLanguage> = listOf(
         AppLanguage(selectedLang = stringResource(id = R.string.el), selectedLangCode = "el"),
         AppLanguage(selectedLang = stringResource(id = R.string.en), selectedLangCode = "en"),
     )

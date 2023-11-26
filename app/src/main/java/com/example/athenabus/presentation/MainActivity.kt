@@ -1,18 +1,14 @@
 package com.example.athenabus.presentation
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.core.os.LocaleListCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import com.example.athenabus.MainViewModel
-import com.example.athenabus.di.AppLanguage
 import com.example.athenabus.presentation.navigation.NavGraph
 import com.example.athenabus.ui.theme.AthenaBusTheme
 import dagger.hilt.android.AndroidEntryPoint

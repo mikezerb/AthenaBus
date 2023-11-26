@@ -104,7 +104,8 @@ private fun SelectItemPreview() {
     Column(
         Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.surface)) {
+            .background(MaterialTheme.colorScheme.surface)
+    ) {
         DropdownMenuSelection(
             itemList = routes.map { it.LineDescr },
             initialText = "Choose direction",

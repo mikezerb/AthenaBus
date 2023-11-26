@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.use_case.bus_lines.GetLinesFromSearchUseCase
-import com.example.athenabus.domain.use_case.bus_lines.ToggleFavoriteLineUseCase
 import com.example.athenabus.domain.use_case.bus_lines.GetLinesUseCase
+import com.example.athenabus.domain.use_case.bus_lines.ToggleFavoriteLineUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
