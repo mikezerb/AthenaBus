@@ -16,6 +16,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -34,7 +35,6 @@ import com.example.athenabus.presentation.line_details.components.StopItem
 @Composable
 fun StopsScreen(
     modifier: Modifier = Modifier,
-    line: Line,
     routes: List<Route>,
     viewModel: RouteStopsViewModel = hiltViewModel(),
 ) {
@@ -44,7 +44,7 @@ fun StopsScreen(
         mutableStateOf("")
     }
     var selected by remember {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
     var selectedRouteCode by remember {
         mutableStateOf("")
@@ -63,7 +63,7 @@ fun StopsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(4.dp),
-            itemList = routes.map { it.RouteDescr },
+            itemList = routes.sortedBy { it.RouteCode }.map { it.RouteDescr },
             initialText = stringResource(id = R.string.choose_direction),
             onDismiss = { expanded = false },
             onClick = { route, i ->
