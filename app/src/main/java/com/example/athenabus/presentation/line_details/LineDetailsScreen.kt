@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Timeline
 import androidx.compose.material.icons.outlined.DirectionsBus
 import androidx.compose.material.icons.outlined.Timeline
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.SecondaryTabRow
 import androidx.compose.material3.Surface
@@ -43,7 +44,7 @@ import com.example.athenabus.presentation.common.TabItem
 import com.example.athenabus.presentation.line_details.components.tabs.ScheduleScreen
 import com.example.athenabus.presentation.line_details.components.tabs.StopsScreen
 
-@OptIn(ExperimentalFoundationApi::class)
+@OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun LineDetailsScreen(
     modifier: Modifier = Modifier,
