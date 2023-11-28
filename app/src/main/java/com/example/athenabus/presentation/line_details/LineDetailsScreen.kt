@@ -133,7 +133,6 @@ fun LineDetailsScreen(
                     state = pagerState,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .fillMaxSize()
                         .weight(1f)
                 ) { index ->
                     if (routeState.isLoading) {

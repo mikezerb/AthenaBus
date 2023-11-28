@@ -203,4 +203,14 @@ class BusLineRepositoryImpl @Inject constructor(
             emit(Resource.Error(message = e.message ?: "An error occurred"))
         }
     }
+
+    override fun getFavoriteLines(): Flow<Resource<List<Line>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val favorites = lineDao.getFavoriteLines().map { it.toBusLine() }
+            emit(Resource.Success(data = favorites))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An error occurred"))
+        }
+    }
 }

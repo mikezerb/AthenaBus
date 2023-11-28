@@ -18,6 +18,6 @@ interface BusLineRepository {
     fun getStopArrivals(stopCode: String): Flow<Resource<List<Arrival>>>
     fun getRoutesForStop(stopCode: String): Flow<Resource<List<Route>>>
     fun getStopsFromRoute(routeCode: String): Flow<Resource<List<Stop>>>
-
     fun getDailySchedules(lineCode: String): Flow<Resource<DailySchedule>>
+    fun getFavoriteLines(): Flow<Resource<List<Line>>>
 }

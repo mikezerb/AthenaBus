@@ -86,5 +86,6 @@
     <string name="no_internet_connection">No Internet Connection</string>
     <string name="back_online">Back Online</string>
     <string name="press_again_to_exit">Press again to exit</string>
+    <string name="no_favorite_lines_found">No favorite lines found</string>
 
 </resources>

@@ -30,28 +30,42 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
-import com.example.athenabus.presentation.common.EmptyScreen
 import com.example.athenabus.presentation.common.TabItem
+import com.example.athenabus.presentation.favorites.tabs.FavoriteLineScreen
+import com.example.athenabus.presentation.favorites.tabs.FavoriteStopsScreen
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
 @Composable
 fun FavoriteScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: FavoriteScreenViewModel = hiltViewModel()
 ) {
+    val state = viewModel.state.value
 
     val favTabItems = listOf(
         TabItem(
             title = stringResource(R.string.favourite_lines_title),
             selectedIcon = Icons.Filled.DirectionsBus,
-            unSelectedIcon = Icons.Outlined.DirectionsBus
+            unSelectedIcon = Icons.Outlined.DirectionsBus,
+            screen = {
+                FavoriteLineScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    lines = state.favoriteLines,
+                    navController = navController
+                )
+            }
         ),
         TabItem(
             title = stringResource(R.string.stops_tab_title),
             selectedIcon = Icons.Filled.FollowTheSigns,
-            unSelectedIcon = Icons.Outlined.FollowTheSigns
+            unSelectedIcon = Icons.Outlined.FollowTheSigns,
+            screen = {
+                FavoriteStopsScreen()
+            }
         )
     )
     Surface(
@@ -97,7 +111,6 @@ fun FavoriteScreen(
                                 contentDescription = tabItem.title
                             )
                         }
-
                     )
                 }
             }
@@ -108,13 +121,11 @@ fun FavoriteScreen(
                     .weight(1f)
             ) { index ->
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    EmptyScreen(title = "No favorite ${favTabItems[index].title} found")
+                    favTabItems[index].screen()
                 }
             }
         }
-
     }
-
 }
 
 @Preview(name = "FavoriteScreen")
