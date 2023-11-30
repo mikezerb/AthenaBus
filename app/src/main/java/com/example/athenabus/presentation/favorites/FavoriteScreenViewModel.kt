@@ -25,7 +25,7 @@ class FavoriteScreenViewModel @Inject constructor(
         getFavLines()
     }
 
-    private fun getFavLines() {
+    fun getFavLines() {
         getFavoriteLinesUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {

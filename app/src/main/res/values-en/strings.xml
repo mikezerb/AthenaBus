@@ -78,7 +78,7 @@
     <string name="application_refresh_setting_title">Update Data</string>
     <string name="application_refresh_setting_desc">Manual update OASA data</string>
     <string name="available_stops">Available stops</string>
-    <string name="update_location">Update Location</string>
+    <string name="update_location">Update</string>
     <string name="allow_your_location">Allow your location</string>
     <string name="location_enable_desc">We need your location to give you the closest stops</string>
     <string name="enable_location_btn">Allow location</string>

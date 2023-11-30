@@ -63,10 +63,10 @@ interface TelematicsLineDao {
     @Query(
         """
             UPDATE BusLineEntity 
-        SET isFavorite = NOT isFavorite where lineID = :query
+            SET isFavorite = NOT isFavorite  
+            WHERE LineID = :query
         """
     )
     suspend fun toggleFavoriteLine(query: String)
-
 
 }

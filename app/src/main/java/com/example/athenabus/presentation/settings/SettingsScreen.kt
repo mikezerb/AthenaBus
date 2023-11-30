@@ -18,7 +18,9 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -47,6 +49,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.core.os.LocaleListCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -78,6 +81,7 @@ fun SettingsScreen(
     navController: NavController = rememberNavController(),
     themeViewModel: ThemeViewModel = hiltViewModel(),
     settingsViewModel: SettingsViewModel = hiltViewModel(),
+    paddingValues: PaddingValues
 ) {
     // Observe the dark theme setting
     val themeState by themeViewModel.themeState.collectAsState()
@@ -103,6 +107,7 @@ fun SettingsScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .padding(paddingValues)
             .verticalScroll(rememberScrollState())
             .animateContentSize(
                 animationSpec = tween(durationMillis = 300, easing = LinearOutSlowInEasing)
@@ -281,5 +286,5 @@ fun SettingsScreen(
 @Preview(name = "SettingsScreen")
 @Composable
 private fun PreviewSettingsScreen() {
-    SettingsScreen()
+    SettingsScreen(paddingValues = PaddingValues(54.dp))
 }

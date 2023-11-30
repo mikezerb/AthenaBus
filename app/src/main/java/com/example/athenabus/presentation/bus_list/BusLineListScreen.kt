@@ -9,6 +9,7 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,12 +50,12 @@ import com.example.athenabus.presentation.bus_list.components.ChangeLayoutButton
 import com.example.athenabus.presentation.bus_list.components.ShowFilterButton
 import com.example.athenabus.presentation.bus_list.components.SingleLineFilters
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BusLineListScreen(
     navController: NavController,
     viewModel: BusLineListViewModel = hiltViewModel(),
+    paddingValues: PaddingValues
 ) {
     val state = viewModel.state.value
     var isGridViewEnabled by rememberSaveable { mutableStateOf(false) }
@@ -143,7 +144,8 @@ fun BusLineListScreen(
             }
         }
     }
-    Surface {
+
+    Surface(Modifier.padding(paddingValues)) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -182,7 +184,10 @@ fun BusLineListScreen(
                                 },
                                 modifier = Modifier.padding(horizontal = 12.dp)
                             ) {
-                                Icon(imageVector = Icons.Outlined.Close, contentDescription = null)
+                                Icon(
+                                    imageVector = Icons.Outlined.Close,
+                                    contentDescription = null
+                                )
                             }
                         } else {
                             Row(
@@ -272,9 +277,8 @@ fun BusLineListScreen(
             }
         }
     }
-
-
 }
+
 
 
 // Function to filter lines based on the selected category

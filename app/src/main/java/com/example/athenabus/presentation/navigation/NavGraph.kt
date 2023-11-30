@@ -38,7 +38,7 @@ fun NavGraph(
                 MainScreen()
             }
             composable(route = Route.SettingsActivityScreen.route) {
-                SettingsScreen()
+//                SettingsScreen()
             }
         }
 
