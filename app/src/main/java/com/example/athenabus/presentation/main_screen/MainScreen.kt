@@ -34,7 +34,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -49,7 +48,7 @@ import com.example.athenabus.presentation.common.MaterialTopAppBar
 import com.example.athenabus.presentation.main_screen.components.ConnectivityStatus
 import com.example.athenabus.presentation.main_screen.components.DrawerHeader
 import com.example.athenabus.presentation.main_screen.components.NavDrawerItem
-import com.example.athenabus.presentation.navigation.HomeNavGraph
+import com.example.athenabus.presentation.navigation.MainNavGraph
 import com.example.athenabus.presentation.navigation.Route
 import kotlinx.coroutines.launch
 
@@ -59,7 +58,15 @@ import kotlinx.coroutines.launch
 fun MainScreen(
     navController: NavHostController = rememberNavController()
 ) {
+
     BackPressAction()
+
+    /**
+     * bottom bar variables for nested scroll
+     */
+    val bottomBarHeight = 56.dp
+    val bottomBarOffsetHeightPx = remember { mutableStateOf(0f) }
+
     val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     var showBottomBar by rememberSaveable { mutableStateOf(true) }
@@ -160,7 +167,7 @@ fun MainScreen(
             drawerState = drawerState
         ) {
             Scaffold(
-                modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
+                modifier = Modifier.fillMaxSize(),
                 topBar = {
                     MaterialTopAppBar(
                         title = stringResource(id = R.string.app_name),
@@ -185,13 +192,13 @@ fun MainScreen(
                         enter = slideInVertically(initialOffsetY = { it }),
                         exit = slideOutVertically(targetOffsetY = { it }),
                     ) {
-                        MaterialBottomNavBar(navController)
+                        MaterialBottomNavBar(navController = navController)
                     }
                 },
             ) {
-                Column(Modifier.padding(it)) {
+                Column {
                     ConnectivityStatus(context)
-                    HomeNavGraph(navController = navController)
+                    MainNavGraph(navController = navController, paddingValues = it)
                 }
             }
         }

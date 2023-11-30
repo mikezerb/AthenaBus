@@ -14,6 +14,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -56,7 +57,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastDistinctBy
@@ -94,7 +94,8 @@ fun NewClosestStopsScreen(
     closestStopsViewModel: ClosestStopsViewModel = hiltViewModel(),
     routesForStopViewModel: RoutesForStopViewModel = hiltViewModel(),
     arrivalsForStopViewModel: ArrivalsForStopViewModel = hiltViewModel(),
-    themeViewModel: ThemeViewModel = hiltViewModel()
+    themeViewModel: ThemeViewModel = hiltViewModel(),
+    paddingValues: PaddingValues
 ) {
     val locationPermissions = rememberMultiplePermissionsState(
         permissions = listOf(
@@ -194,7 +195,9 @@ fun NewClosestStopsScreen(
         }
     )
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(paddingValues),
         contentAlignment = Alignment.TopCenter
     ) {
         AnimatedContent(targetState = locationPermissionState.allPermissionsGranted, label = "")
@@ -500,70 +503,3 @@ private fun fillArrivalDetail(arrivals: List<Arrival>, routes: List<Route>): Lis
         } ?: arrival
     }
 }
-
-@Preview
-@Composable
-private fun PreviewNewClosestStopsScreen() {
-    NewClosestStopsScreen()
-}
-
-/*
-
-Column {
-            if (locationValue.currentLocation != null) {
-                Text(text = locationValue.currentLocation?.latitude.toString() + ", " + locationValue.currentLocation?.longitude.toString())
-                Button(onClick = {
-                    Log.d(
-                        "closestStopsViewModel",
-                        locationValue.currentLocation?.latitude.toString() + " " + locationValue.currentLocation?.longitude.toString()
-                    )
-                    closestStopsViewModel.getClosestStops(
-                        x = locationValue.currentLocation?.latitude.toString(),
-                        y = locationValue.currentLocation?.longitude.toString()
-                    )
-                }) {
-                    Text(text = "Search close stops")
-                }
-                Button(onClick = {
-                    viewModel.getCurrentLocation()
-                    closestStopsViewModel.getClosestStops(
-                        x = locationValue.currentLocation?.latitude.toString(),
-                        y = locationValue.currentLocation?.longitude.toString()
-                    )
-                }) {
-                    Text(text = "Refresh location")
-                }
-                if (closestStopsValue.closestStops.isNotEmpty()) {
-                    Log.d(
-                        "closestStopsViewModel",
-                        " closestStops size: " + closestStopsValue.closestStops.size.toString()
-                    )
-
-                    LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                        items(closestStopsValue.closestStops.filter { it.StopLat != "0" && it.StopLng != "0" }) { stop ->
-                            ClosestStopItem(
-                                stop = stop,
-                                onClick = { }
-                            )
-                        }
-                    }
-                }
-            } else if (locationValue.isLoading) {
-                CircularProgressIndicator(
-                )
-            } else if (locationValue.error.isNotEmpty()) {
-                Text(
-                    text = locationValue.error,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = MaterialTheme.colorScheme.error
-                )
-                Button(onClick = {
-                    viewModel.getCurrentLocation()
-                }) {
-                    Text(text = "Try again")
-                }
-            }
-        }
-
-
- */

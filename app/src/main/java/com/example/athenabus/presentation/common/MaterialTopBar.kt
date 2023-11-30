@@ -4,22 +4,15 @@ import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.Map
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarBorder
 import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeTopAppBar
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -57,93 +50,92 @@ fun MaterialTopAppBar(
             || currentRoute == Route.SettingsActivityScreen.route
             || currentRoute == Route.AboutActivityScreen.route
 
-    if (currentRoute == Route.LineDetailActivityScreen.route) {
-        AnimatedVisibility(
-            visible = currentRoute == Route.LineDetailActivityScreen.route,
-            enter = slideInVertically(initialOffsetY = { -it }),
-            exit = slideOutVertically(targetOffsetY = { -it }),
-        )
-        {
-            LargeTopAppBar(
-                title = {
-                    Column {
-                        Text(text = navBackStackEntry?.arguments?.getString("lineId") ?: "")
-                        Text(
-                            text = navBackStackEntry?.arguments?.getString("lineDesc") ?: "",
-                            maxLines = 1,
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(onClick = onMapClick) {
-                        Icon(imageVector = Icons.Default.Map, contentDescription = null)
-                    }
-                    IconButton(onClick = onFavoriteClick) {
-                        if (navBackStackEntry?.arguments?.getBoolean("isFav") == true)
-                            Icon(imageVector = Icons.Default.Star, contentDescription = null)
-                        else {
-                            Icon(imageVector = Icons.Default.StarBorder, contentDescription = null)
-                        }
-                    }
-                    IconButton(onClick = onMoreSettings) {
-                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
-                    }
-                },
-                navigationIcon = {
+//    if (currentRoute == Route.LineDetailActivityScreen.route) {
+//        AnimatedVisibility(
+//            visible = currentRoute == Route.LineDetailActivityScreen.route,
+//            enter = slideInVertically(initialOffsetY = { -it }),
+//            exit = slideOutVertically(targetOffsetY = { -it }),
+//        )
+//        {
+//            LargeTopAppBar(
+//                title = {
+//                    Column {
+//                        Text(text = navBackStackEntry?.arguments?.getString("lineId") ?: "")
+//                        Text(
+//                            text = navBackStackEntry?.arguments?.getString("lineDesc") ?: "",
+//                            maxLines = 1,
+//                            style = MaterialTheme.typography.titleMedium
+//                        )
+//                    }
+//                },
+//                actions = {
+//                    IconButton(onClick = onMapClick) {
+//                        Icon(imageVector = Icons.Default.Map, contentDescription = null)
+//                    }
+//                    IconButton(onClick = onFavoriteClick) {
+//                        if (navBackStackEntry?.arguments?.getBoolean("isFav") == true)
+//                            Icon(imageVector = Icons.Default.Star, contentDescription = null)
+//                        else {
+//                            Icon(imageVector = Icons.Default.StarBorder, contentDescription = null)
+//                        }
+//                    }
+//                    IconButton(onClick = onMoreSettings) {
+//                        Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
+//                    }
+//                },
+//                navigationIcon = {
+//                    IconButton(onClick = navigateUp) {
+//                        Icon(
+//                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+//                            contentDescription = "Back"
+//                        )
+//                    }
+//                },
+//            )
+//        }
+//    } else {
+    AnimatedVisibility(
+        visible = visible,
+        enter = slideInVertically(initialOffsetY = { -it }),
+        exit = slideOutVertically(targetOffsetY = { -it }),
+    ) {
+        CenterAlignedTopAppBar(
+            title = {
+                Text(
+                    text = if (currentRoute == Route.AboutActivityScreen.route) stringResource(R.string.about_athenabus) else title,
+                    fontFamily = FontFamily(Font(R.font.poppins_semibold))
+                )
+            },
+            navigationIcon = {
+                if (currentRoute == Route.SettingsActivityScreen.route || currentRoute == Route.AboutActivityScreen.route) {
                     IconButton(onClick = navigateUp) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             contentDescription = "Back"
                         )
                     }
-                },
-            )
-        }
-    } else {
-        AnimatedVisibility(
-            visible = visible,
-            enter = slideInVertically(initialOffsetY = { -it }),
-            exit = slideOutVertically(targetOffsetY = { -it }),
-        ) {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = if (currentRoute == Route.AboutActivityScreen.route) stringResource(R.string.about_athenabus) else title,
-                        fontFamily = FontFamily(Font(R.font.poppins_semibold))
-                    )
-                },
-                navigationIcon = {
-                    if (currentRoute == Route.SettingsActivityScreen.route || currentRoute == Route.AboutActivityScreen.route) {
-                        IconButton(onClick = navigateUp) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back"
-                            )
-                        }
-                    } else {
-                        IconButton(onClick = navigationDrawerClick) {
-                            Icon(imageVector = Icons.Default.Menu, contentDescription = null)
-                        }
+                } else {
+                    IconButton(onClick = navigationDrawerClick) {
+                        Icon(imageVector = Icons.Default.Menu, contentDescription = null)
                     }
-                },
-                actions = {
-                    if (
-                        currentRoute == Route.NewBusLineScreen.route
-                        || currentRoute == Route.FavoriteScreen.route
-                        || currentRoute == Route.ClosestStopsActivityScreen.route
-                    ) {
-                        IconButton(onClick = onSettingsClick) {
-                            Icon(
-                                imageVector = Icons.Outlined.Settings,
-                                contentDescription = "Settings"
-                            )
-                        }
+                }
+            },
+            actions = {
+                if (
+                    currentRoute == Route.NewBusLineScreen.route
+                    || currentRoute == Route.FavoriteScreen.route
+                    || currentRoute == Route.ClosestStopsActivityScreen.route
+                ) {
+                    IconButton(onClick = onSettingsClick) {
+                        Icon(
+                            imageVector = Icons.Outlined.Settings,
+                            contentDescription = "Settings"
+                        )
                     }
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
     }
 }
 

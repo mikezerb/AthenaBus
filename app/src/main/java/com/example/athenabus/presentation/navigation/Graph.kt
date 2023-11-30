@@ -4,6 +4,7 @@ object Graph {
     const val ROOT = "root_graph"
     const val ONBOARDING = "onboarding_graph"
     const val START = "start_graph"
+    const val MAIN = "main_graph"
     const val HOME = "home_graph"
     const val SETTINGS = "settings_graph"
 }

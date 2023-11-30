@@ -20,12 +20,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.ui.theme.AthenaBusTheme
 
 @Composable
 fun MaterialBottomNavBar(
-    navController: NavController
+    navController: NavController,
 ) {
     NavigationBar {
         val items = listOf(
@@ -98,13 +97,13 @@ fun MaterialBottomNavBar(
             )
         }
     }
-
 }
+
 
 @Preview(showBackground = true)
 @Composable
 private fun PreviewMaterialBottomNavBar() {
     AthenaBusTheme {
-        MaterialBottomNavBar(navController = rememberNavController())
+//        MaterialBottomNavBar(navController = rememberNavController())
     }
 }

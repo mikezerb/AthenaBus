@@ -5,13 +5,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 
 @Composable
-fun RootNavGraph(navController: NavHostController, startDestination: String) {
+fun RootNavigationGraph(navHostController: NavHostController) {
     NavHost(
-        navController = navController,
+        navController = navHostController,
         route = Graph.ROOT,
-        startDestination = Graph.ONBOARDING
+        startDestination = Graph.START
     ) {
-        onBoardingNavGraph()
-        startNavGraph(navController)
+
     }
 }

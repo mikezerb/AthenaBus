@@ -1,11 +1,13 @@
 package com.example.athenabus.data.repository
 
 import com.example.athenabus.common.Resource
+import com.example.athenabus.data.local.FavoritesDao
 import com.example.athenabus.data.local.TelematicsLineDao
 import com.example.athenabus.data.mapper.toArrival
 import com.example.athenabus.data.mapper.toBusLine
 import com.example.athenabus.data.mapper.toBusLineEntity
 import com.example.athenabus.data.mapper.toDailySchedule
+import com.example.athenabus.data.mapper.toFavoriteLineEntity
 import com.example.athenabus.data.mapper.toRoute
 import com.example.athenabus.data.mapper.toStop
 import com.example.athenabus.data.remote.OASATelematicsAPI
@@ -24,6 +26,7 @@ import javax.inject.Inject
 class BusLineRepositoryImpl @Inject constructor(
     private val api: OASATelematicsAPI,
     private val lineDao: TelematicsLineDao,
+    private val favoritesDao: FavoritesDao,
 ) : BusLineRepository {
     override fun getBusLines(): Flow<Resource<List<Line>>> = flow {
         emit(Resource.Loading())
@@ -207,10 +210,22 @@ class BusLineRepositoryImpl @Inject constructor(
     override fun getFavoriteLines(): Flow<Resource<List<Line>>> = flow {
         emit(Resource.Loading())
         try {
-            val favorites = lineDao.getFavoriteLines().map { it.toBusLine() }
+            val favorites = favoritesDao.getFavoriteLines().map { it.toBusLine() }
             emit(Resource.Success(data = favorites))
         } catch (e: Exception) {
             emit(Resource.Error(message = e.message ?: "An error occurred"))
         }
+    }
+
+    override suspend fun addFavoriteLine(line: Line) {
+        favoritesDao.insertFavoriteLine(line.toFavoriteLineEntity())
+    }
+
+    override suspend fun isFavoriteLine(line: String): Boolean {
+        return favoritesDao.checkFavoriteLine(line) != 0
+    }
+
+    override suspend fun removeFavoriteLine(line: String) {
+        favoritesDao.deleteFavoriteFromID(line)
     }
 }

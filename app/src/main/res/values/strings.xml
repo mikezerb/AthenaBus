@@ -83,7 +83,7 @@
     <string name="application_refresh_setting_title">Ενημέρωση δεδομένων</string>
     <string name="application_refresh_setting_desc">Χειροκίνητη ενημέρωση δεδομένων ΟΑΣΑ</string>
     <string name="available_stops">Διαθέσιμες στάσεις</string>
-    <string name="update_location">Ενημέρωση τοποθεσίας</string>
+    <string name="update_location">Ενημέρωση</string>
     <string name="allow_your_location">Επιτρέψτε την τοποθεσία σας</string>
     <string name="location_enable_desc">Χρειαζόμαστε την τοποθεσία σας για να βρούμε τις πλησιέστερες στάσεις</string>
     <string name="enable_location_btn">Ενεργοποίηση τοποθεσίας</string>

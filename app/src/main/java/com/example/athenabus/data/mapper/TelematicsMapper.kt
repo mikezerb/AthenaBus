@@ -1,6 +1,7 @@
 package com.example.athenabus.data.mapper
 
 import com.example.athenabus.data.local.entity.BusLineEntity
+import com.example.athenabus.data.local.entity.FavoriteLinesEntity
 import com.example.athenabus.data.local.entity.RouteEntity
 import com.example.athenabus.data.remote.dto.ArrivalStopDtoItem
 import com.example.athenabus.data.remote.dto.ClosestStopDtoItem
@@ -36,6 +37,16 @@ fun BusLineEntity.toBusLine(): Line {
         LineDescr = LineDescr,
         LineDescrEng = LineDescrEng,
         isFavorite = isFavorite
+    )
+}
+
+fun FavoriteLinesEntity.toBusLine(): Line {
+    return Line(
+        LineCode = LineCode,
+        LineID = LineID,
+        LineDescr = LineDescr,
+        LineDescrEng = LineDescrEng,
+        isFavorite = false
     )
 }
 
@@ -104,6 +115,15 @@ fun Route.toRouteEntity(): RouteEntity {
         RouteDescrEng = RouteDescrEng,
         RouteDistance = RouteDistance,
         RouteType = RouteType
+    )
+}
+
+fun Line.toFavoriteLineEntity(): FavoriteLinesEntity {
+    return FavoriteLinesEntity(
+        LineID = LineID,
+        LineCode = LineCode,
+        LineDescr = LineDescr,
+        LineDescrEng = LineDescrEng
     )
 }
 

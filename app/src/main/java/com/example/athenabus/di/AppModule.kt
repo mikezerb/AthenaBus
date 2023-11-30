@@ -50,7 +50,7 @@ object AppModule {
         api: OASATelematicsAPI,
         db: TelematicsDatabase
     ): BusLineRepository {
-        return BusLineRepositoryImpl(api, db.linesDao)
+        return BusLineRepositoryImpl(api, db.linesDao, db.favoritesDao)
     }
 
     @Provides
