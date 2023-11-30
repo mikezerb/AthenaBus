@@ -6,6 +6,7 @@ import android.os.Build
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -61,11 +62,12 @@ fun getAppVersion(
 
 @Composable
 fun AboutScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    paddingValues: PaddingValues
 ) {
     val context = LocalContext.current
     Surface(
-        modifier.fillMaxSize(),
+        modifier.fillMaxSize().padding(paddingValues),
         tonalElevation = 2.dp
     ) {
         Column(

@@ -62,7 +62,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
         }
 
         composable(route = Route.AboutActivityScreen.route) {
-            AboutScreen()
+            AboutScreen(paddingValues = paddingValues)
         }
 
         composable(
