@@ -50,18 +50,19 @@ class LineDetailsViewModel @Inject constructor(
     }
 
 
-    suspend fun favoriteLine(lineId: String){
+    suspend fun favoriteLine(lineId: String) {
         toggleFavoriteLineUseCase(lineId)
     }
 
-    suspend fun isFavoriteLine(lineId: String) : Boolean{
+    suspend fun isFavoriteLine(lineId: String): Boolean {
         return isFavoriteLineUseCase(lineId)
     }
 
-    suspend fun addFavoriteLine(line: Line){
+    suspend fun addFavoriteLine(line: Line) {
         addFavoriteLineUseCase(line)
     }
-    suspend fun removeFavoriteLine(line: String){
+
+    suspend fun removeFavoriteLine(line: String) {
         removeFavoriteLineUseCase(line)
     }
 }

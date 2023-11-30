@@ -96,8 +96,8 @@ fun MaterialBottomNavBar(
                 label = { Text(text = stringResource(navBarItem.title)) }
             )
         }
-        }
     }
+}
 
 
 @Preview(showBackground = true)

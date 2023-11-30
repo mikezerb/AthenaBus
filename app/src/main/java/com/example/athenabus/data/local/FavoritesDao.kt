@@ -43,7 +43,6 @@ interface FavoritesDao {
     suspend fun checkFavoriteLine(query: String): Int
 
 
-
     @Query(
         """
            DELETE FROM FavoriteLinesEntity 

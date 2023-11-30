@@ -104,40 +104,40 @@ fun MaterialTopAppBar(
                 Text(
                     text = if (currentRoute == Route.AboutActivityScreen.route) stringResource(R.string.about_athenabus) else title,
                     fontFamily = FontFamily(Font(R.font.poppins_semibold))
-                    )
-                },
-                navigationIcon = {
-                    if (currentRoute == Route.SettingsActivityScreen.route || currentRoute == Route.AboutActivityScreen.route) {
-                        IconButton(onClick = navigateUp) {
-                            Icon(
-                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                                contentDescription = "Back"
-                            )
-                        }
-                    } else {
-                        IconButton(onClick = navigationDrawerClick) {
-                            Icon(imageVector = Icons.Default.Menu, contentDescription = null)
-                        }
+                )
+            },
+            navigationIcon = {
+                if (currentRoute == Route.SettingsActivityScreen.route || currentRoute == Route.AboutActivityScreen.route) {
+                    IconButton(onClick = navigateUp) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = "Back"
+                        )
                     }
-                },
-                actions = {
-                    if (
-                        currentRoute == Route.NewBusLineScreen.route
-                        || currentRoute == Route.FavoriteScreen.route
-                        || currentRoute == Route.ClosestStopsActivityScreen.route
-                    ) {
-                        IconButton(onClick = onSettingsClick) {
-                            Icon(
-                                imageVector = Icons.Outlined.Settings,
-                                contentDescription = "Settings"
-                            )
-                        }
+                } else {
+                    IconButton(onClick = navigationDrawerClick) {
+                        Icon(imageVector = Icons.Default.Menu, contentDescription = null)
                     }
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
+                }
+            },
+            actions = {
+                if (
+                    currentRoute == Route.NewBusLineScreen.route
+                    || currentRoute == Route.FavoriteScreen.route
+                    || currentRoute == Route.ClosestStopsActivityScreen.route
+                ) {
+                    IconButton(onClick = onSettingsClick) {
+                        Icon(
+                            imageVector = Icons.Outlined.Settings,
+                            contentDescription = "Settings"
+                        )
+                    }
+                }
+            },
+            modifier = Modifier.fillMaxWidth()
+        )
     }
+}
 
 
 @Preview

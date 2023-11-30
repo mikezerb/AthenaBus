@@ -21,6 +21,6 @@ interface BusLineRepository {
     fun getDailySchedules(lineCode: String): Flow<Resource<DailySchedule>>
     fun getFavoriteLines(): Flow<Resource<List<Line>>>
     suspend fun addFavoriteLine(line: Line)
-    suspend fun isFavoriteLine(line: String) : Boolean
+    suspend fun isFavoriteLine(line: String): Boolean
     suspend fun removeFavoriteLine(line: String)
 }

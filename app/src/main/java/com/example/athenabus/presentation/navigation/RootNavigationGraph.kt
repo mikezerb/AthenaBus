@@ -10,7 +10,7 @@ fun RootNavigationGraph(navHostController: NavHostController) {
         navController = navHostController,
         route = Graph.ROOT,
         startDestination = Graph.START
-    ){
+    ) {
 
     }
 }

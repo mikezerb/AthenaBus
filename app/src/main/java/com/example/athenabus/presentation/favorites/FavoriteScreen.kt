@@ -48,7 +48,7 @@ fun FavoriteScreen(
     viewModel: FavoriteScreenViewModel = hiltViewModel(),
     paddingValues: PaddingValues
 ) {
-    LaunchedEffect(key1 = true){
+    LaunchedEffect(key1 = true) {
         viewModel.getFavLines()
     }
 
