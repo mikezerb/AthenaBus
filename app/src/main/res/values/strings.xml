@@ -92,7 +92,7 @@
     <string name="back_online">Επιτυχής σύνδεση</string>
     <string name="press_again_to_exit">Πατήστε ξανά για έξοδο</string>
     <string name="no_favorite_lines_found">Δεν βρέθηκαν αγαπημένες γραμμές</string>
-    <string name="bus_category_title">Λεωφορείο</string>
+    <string name="bus_category_title">Λεωφ.</string>
     <string name="unknown_category_title">-</string>
     <string name="trolley_category_title">Τρόλεϊ</string>
     <string name="hour24_category_title">24ωρο</string>
