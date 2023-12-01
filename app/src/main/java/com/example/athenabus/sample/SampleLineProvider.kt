@@ -1,6 +1,7 @@
 package com.example.athenabus.sample
 
 import androidx.compose.ui.tooling.preview.PreviewParameterProvider
+import com.example.athenabus.data.local.LineCategory
 import com.example.athenabus.domain.model.Line
 
 class SampleLineProvider : PreviewParameterProvider<Line> {
@@ -10,14 +11,16 @@ class SampleLineProvider : PreviewParameterProvider<Line> {
             LineID = "1",
             LineDescr = "ΠΛΑΤΕΙΑ ΚΑΝΙΓΓΟΣ - ΓΚΥΖH (ΚΥΚΛΙΚΗ)",
             LineDescrEng = "PLATEIA KANIGKOS - GKIZI",
-            isFavorite = false
+            isFavorite = false,
+            Category = LineCategory.BUS
         ),
         Line(
             LineCode = "1574",
             LineID = "11",
             LineDescr = "ΠΛΑΤΕΙΑ ΚΑΝΙΓΓΟΣ - ΓΚΥΖH (ΑΠΟ ΓΚΥΖΗ)",
             LineDescrEng = "PLATEIA KANIGKOS - GKIZI (FROM GKIZI TO PLATEIA KANIGKOS)",
-            isFavorite = false
+            isFavorite = false,
+            Category = LineCategory.EXPRESS
         ),
 //        Line(
 //            LineCode = "1574",
@@ -45,7 +48,8 @@ class SampleLineProvider : PreviewParameterProvider<Line> {
             LineID = "120",
             LineDescr = "ΑΓ. ΒΑΣΙΛΕΙΟΣ - ΑΓ. ΣΟΦΙΑ - ΚΡΑΤ. ΝΙΚΑΙΑΣ (ΔΕ-ΠΕ 20:00-23:59 ΠΑ-ΚΥ 18:00-23:59)",
             LineDescrEng = "AG. VASILEIOS - AG. SOFIA - KRAT. NIKAIAS (MO-TH 20:00-23:59, FR-SU 18",
-            isFavorite = false
+            isFavorite = false,
+            Category = LineCategory.HOUR_24
         ),
     )
 }

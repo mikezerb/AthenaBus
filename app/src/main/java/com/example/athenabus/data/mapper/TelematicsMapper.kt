@@ -36,7 +36,8 @@ fun BusLineEntity.toBusLine(): Line {
         LineID = LineID,
         LineDescr = LineDescr,
         LineDescrEng = LineDescrEng,
-        isFavorite = isFavorite
+        isFavorite = isFavorite,
+        Category = Category
     )
 }
 
@@ -46,7 +47,8 @@ fun FavoriteLinesEntity.toBusLine(): Line {
         LineID = LineID,
         LineDescr = LineDescr,
         LineDescrEng = LineDescrEng,
-        isFavorite = false
+        isFavorite = false,
+        Category = Category
     )
 }
 

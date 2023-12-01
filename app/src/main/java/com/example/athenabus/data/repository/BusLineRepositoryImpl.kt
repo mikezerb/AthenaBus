@@ -2,6 +2,7 @@ package com.example.athenabus.data.repository
 
 import com.example.athenabus.common.Resource
 import com.example.athenabus.data.local.FavoritesDao
+import com.example.athenabus.data.local.LineCategory
 import com.example.athenabus.data.local.TelematicsLineDao
 import com.example.athenabus.data.mapper.toArrival
 import com.example.athenabus.data.mapper.toBusLine
@@ -28,6 +29,16 @@ class BusLineRepositoryImpl @Inject constructor(
     private val lineDao: TelematicsLineDao,
     private val favoritesDao: FavoritesDao,
 ) : BusLineRepository {
+
+    val trolleyList: List<String> = listOf(
+        "10", "11", "12", "15",
+        "16", "17", "18", "19", "19Β", "20", "21", "24", "25"
+    )
+    val h24List: List<String> = listOf("040", "11")
+    val nightList: List<String> = listOf("040", "11", "500", "790", "Χ14")
+    val aeroplaneList: List<String> = listOf("Χ93", "Χ95", "Χ96", "Χ97")
+    val expressList: List<String> = listOf("Ε14", "Ε90", "Χ14")
+
     override fun getBusLines(): Flow<Resource<List<Line>>> = flow {
         emit(Resource.Loading())
 
@@ -40,6 +51,8 @@ class BusLineRepositoryImpl @Inject constructor(
                 lineDao.insertBusLines(remoteBusLines.map { it.toBusLineEntity() })
 
                 busLines = lineDao.getBusLines().map { it.toBusLine() }
+
+
             } catch (e: HttpException) {
                 emit(
                     Resource.Error(
@@ -61,6 +74,18 @@ class BusLineRepositoryImpl @Inject constructor(
 
         // Filter the bus lines to get distinct
         val distinctBusLines = busLines.distinctBy { it.LineID }
+
+        // Assign categories based on lists
+        distinctBusLines.forEach { line ->
+            when (line.LineID) {
+                in trolleyList -> line.Category = LineCategory.TROLLEY
+                in h24List -> line.Category = LineCategory.HOUR_24
+                in nightList -> line.Category = LineCategory.NIGHT
+                in aeroplaneList -> line.Category = LineCategory.AIRPORT
+                in expressList -> line.Category = LineCategory.EXPRESS
+                else -> line.Category = LineCategory.BUS
+            }
+        }
 
         emit(Resource.Success(distinctBusLines))
     }
