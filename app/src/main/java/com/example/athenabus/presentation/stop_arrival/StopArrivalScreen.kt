@@ -4,24 +4,30 @@ import android.widget.Toast
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarBorder
+import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconToggleButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.rememberModalBottomSheetState
+import androidx.compose.material3.rememberBottomSheetScaffoldState
+import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
@@ -31,6 +37,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
@@ -75,7 +82,12 @@ fun StopArrivalScreen(
     val context = LocalContext.current
     val darkThemeState by themeViewModel.themeState.collectAsState()
 
-    val sheetState = rememberModalBottomSheetState()
+    val sheetState = rememberStandardBottomSheetState(
+        initialValue = SheetValue.Expanded
+    )
+    val scaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = sheetState
+    )
 
     var openBottomSheet = remember {
         mutableStateOf(false)
@@ -87,15 +99,22 @@ fun StopArrivalScreen(
             false
         ) // initially checked, default to false if null
     }
-
-    LaunchedEffect(key1 = true, key2 = stopCode) {
-        viewModel.getStopArrival(stopCode)
-    }
+//
+//    LaunchedEffect(key1 = true, key2 = stopCode) {
+//        viewModel.getStopArrival(stopCode)
+//    }
 
     LaunchedEffect(key1 = true, key2 = stopCode) {
         stopArrivalViewModel.getStopDetails(stopCode)
     }
 
+    LaunchedEffect(key1 = true, key2 = stopCode) {
+        stopArrivalViewModel.getStopArrivals(stopCode)
+    }
+
+    LaunchedEffect(key1 = true, key2 = stopCode) {
+        stopArrivalViewModel.getRoutesForStop(stopCode)
+    }
 
     var isMapLoaded by remember { mutableStateOf(false) }
 
@@ -123,7 +142,8 @@ fun StopArrivalScreen(
         }
     )
 
-    Scaffold(
+    BottomSheetScaffold(
+        scaffoldState = scaffoldState,
         topBar = {
             TopAppBar(
                 title = {
@@ -174,9 +194,52 @@ fun StopArrivalScreen(
                     }
                 },
             )
+        },
+        sheetContent = {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .defaultMinSize(minHeight = 150.dp)
+                    .wrapContentSize(),
+                contentAlignment = Alignment.TopCenter
+            ) {
+                Column {
+//                    if (stopState.stopArrivals.isEmpty()) {
+//                        Text(
+//                            text = "No Incoming Buses",
+//                            style = MaterialTheme.typography.headlineSmall
+//                        )
+//                    } else {
+                    Text(
+                        text = "Incoming Buses",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                        items(stopState.stopArrivals) { item ->
+                            val lineId =
+                                stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr
+                            Text(text = lineId + ", " + item.LineID + " in " + item.btime2)
+                        }
+                    }
+//                    if (stopState.routeStops.isNotEmpty()) {
+//                        LazyColumn(modifier = Modifier.fillMaxWidth()) {
+//                            items(stopState.routeStops) { route ->
+//                                Text(
+//                                    text = route.RouteDescr + " " + route.LineID,
+//                                    style = MaterialTheme.typography.bodySmall
+//                                )
+//                            }
+//                        }
+//                    }
+                }
+            }
         }
     ) {
-        Box(Modifier.padding(it)) {
+        Box(
+            Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
             if (stopState.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier
@@ -229,14 +292,7 @@ fun StopArrivalScreen(
                         )
                     }
                 }
-                ModalBottomSheet(
-                    sheetState = sheetState,
-                    onDismissRequest = {  }
-                ) {
-                    Text(text = "ArrivalBottomSheet")
-                }
             }
-
         }
     }
 }

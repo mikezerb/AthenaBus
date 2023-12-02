@@ -1,7 +1,6 @@
 package com.example.athenabus.presentation.line_details.components.tabs
 
 import DropdownMenuSelection
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -98,11 +97,11 @@ fun StopsScreen(
                     StopItem(
                         stop = stop,
                         onItemClick = {
-                            Toast.makeText(
-                                context,
-                                "Clicked ${stop.StopDescr}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+//                            Toast.makeText(
+//                                context,
+//                                "Clicked ${stop.StopDescr}",
+//                                Toast.LENGTH_SHORT
+//                            ).show()
                             navController.navigate(
                                 com.example.athenabus.presentation.navigation.Route.StopActivity.route + "?stopCode=${stop.StopCode}&stopDesc=${stop.StopDescr}"
                             )
