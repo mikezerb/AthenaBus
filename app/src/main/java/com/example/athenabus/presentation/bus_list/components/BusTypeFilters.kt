@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Done
 import androidx.compose.material3.ElevatedFilterChip
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.FilterChipDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -30,34 +32,61 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.athenabus.R
+import com.example.athenabus.data.local.LineCategory
+import com.google.android.material.color.MaterialColors
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MultiLineFilters(
     modifier: Modifier = Modifier,
-    labels: List<String>,
     selected: List<String>,
+    categories: List<LineCategory>,
     onClick: (String) -> Unit,
 ) {
+    val context = LocalContext.current
+
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        items(labels) { item ->
-            ElevatedFilterChip(
+        items(categories) { item ->
+            val customColors = FilterChipDefaults.elevatedFilterChipColors(
+                containerColor = Color(
+                    MaterialColors.harmonizeWithPrimary(
+                        context,
+                        item.color.toArgb()
+                    )
+                ),
+                selectedContainerColor = Color(
+                    MaterialColors.harmonizeWithPrimary(
+                        context,
+                        item.color.copy(alpha = 0.1f).toArgb()
+                    )
+                ),
+                labelColor = Color.White
+            )
+            FilterChip(
                 modifier = modifier,
-                onClick = { onClick(item) },
+                colors = customColors,
+                onClick = { onClick(context.getString(item.titleResId)) },
                 label = {
-                    Text(item)
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceAround,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(imageVector = item.iconResId, contentDescription = null)
+                        Text(context.getString(item.titleResId))
+                    }
                 },
-                selected = selected.contains(item),
-                leadingIcon = if (selected.contains(item)) {
+                selected = selected.contains(context.getString(item.titleResId)),
+                leadingIcon = if (selected.contains(context.getString(item.titleResId))) {
                     {
                         Icon(
                             imageVector = Icons.Filled.Done,
@@ -73,27 +102,62 @@ fun MultiLineFilters(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SingleLineFilters(
     modifier: Modifier = Modifier,
-    labels: List<String>,
     selected: String,
+    categories: List<LineCategory>,
     onClick: (String) -> Unit,
 ) {
+    val context = LocalContext.current
     LazyRow(
         modifier = modifier,
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        items(labels) { item ->
+        items(categories) { item ->
+            val customColors = FilterChipDefaults.elevatedFilterChipColors(
+                containerColor = Color(
+                    MaterialColors.harmonizeWithPrimary(
+                        context,
+                        item.color.toArgb()
+                    )
+                ),
+                selectedContainerColor = Color(
+                    MaterialColors.harmonizeWithPrimary(
+                        context,
+                        item.color.toArgb()
+                    )
+                ).copy(alpha = 0.4f),
+                iconColor = Color(
+                    MaterialColors.harmonizeWithPrimary(
+                        context,
+                        Color.White.toArgb()
+                    )
+                ),
+                selectedLeadingIconColor = Color(
+                    MaterialColors.harmonizeWithPrimary(
+                        context,
+                        Color.White.toArgb()
+                    )
+                ).copy(alpha = 0.4f),
+                labelColor = Color.White
+            )
             ElevatedFilterChip(
                 modifier = modifier,
-                onClick = { onClick(item) },
-                label = {
-                    Text(item)
+                colors = customColors,
+                onClick = { onClick(context.getString(item.titleResId)) },
+                leadingIcon = {
+                    Icon(
+                        imageVector = item.iconResId,
+                        contentDescription = null,
+                        tint = Color.White
+                    )
                 },
-                selected = (item == selected),
+                label = {
+                    Text(context.getString(item.titleResId))
+                },
+                selected = (context.getString(item.titleResId) == selected),
             )
         }
     }
@@ -120,6 +184,17 @@ private fun PreviewBusTypeFilters() {
         mutableStateOf("") // initially, first item is selected
     }
 
+    val categories = listOf(
+        LineCategory.BUS,
+        LineCategory.TROLLEY
+    )
+    val secondaryCategories = listOf(
+        LineCategory.HOUR_24,
+        LineCategory.NIGHT,
+        LineCategory.EXPRESS,
+        LineCategory.AIRPORT,
+    )
+
     Scaffold {
         Surface(
             modifier = Modifier.padding(4.dp),
@@ -135,7 +210,7 @@ private fun PreviewBusTypeFilters() {
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),
                     selected = selectedItem,
-                    labels = singleFilters,
+                    categories = categories,
                     onClick = { item ->
                         selectedItem = item
                         Toast.makeText(context, "Sel: $item", Toast.LENGTH_SHORT).show()
@@ -146,7 +221,7 @@ private fun PreviewBusTypeFilters() {
                         .fillMaxWidth()
                         .padding(horizontal = 8.dp),
                     selected = selectedItems,
-                    labels = multiFilters,
+                    categories = secondaryCategories,
                     onClick = { item ->
                         if (selectedItems.contains(item)) {
                             selectedItems.remove(item)

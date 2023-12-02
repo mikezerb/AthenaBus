@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.athenabus.R
+import com.example.athenabus.data.local.LineCategory
 import com.example.athenabus.presentation.bus_list.components.BusLineList
 import com.example.athenabus.presentation.bus_list.components.ChangeLayoutButton
 import com.example.athenabus.presentation.bus_list.components.ShowFilterButton
@@ -102,6 +103,18 @@ fun BusLineListScreen(
         stringResource(id = R.string.aeroplane_chip_label),
         stringResource(id = R.string.express_chip_label),
     )
+
+    val categories = listOf(
+        LineCategory.BUS,
+        LineCategory.TROLLEY
+    )
+    val secondaryCategories = listOf(
+        LineCategory.HOUR_24,
+        LineCategory.NIGHT,
+        LineCategory.EXPRESS,
+        LineCategory.AIRPORT,
+    )
+
 
     val selectedMultiFilters = remember {
         mutableStateListOf("")
@@ -233,7 +246,7 @@ fun BusLineListScreen(
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp),
                         selected = selectedFilter,
-                        labels = singleFilters,
+                        categories = categories,
                         onClick = { item ->
                             selectedFilter = if (selectedFilter == item) "" else item
                         }
@@ -243,7 +256,7 @@ fun BusLineListScreen(
                             .fillMaxWidth()
                             .padding(horizontal = 8.dp),
                         selected = selectedFilter,
-                        labels = multiFilters,
+                        categories = secondaryCategories,
                         onClick = { item ->
                             selectedFilter = if (selectedFilter == item) "" else item
                         }

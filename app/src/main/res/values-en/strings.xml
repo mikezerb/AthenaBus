@@ -47,7 +47,7 @@
     <string name="buses_chip_label">Buses</string>
     <string name="_24hour_chip_label">24hour</string>
     <string name="night_chip_label">Night</string>
-    <string name="aeroplane_chip_label">Aeroplane</string>
+    <string name="aeroplane_chip_label">Airport</string>
     <string name="express_chip_label">Express</string>
     <string name="about_athenabus">About</string>
 
@@ -87,7 +87,7 @@
     <string name="back_online">Back Online</string>
     <string name="press_again_to_exit">Press again to exit</string>
     <string name="no_favorite_lines_found">No favorite lines found</string>
-    <string name="bus_category_title">Bus</string>
+    <string name="bus_category_title">Buses</string>
     <string name="unknown_category_title">-</string>
     <string name="trolley_category_title">Trolley</string>
     <string name="hour24_category_title">24hour</string>

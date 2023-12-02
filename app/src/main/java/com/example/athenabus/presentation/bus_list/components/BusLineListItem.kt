@@ -64,12 +64,12 @@ fun BusLineListItem(
             )
         },
         overlineContent = {
-            LineCategoryChip(
-                modifier = Modifier.padding(bottom = 4.dp),
-                category = busLine.Category,
-                context = context,
-                showTitle = true
-            )
+//            LineCategoryChip(
+//                modifier = Modifier.padding(bottom = 4.dp),
+//                category = busLine.Category,
+//                context = context,
+//                showTitle = true
+//            )
         }
     )
 }
