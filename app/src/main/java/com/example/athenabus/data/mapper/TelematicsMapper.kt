@@ -10,6 +10,7 @@ import com.example.athenabus.data.remote.dto.DailyScheduleDto
 import com.example.athenabus.data.remote.dto.Go
 import com.example.athenabus.data.remote.dto.LineDtoItem
 import com.example.athenabus.data.remote.dto.RouteDtoItem
+import com.example.athenabus.data.remote.dto.StopDetailsDtoItem
 import com.example.athenabus.data.remote.dto.WebGetRouteDtoItem
 import com.example.athenabus.data.remote.dto.WebGetStopsDtoItem
 import com.example.athenabus.domain.model.Arrival
@@ -94,6 +95,19 @@ fun WebGetStopsDtoItem.toStop(): Stop {
         StopStreet = StopStreet,
         StopLat = StopLat,
         StopLng = StopLng,
+        distance = ""
+    )
+}
+
+fun StopDetailsDtoItem.toStop(stopCode: String): Stop {
+    return Stop(
+        StopCode = stopCode,
+        StopID = stop_id,
+        StopDescr = stop_descr,
+        StopDescrEng = stop_descr_matrix_eng,
+        StopStreet = "",
+        StopLat = stop_lat,
+        StopLng = stop_lng,
         distance = ""
     )
 }

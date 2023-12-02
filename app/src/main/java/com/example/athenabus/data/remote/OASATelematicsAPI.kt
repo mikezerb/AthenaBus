@@ -5,6 +5,7 @@ import com.example.athenabus.data.remote.dto.ClosestStopDto
 import com.example.athenabus.data.remote.dto.DailyScheduleDto
 import com.example.athenabus.data.remote.dto.LineDto
 import com.example.athenabus.data.remote.dto.RouteDto
+import com.example.athenabus.data.remote.dto.StopDetailsDto
 import com.example.athenabus.data.remote.dto.WebGetRouteDto
 import com.example.athenabus.data.remote.dto.WebGetStopsDto
 import retrofit2.http.GET
@@ -51,4 +52,10 @@ interface OASATelematicsAPI {
         @Query("act") action: String = "getDailySchedule",
         @Query("line_code") lineCode: String,
     ): DailyScheduleDto
+
+    @GET("api/")
+    suspend fun getStopNameAndXY(
+        @Query("act") action: String = "getStopNameAndXY",
+        @Query("p1") stopCode: String,
+    ): StopDetailsDto
 }

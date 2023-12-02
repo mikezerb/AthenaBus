@@ -253,4 +253,16 @@ class BusLineRepositoryImpl @Inject constructor(
     override suspend fun removeFavoriteLine(line: String) {
         favoritesDao.deleteFavoriteFromID(line)
     }
+
+    override fun getStopDetailsFromCode(stopCode: String): Flow<Resource<Stop>> = flow {
+        emit(Resource.Loading())
+        try {
+            val stop = api.getStopNameAndXY(stopCode = stopCode).first().toStop(stopCode)
+            emit(Resource.Success(data = stop))
+        } catch (e: HttpException) {
+            emit(Resource.Error(message = e.localizedMessage ?: "error"))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An error occurred"))
+        }
+    }
 }

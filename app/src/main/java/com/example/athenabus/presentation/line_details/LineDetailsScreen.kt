@@ -71,15 +71,12 @@ fun LineDetailsScreen(
     modifier: Modifier = Modifier,
     navController: NavController = rememberNavController(),
     lineId: String = "",
-    lineCode: String = "",
-    lineDesc: String = "",
-    isFav: Boolean = false,
     viewModel: LineDetailsViewModel = hiltViewModel(),
     routeViewModel: RouteDetailsViewModel = hiltViewModel(),
 ) {
     Log.d(
         "LineDetailsScreen",
-        "LineID: $lineId, LineCode: $lineCode, lineDesc: $lineDesc isFav = $isFav"
+        "LineID: $lineId"
     )
     val state = viewModel.state.value
     val routeState = routeViewModel.state.value
@@ -110,7 +107,8 @@ fun LineDetailsScreen(
             screen = {
                 state.line?.let {
                     StopsScreen(
-                        routes = routeState.availableRoutes
+                        routes = routeState.availableRoutes,
+                        navController = navController
                     )
                 }
             }

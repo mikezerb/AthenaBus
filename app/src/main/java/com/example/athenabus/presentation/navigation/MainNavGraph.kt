@@ -25,6 +25,7 @@ import com.example.athenabus.presentation.closest_stops.NewClosestStopsScreen
 import com.example.athenabus.presentation.favorites.FavoriteScreen
 import com.example.athenabus.presentation.line_details.LineDetailsScreen
 import com.example.athenabus.presentation.settings.SettingsScreen
+import com.example.athenabus.presentation.stop_arrival.StopArrivalScreen
 
 @Composable
 fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues) {
@@ -68,10 +69,7 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
         composable(
             route = Route.LineDetailActivityScreen.route,
             arguments = listOf(
-                navArgument(name = "lineId") { type = NavType.StringType },
-                navArgument(name = "lineCode") { type = NavType.StringType },
-                navArgument(name = "lineDesc") { type = NavType.StringType },
-                navArgument(name = "isFav") { type = NavType.BoolType },
+                navArgument(name = "lineId") { type = NavType.StringType }
             ),
             enterTransition = {
                 slideInVertically(
@@ -88,9 +86,20 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
         ) { navBackStackEntry ->
             LineDetailsScreen(
                 lineId = navBackStackEntry.arguments?.getString("lineId") ?: "",
-                lineCode = navBackStackEntry.arguments?.getString("lineCode") ?: "",
-                lineDesc = navBackStackEntry.arguments?.getString("lineDesc") ?: "",
-                isFav = navBackStackEntry.arguments?.getBoolean("isFav") ?: false,
+                navController = navController
+            )
+        }
+
+        composable(
+            route = Route.StopActivityScreen.route,
+            arguments = listOf(
+                navArgument(name = "stopCode") { type = NavType.StringType },
+                navArgument(name = "stopDesc") { type = NavType.StringType }
+            ),
+        ) { navBackStackEntry ->
+            StopArrivalScreen(
+                stopCode = navBackStackEntry.arguments?.getString("stopCode") ?: "",
+                stopDesc = navBackStackEntry.arguments?.getString("stopDesc") ?: "",
                 navController = navController
             )
         }

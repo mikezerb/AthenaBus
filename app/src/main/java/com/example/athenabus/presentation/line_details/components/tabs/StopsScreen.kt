@@ -26,6 +26,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.line_details.RouteStopsViewModel
@@ -36,6 +38,7 @@ fun StopsScreen(
     modifier: Modifier = Modifier,
     routes: List<Route>,
     viewModel: RouteStopsViewModel = hiltViewModel(),
+    navController: NavController = rememberNavController()
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -100,6 +103,9 @@ fun StopsScreen(
                                 "Clicked ${stop.StopDescr}",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            navController.navigate(
+                                com.example.athenabus.presentation.navigation.Route.StopActivity.route + "?stopCode=${stop.StopCode}&stopDesc=${stop.StopDescr}"
+                            )
                         }
                     )
                     HorizontalDivider()

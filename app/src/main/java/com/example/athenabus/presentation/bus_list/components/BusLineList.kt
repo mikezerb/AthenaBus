@@ -45,7 +45,7 @@ fun BusLineList(
                     GridBusLineItem(
                         busLine = line, onItemClick =
                         {
-                            navController.navigate(Route.LineDetailsActivity.route + "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}") // &lineDesc=${line.LineDescr}&isFav=${line.isFavorite}
+                            navController.navigate(Route.LineDetailsActivity.route + "?lineId=${line.LineID}")
                         },
                         onToggleFavorite = { }
                     )
@@ -69,7 +69,7 @@ fun BusLineList(
                         {
                             navController.navigate(
                                 Route.LineDetailsActivity.route +
-                                        "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}"
+                                        "?lineId=${line.LineID}"
                             )
                         },
                         onToggleFavorite = { }
