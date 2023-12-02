@@ -80,6 +80,7 @@ fun MainScreen(
         Route.SettingsActivityScreen.route -> false // on this screen bottom bar should be hidden
         Route.LineDetailActivityScreen.route -> false // on this screen bottom bar should be hidden
         Route.AboutActivityScreen.route -> false // on this screen bottom bar should be hidden
+        Route.StopActivityScreen.route -> false // on this screen bottom bar should be hidden
         else -> true // in all other cases show bottom bar
     }
 
