@@ -31,7 +31,6 @@ import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.material3.rememberStandardBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -133,9 +132,9 @@ fun StopArrivalScreen(
         )
     }
 
-    val defaultAthensCoords = LatLng(37.981, 23.7273)
+    val stopCoords = LatLng(stopLat.toDouble(), stopLng.toDouble())
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(defaultAthensCoords, 17f)
+        position = CameraPosition.fromLatLngZoom(stopCoords, 18f)
     }
     // Set properties using MapProperties which you can use to recompose the map
     val mapProperties = MapProperties(
@@ -220,13 +219,13 @@ fun StopArrivalScreen(
                 if (stopArrivalState.stopArrivals.isEmpty()) {
                     Text(
                         text = "No Incoming Buses",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.titleLarge
                     )
                 } else {
                     Text(
                         modifier = Modifier.padding(bottom = 12.dp),
                         text = "Incoming Buses",
-                        style = MaterialTheme.typography.headlineSmall
+                        style = MaterialTheme.typography.titleLarge
                     )
                     HorizontalDivider()
                     if (stopArrivalState.stopArrivals.isNotEmpty()) {
@@ -268,15 +267,13 @@ fun StopArrivalScreen(
                     isMapLoaded = true
                 },
             ) {
-                SideEffect {
-                    scope.launch {
-                        cameraPositionState.centerOnLatLng(
-                            LatLng(
-                                stopLat.toDouble(),
-                                stopLng.toDouble()
-                            )
+                LaunchedEffect(key1 = isMapLoaded) {
+                    cameraPositionState.centerOnLatLng(
+                        LatLng(
+                            stopLat.toDouble(),
+                            stopLng.toDouble()
                         )
-                    }
+                    )
                 }
                 MarkerComposable(
                     state = MarkerState(
