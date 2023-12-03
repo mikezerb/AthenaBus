@@ -50,6 +50,7 @@ import com.example.athenabus.presentation.bus_list.components.BusLineList
 import com.example.athenabus.presentation.bus_list.components.ChangeLayoutButton
 import com.example.athenabus.presentation.bus_list.components.ShowFilterButton
 import com.example.athenabus.presentation.bus_list.components.SingleLineFilters
+import com.example.athenabus.presentation.main_screen.components.ConnectivityStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -164,6 +165,7 @@ fun BusLineListScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
+            ConnectivityStatus(context)
             Row(
                 Modifier
                     .fillMaxWidth()
