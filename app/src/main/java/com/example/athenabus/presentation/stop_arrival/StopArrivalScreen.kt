@@ -267,14 +267,14 @@ fun StopArrivalScreen(
                     isMapLoaded = true
                 },
             ) {
-                LaunchedEffect(key1 = isMapLoaded) {
-                    cameraPositionState.centerOnLatLng(
-                        LatLng(
-                            stopLat.toDouble(),
-                            stopLng.toDouble()
-                        )
-                    )
-                }
+//                LaunchedEffect(key1 = isMapLoaded) {
+//                    cameraPositionState.centerOnLatLng(
+//                        LatLng(
+//                            stopLat.toDouble(),
+//                            stopLng.toDouble()
+//                        )
+//                    )
+//                }
                 MarkerComposable(
                     state = MarkerState(
                         position = LatLng(
