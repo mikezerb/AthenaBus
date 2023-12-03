@@ -103,7 +103,7 @@ fun StopsScreen(
 //                                Toast.LENGTH_SHORT
 //                            ).show()
                             navController.navigate(
-                                com.example.athenabus.presentation.navigation.Route.StopActivity.route + "?stopCode=${stop.StopCode}&stopDesc=${stop.StopDescr}"
+                                com.example.athenabus.presentation.navigation.Route.StopActivity.route + "?stopCode=${stop.StopCode}&stopDesc=${stop.StopDescr}&stopLat=${stop.StopLat}&stopLng=${stop.StopLng}"
                             )
                         }
                     )

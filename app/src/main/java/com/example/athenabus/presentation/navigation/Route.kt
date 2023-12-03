@@ -34,6 +34,6 @@ sealed class Route(
 
     object StopActivity : Route(route = "stopActivity")
     object StopActivityScreen :
-        Route(route = "stopActivity?stopCode={stopCode}&stopDesc={stopDesc}")
+        Route(route = "stopActivity?stopCode={stopCode}&stopDesc={stopDesc}&stopLat={stopLat}&stopLng={stopLng}")
 
 }

@@ -2,14 +2,13 @@ package com.example.athenabus.presentation.stop_arrival
 
 import android.widget.Toast
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -20,6 +19,7 @@ import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconToggleButton
@@ -42,9 +42,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -72,16 +72,32 @@ fun StopArrivalScreen(
     navController: NavController = rememberNavController(),
     viewModel: ArrivalsForStopViewModel = hiltViewModel(),
     stopArrivalViewModel: StopArrivalViewModel = hiltViewModel(),
+    stopViewModel: StopViewModel = hiltViewModel(),
     themeViewModel: ThemeViewModel = hiltViewModel(),
     stopCode: String,
     stopDesc: String,
+    stopLat: String,
+    stopLng: String,
 ) {
 
     val state = viewModel.state.value
-    val stopState = stopArrivalViewModel.state.value
+    val stopArrivalState = stopArrivalViewModel.state.value
+    val stopState = stopViewModel.state.value
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val darkThemeState by themeViewModel.themeState.collectAsState()
+//
+//    LaunchedEffect(key1 = true, key2 = stopCode) {
+//        stopArrivalViewModel.getStopDetails(stopCode)
+//    }
+
+    LaunchedEffect(key1 = true) {
+        stopArrivalViewModel.getStopArrivals(stopCode)
+    }
+
+    LaunchedEffect(key1 = true) {
+        stopViewModel.getRoutesForStop(stopCode)
+    }
 
     val sheetState = rememberStandardBottomSheetState(
         initialValue = SheetValue.Expanded
@@ -105,17 +121,6 @@ fun StopArrivalScreen(
 //        viewModel.getStopArrival(stopCode)
 //    }
 
-    LaunchedEffect(key1 = true, key2 = stopCode) {
-        stopArrivalViewModel.getStopDetails(stopCode)
-    }
-
-    LaunchedEffect(key1 = true) {
-        viewModel.getStopArrival(stopCode)
-    }
-
-    LaunchedEffect(key1 = true, key2 = stopCode) {
-        stopArrivalViewModel.getRoutesForStop(stopCode)
-    }
 
     var isMapLoaded by remember { mutableStateOf(false) }
 
@@ -130,7 +135,7 @@ fun StopArrivalScreen(
 
     val defaultAthensCoords = LatLng(37.981, 23.7273)
     val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(defaultAthensCoords, 15f)
+        position = CameraPosition.fromLatLngZoom(defaultAthensCoords, 17f)
     }
     // Set properties using MapProperties which you can use to recompose the map
     val mapProperties = MapProperties(
@@ -204,48 +209,47 @@ fun StopArrivalScreen(
             )
         },
         sheetContent = {
-            Box(
+            Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .defaultMinSize(minHeight = 150.dp)
-                    .wrapContentSize(),
-                contentAlignment = Alignment.TopCenter
+                    .padding(horizontal = 8.dp)
+                    .defaultMinSize(minHeight = 150.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Column {
-//                    if (stopState.stopArrivals.isEmpty()) {
-//                        Text(
-//                            text = "No Incoming Buses",
-//                            style = MaterialTheme.typography.headlineSmall
-//                        )
-//                    } else {
+                if (stopArrivalState.stopArrivals.isEmpty()) {
                     Text(
+                        text = "No Incoming Buses",
+                        style = MaterialTheme.typography.headlineSmall
+                    )
+                } else {
+                    Text(
+                        modifier = Modifier.padding(bottom = 12.dp),
                         text = "Incoming Buses",
                         style = MaterialTheme.typography.headlineSmall
                     )
-                    if (stopState.stopArrivals.isNotEmpty()) {
+                    HorizontalDivider()
+                    if (stopArrivalState.stopArrivals.isNotEmpty()) {
                         LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                            items(stopState.stopArrivals) { item ->
-//                            val lineId =
-//                                stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr
-                                Text(text = item.LineID + " in " + item.btime2)
+                            items(stopArrivalState.stopArrivals) { item ->
+                                val lineDetails =
+                                    stopState.routeStops.find { it.RouteCode == item.route_code }?.LineID + " (" +
+                                            stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr + ") "
+                                Text(
+                                    text = lineDetails + " in " + item.btime2 + " " + pluralStringResource(
+                                        id = R.plurals.minutes_arrive,
+                                        count = item.btime2.toInt()
+                                    ),
+                                    style = MaterialTheme.typography.labelLarge
+                                )
                             }
                         }
-                    } else if (stopState.isLoading) {
+                        HorizontalDivider(Modifier.padding(bottom = 8.dp))
+                    } else if (stopArrivalState.isLoading) {
                         CircularProgressIndicator()
-                    } else if (stopState.error.isNotEmpty()) {
-                        Text(text = stopState.error)
+                    } else if (stopArrivalState.error.isNotEmpty()) {
+                        Text(text = stopArrivalState.error)
                     }
-
-//                    if (stopState.routeStops.isNotEmpty()) {
-//                        LazyColumn(modifier = Modifier.fillMaxWidth()) {
-//                            items(stopState.routeStops) { route ->
-//                                Text(
-//                                    text = route.RouteDescr + " " + route.LineID,
-//                                    style = MaterialTheme.typography.bodySmall
-//                                )
-//                            }
-//                        }
-//                    }
                 }
             }
         }
@@ -255,57 +259,40 @@ fun StopArrivalScreen(
                 .fillMaxSize()
                 .padding(it)
         ) {
-            if (stopState.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(54.dp),
-                    strokeWidth = 6.dp
-                )
-            } else if (stopState.error.isNotEmpty()) {
-                Column {
-                    Text(
-                        text = stopState.error,
-                        color = MaterialTheme.colorScheme.error,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                }
-            } else if (stopState.busStop != null) {
-                GoogleMap(
-                    modifier = Modifier.fillMaxSize(),
-                    cameraPositionState = cameraPositionState,
-                    properties = mapProperties,
-                    uiSettings = uiSettings,
-                    onMapLoaded = {
-                        isMapLoaded = true
-                    },
-                ) {
-                    SideEffect {
-                        scope.launch {
-                            cameraPositionState.centerOnLatLng(
-                                LatLng(
-                                    stopState.busStop.StopLat.toDouble(),
-                                    stopState.busStop.StopLng.toDouble()
-                                )
+            GoogleMap(
+                modifier = Modifier.fillMaxSize(),
+                cameraPositionState = cameraPositionState,
+                properties = mapProperties,
+                uiSettings = uiSettings,
+                onMapLoaded = {
+                    isMapLoaded = true
+                },
+            ) {
+                SideEffect {
+                    scope.launch {
+                        cameraPositionState.centerOnLatLng(
+                            LatLng(
+                                stopLat.toDouble(),
+                                stopLng.toDouble()
                             )
-                        }
-                    }
-                    MarkerComposable(
-                        state = MarkerState(
-                            position = LatLng(
-                                stopState.busStop.StopLat.toDouble(),
-                                stopState.busStop.StopLng.toDouble()
-                            )
-                        ),
-                        title = stopState.busStop.StopDescr,
-                        snippet = stopState.busStop.StopStreet ?: "",
-                        draggable = false,
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.bus_stop_pointer),
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.surfaceTint
                         )
                     }
+                }
+                MarkerComposable(
+                    state = MarkerState(
+                        position = LatLng(
+                            stopLat.toDouble(),
+                            stopLng.toDouble()
+                        )
+                    ),
+                    title = stopDesc,
+                    draggable = false,
+                ) {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.bus_stop_new),
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.surfaceTint
+                    )
                 }
             }
         }
@@ -317,13 +304,6 @@ private suspend fun CameraPositionState.centerOnLatLng(
 ) = animate(
     update = CameraUpdateFactory.newLatLngZoom(
         coords,
-        17f
+        19f
     ),
 )
-
-
-@Preview(name = "StopArrivalScreen")
-@Composable
-private fun PreviewStopArrivalScreen() {
-    StopArrivalScreen(stopCode = "60991", stopDesc = "Test")
-}

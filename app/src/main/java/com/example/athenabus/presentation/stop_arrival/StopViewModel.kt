@@ -6,7 +6,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
-import com.example.athenabus.domain.use_case.bus_lines.GetStopArrivalUseCase
 import com.example.athenabus.domain.use_case.get_route.GetRoutesForStopsUseCase
 import com.example.athenabus.domain.use_case.get_stops.GetStopDetailsFromCodeUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,9 +14,8 @@ import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 @HiltViewModel
-class StopArrivalViewModel @Inject constructor(
+class StopViewModel @Inject constructor(
     private val getStopDetailsFromCodeUseCase: GetStopDetailsFromCodeUseCase,
-    private val getStopArrivalUseCase: GetStopArrivalUseCase,
     private val getRoutesForStopsUseCase: GetRoutesForStopsUseCase,
 ) : ViewModel() {
 
@@ -33,27 +31,6 @@ class StopArrivalViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _state.value = StopArrivalState(error = result.message ?: "Unexpected error")
-                }
-
-                is Resource.Loading -> {
-                    _state.value = StopArrivalState(isLoading = true)
-                }
-            }
-        }.launchIn(viewModelScope)
-    }
-
-    fun getStopArrivals(stopCode: String) {
-        getStopArrivalUseCase(stopCode).onEach { result ->
-            when (result) {
-                is Resource.Success -> {
-                    val arrivals = result.data ?: emptyList()
-                    Log.d("getStopArrivals", "arrivals: ${arrivals.size}")
-                    _state.value = StopArrivalState(stopArrivals = arrivals)
-                }
-
-                is Resource.Error -> {
-                    Log.d("getStopArrivals", "error: ${result.message ?: "Unexpected error"}")
                     _state.value = StopArrivalState(error = result.message ?: "Unexpected error")
                 }
 

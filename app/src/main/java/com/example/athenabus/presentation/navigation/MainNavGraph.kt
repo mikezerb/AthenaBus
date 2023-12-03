@@ -94,12 +94,16 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
             route = Route.StopActivityScreen.route,
             arguments = listOf(
                 navArgument(name = "stopCode") { type = NavType.StringType },
-                navArgument(name = "stopDesc") { type = NavType.StringType }
+                navArgument(name = "stopDesc") { type = NavType.StringType },
+                navArgument(name = "stopLat") { type = NavType.StringType },
+                navArgument(name = "stopLng") { type = NavType.StringType },
             ),
         ) { navBackStackEntry ->
             StopArrivalScreen(
                 stopCode = navBackStackEntry.arguments?.getString("stopCode") ?: "",
                 stopDesc = navBackStackEntry.arguments?.getString("stopDesc") ?: "",
+                stopLat = navBackStackEntry.arguments?.getString("stopLat") ?: "",
+                stopLng = navBackStackEntry.arguments?.getString("stopLng") ?: "",
                 navController = navController
             )
         }
