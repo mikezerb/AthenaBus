@@ -14,6 +14,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarBorder
 import androidx.compose.material3.BottomSheetScaffold
@@ -108,8 +109,8 @@ fun StopArrivalScreen(
         stopArrivalViewModel.getStopDetails(stopCode)
     }
 
-    LaunchedEffect(key1 = true, key2 = stopCode) {
-        stopArrivalViewModel.getStopArrivals(stopCode)
+    LaunchedEffect(key1 = true) {
+        viewModel.getStopArrival(stopCode)
     }
 
     LaunchedEffect(key1 = true, key2 = stopCode) {
@@ -184,6 +185,13 @@ fun StopArrivalScreen(
                             contentDescription = null
                         )
                     }
+                    IconButton(onClick = {
+                        scope.launch {
+                            stopArrivalViewModel.getStopArrivals(stopCode)
+                        }
+                    }) {
+                        Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
+                    }
                 },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
@@ -214,13 +222,20 @@ fun StopArrivalScreen(
                         text = "Incoming Buses",
                         style = MaterialTheme.typography.headlineSmall
                     )
-                    LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                        items(stopState.stopArrivals) { item ->
-                            val lineId =
-                                stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr
-                            Text(text = lineId + ", " + item.LineID + " in " + item.btime2)
+                    if (stopState.stopArrivals.isNotEmpty()) {
+                        LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                            items(stopState.stopArrivals) { item ->
+//                            val lineId =
+//                                stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr
+                                Text(text = item.LineID + " in " + item.btime2)
+                            }
                         }
+                    } else if (stopState.isLoading) {
+                        CircularProgressIndicator()
+                    } else if (stopState.error.isNotEmpty()) {
+                        Text(text = stopState.error)
                     }
+
 //                    if (stopState.routeStops.isNotEmpty()) {
 //                        LazyColumn(modifier = Modifier.fillMaxWidth()) {
 //                            items(stopState.routeStops) { route ->
