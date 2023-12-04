@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -23,6 +24,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SheetValue
 import androidx.compose.material3.Text
@@ -44,6 +46,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -211,7 +214,8 @@ fun StopArrivalScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp)
+                    .padding(horizontal = 8.dp, vertical = 4.dp)
+                    .sizeIn(maxHeight = 500.dp)
                     .defaultMinSize(minHeight = 150.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -229,21 +233,43 @@ fun StopArrivalScreen(
                     )
                     HorizontalDivider()
                     if (stopArrivalState.stopArrivals.isNotEmpty()) {
-                        LazyColumn(modifier = Modifier.fillMaxWidth()) {
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(bottom = 8.dp)
+                        ) {
                             items(stopArrivalState.stopArrivals) { item ->
-                                val lineDetails =
-                                    stopState.routeStops.find { it.RouteCode == item.route_code }?.LineID + " (" +
-                                            stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr + ") "
-                                Text(
-                                    text = lineDetails + " in " + item.btime2 + " " + pluralStringResource(
-                                        id = R.plurals.minutes_arrive,
-                                        count = item.btime2.toInt()
-                                    ),
-                                    style = MaterialTheme.typography.labelLarge
+                                val lineId =
+                                    stopState.routeStops.find { it.RouteCode == item.route_code }?.LineID
+                                        ?: ""
+                                val lineDesc =
+                                    stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr
+                                        ?: ""
+                                ListItem(
+                                    headlineContent = {
+                                        Text(
+                                            text = lineId,
+                                            style = MaterialTheme.typography.titleLarge,
+                                        )
+                                    },
+                                    supportingContent = {
+                                        Text(
+                                            text = lineDesc,
+                                            overflow = TextOverflow.Ellipsis,
+                                            maxLines = 2
+                                        )
+                                    },
+                                    trailingContent = {
+                                        Text(
+                                            text = item.btime2 + " " + pluralStringResource(
+                                                id = R.plurals.minutes_arrive,
+                                                count = item.btime2.toInt()
+                                            )
+                                        )
+                                    }
                                 )
                             }
                         }
-                        HorizontalDivider(Modifier.padding(bottom = 8.dp))
                     } else if (stopArrivalState.isLoading) {
                         CircularProgressIndicator()
                     } else if (stopArrivalState.error.isNotEmpty()) {
