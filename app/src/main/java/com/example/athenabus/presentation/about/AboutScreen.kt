@@ -67,7 +67,9 @@ fun AboutScreen(
 ) {
     val context = LocalContext.current
     Surface(
-        modifier.fillMaxSize().padding(paddingValues),
+        modifier
+            .fillMaxSize()
+            .padding(paddingValues),
         tonalElevation = 2.dp
     ) {
         Column(

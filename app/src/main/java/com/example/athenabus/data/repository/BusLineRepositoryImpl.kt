@@ -188,7 +188,7 @@ class BusLineRepositoryImpl @Inject constructor(
         emit(Resource.Loading())
         try {
             val arrivals = api.getStopArrivals(stopCode = stopCode)?.map { it.toArrival() }
-            emit(Resource.Success(data = arrivals?: emptyList()))
+            emit(Resource.Success(data = arrivals ?: emptyList()))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "error"))
         } catch (e: Exception) {
