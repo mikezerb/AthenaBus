@@ -210,13 +210,15 @@ fun StopArrivalScreen(
                 },
             )
         },
+        sheetShadowElevation = 8.dp,
+        sheetPeekHeight = 150.dp,
         sheetContent = {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp, vertical = 4.dp)
                     .sizeIn(maxHeight = 500.dp)
-                    .defaultMinSize(minHeight = 150.dp),
+                    .defaultMinSize(minHeight = 200.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -264,7 +266,8 @@ fun StopArrivalScreen(
                                             text = item.btime2 + " " + pluralStringResource(
                                                 id = R.plurals.minutes_arrive,
                                                 count = item.btime2.toInt()
-                                            )
+                                            ),
+                                            style = MaterialTheme.typography.labelLarge,
                                         )
                                     }
                                 )
