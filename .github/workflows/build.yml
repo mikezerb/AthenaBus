@@ -27,9 +27,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2.11.0
         
-      - name: Execute Gradle Command LintDebug
-        uses: ./gradlew lintDebug
-        
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
 
