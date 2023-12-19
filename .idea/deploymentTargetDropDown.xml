@@ -2,7 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="Preview">
+      <entry key="OnBoardingPview">
         <State />
       </entry>
       <entry key="PreviewBusTypeFilters">
@@ -19,6 +19,17 @@
       </entry>
       <entry key="app">
         <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\mikeaposto\.android\avd\Pixel_6_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
           <targetSelectedWithDropDown>
             <Target>
               <type value="QUICK_BOOT_TARGET" />
@@ -30,7 +41,7 @@
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2023-12-03T17:16:30.408176900Z" />
+          <timeTargetWasSelectedWithDropDown value="2023-12-19T23:18:48.905350300Z" />
         </State>
       </entry>
     </value>

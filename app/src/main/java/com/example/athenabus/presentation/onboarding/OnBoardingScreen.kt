@@ -13,6 +13,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -59,17 +63,17 @@ fun OnBoardingScreen(
         }
         Box(
             modifier = Modifier
-                .fillMaxHeight(0.8f)
+                .fillMaxHeight(0.9f)
                 .fillMaxWidth()
         ) {
             Column(horizontalAlignment = Alignment.End) {
-                TextButton(
+                IconButton(
                     onClick = {
                         scope.launch {
                             event(OnBoardingEvent.SaveAppEntry)
                         }
                     }) {
-                    Text(text = "Skip")
+                    Icon(imageVector = Icons.Default.Close, contentDescription = null)
                 }
                 HorizontalPager(state = pagerState) { index ->
                     OnBoardingPage(page = pages[index])
@@ -79,8 +83,7 @@ fun OnBoardingScreen(
 
         Row(
             Modifier
-                .fillMaxWidth()
-                .padding(horizontal = MediumPadding1),
+                .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceAround
         ) {
