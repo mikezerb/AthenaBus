@@ -20,7 +20,10 @@ jobs:
         with:
           java-version: 18
           distribution: 'temurin'
-          
+
+      - name: Touch local properties
+        run: touch local.properties
+
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
