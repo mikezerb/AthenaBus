@@ -1,0 +1,47 @@
+name: Android Build Release Workflow
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: set up JDK 1.8
+        uses: actions/setup-java@v4.0.0
+        with:
+          java-version: '18'
+          
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2.11.0
+        
+      - name: Execute Gradle Command LintDebug
+        uses: ./gradlew lintDebug
+        
+      - name: Unit tests
+        run: bash ./gradlew test --stacktrace
+
+      - name: Run Tests
+        run: ./gradlew test
+
+      - name: Build Project
+        run: ./gradlew assemble
+
+      - name: Build Debug APK
+        run: bash ./gradlew :app:assembleDebug
+
+      - name: build release
+        run: ./gradlew assembleRelease
+
+   
