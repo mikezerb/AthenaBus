@@ -46,13 +46,18 @@ import com.example.athenabus.presentation.favorites.tabs.FavoriteStopsScreen
 fun FavoriteScreen(
     navController: NavController,
     viewModel: FavoriteScreenViewModel = hiltViewModel(),
+    stopViewModel: FavoriteScreenStopsViewModel = hiltViewModel(),
     paddingValues: PaddingValues
 ) {
     LaunchedEffect(key1 = true) {
         viewModel.getFavLines()
     }
+    LaunchedEffect(key1 = true) {
+        stopViewModel.getFavStops()
+    }
 
     val state = viewModel.state.value
+    val stopState = stopViewModel.state.value
 
     val favTabItems = listOf(
         TabItem(
@@ -72,7 +77,11 @@ fun FavoriteScreen(
             selectedIcon = Icons.Filled.FollowTheSigns,
             unSelectedIcon = Icons.Outlined.FollowTheSigns,
             screen = {
-                FavoriteStopsScreen()
+                FavoriteStopsScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    stops = stopState.favoriteStops,
+                    navController = navController
+                )
             }
         )
     )

@@ -6,8 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
+import com.example.athenabus.domain.model.Stop
 import com.example.athenabus.domain.use_case.get_route.GetRoutesForStopsUseCase
+import com.example.athenabus.domain.use_case.get_stops.AddFavoriteStopUseCase
 import com.example.athenabus.domain.use_case.get_stops.GetStopDetailsFromCodeUseCase
+import com.example.athenabus.domain.use_case.get_stops.IsFavoriteStopUseCase
+import com.example.athenabus.domain.use_case.get_stops.RemoveFavoriteStopUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -17,6 +21,9 @@ import javax.inject.Inject
 class StopViewModel @Inject constructor(
     private val getStopDetailsFromCodeUseCase: GetStopDetailsFromCodeUseCase,
     private val getRoutesForStopsUseCase: GetRoutesForStopsUseCase,
+    private val addFavoriteStopUseCase: AddFavoriteStopUseCase,
+    private val removeFavoriteStopUseCase: RemoveFavoriteStopUseCase,
+    private val isFavoriteStopUseCase: IsFavoriteStopUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(StopArrivalState())
@@ -60,6 +67,18 @@ class StopViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    suspend fun isFavoriteStop(stopCode: String): Boolean {
+        return isFavoriteStopUseCase(stopCode)
+    }
+
+    suspend fun addFavoriteStop(stop: Stop) {
+        addFavoriteStopUseCase(stop)
+    }
+
+    suspend fun removeFavoriteStop(stopCode: String) {
+        removeFavoriteStopUseCase(stopCode)
     }
 
 }

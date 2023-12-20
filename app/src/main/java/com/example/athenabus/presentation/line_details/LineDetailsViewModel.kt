@@ -11,7 +11,6 @@ import com.example.athenabus.domain.use_case.bus_lines.GetLineFromIDUseCase
 import com.example.athenabus.domain.use_case.bus_lines.GetLinesFromLineIDUseCase
 import com.example.athenabus.domain.use_case.bus_lines.IsFavoriteLineUseCase
 import com.example.athenabus.domain.use_case.bus_lines.RemoveFavoriteLineUseCase
-import com.example.athenabus.domain.use_case.bus_lines.ToggleFavoriteLineUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -21,7 +20,6 @@ import javax.inject.Inject
 class LineDetailsViewModel @Inject constructor(
     private val getLineFromIDUseCase: GetLineFromIDUseCase,
     private val getLinesFromLineIDUseCase: GetLinesFromLineIDUseCase,
-    private val toggleFavoriteLineUseCase: ToggleFavoriteLineUseCase,
     private val addFavoriteLineUseCase: AddFavoriteLineUseCase,
     private val removeFavoriteLineUseCase: RemoveFavoriteLineUseCase,
     private val isFavoriteLineUseCase: IsFavoriteLineUseCase
@@ -49,10 +47,6 @@ class LineDetailsViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-
-    suspend fun favoriteLine(lineId: String) {
-        toggleFavoriteLineUseCase(lineId)
-    }
 
     suspend fun isFavoriteLine(lineId: String): Boolean {
         return isFavoriteLineUseCase(lineId)

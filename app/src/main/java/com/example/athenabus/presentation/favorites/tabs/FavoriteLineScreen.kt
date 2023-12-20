@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.favorites.tabs
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,8 +21,6 @@ fun FavoriteLineScreen(
     lines: List<Line> = emptyList(),
     navController: NavController = rememberNavController(),
 ) {
-    Log.d("FavoriteLineScreen", "lines: ${lines.size}")
-
     if (lines.isEmpty()) {
         EmptyScreen(title = stringResource(R.string.no_favorite_lines_found))
     } else {

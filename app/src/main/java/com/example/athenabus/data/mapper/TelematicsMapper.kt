@@ -2,6 +2,7 @@ package com.example.athenabus.data.mapper
 
 import com.example.athenabus.data.local.entity.BusLineEntity
 import com.example.athenabus.data.local.entity.FavoriteLinesEntity
+import com.example.athenabus.data.local.entity.FavoriteStopsEntity
 import com.example.athenabus.data.local.entity.RouteEntity
 import com.example.athenabus.data.remote.dto.ArrivalStopDtoItem
 import com.example.athenabus.data.remote.dto.ClosestStopDtoItem
@@ -174,6 +175,29 @@ fun ArrivalStopDtoItem.toArrival(): Arrival {
         MasterLineCode = ""
     )
 }
+
+fun FavoriteStopsEntity.toStop(): Stop {
+    return Stop(
+        StopCode = StopCode,
+        StopID = StopID,
+        StopDescr = StopDescr,
+        StopDescrEng = StopDescrEng,
+        StopStreet = "",
+        StopLat = "",
+        StopLng = "",
+        distance = ""
+    )
+}
+
+fun Stop.toStopEntity(): FavoriteStopsEntity {
+    return FavoriteStopsEntity(
+        StopCode = StopCode,
+        StopID = StopID,
+        StopDescr = StopDescr,
+        StopDescrEng = StopDescrEng!!,
+    )
+}
+
 
 fun DailyScheduleDto.toDailySchedule(): DailySchedule {
     return DailySchedule(

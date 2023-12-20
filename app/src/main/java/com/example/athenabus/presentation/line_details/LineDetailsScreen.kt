@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.line_details
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -74,10 +73,6 @@ fun LineDetailsScreen(
     viewModel: LineDetailsViewModel = hiltViewModel(),
     routeViewModel: RouteDetailsViewModel = hiltViewModel(),
 ) {
-    Log.d(
-        "LineDetailsScreen",
-        "LineID: $lineId"
-    )
     val state = viewModel.state.value
     val routeState = routeViewModel.state.value
 

@@ -52,6 +52,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
+import com.example.athenabus.domain.model.Stop
 import com.example.athenabus.presentation.closest_stops.ArrivalsForStopViewModel
 import com.example.athenabus.presentation.settings.ThemeViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -88,10 +89,10 @@ fun StopArrivalScreen(
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val darkThemeState by themeViewModel.themeState.collectAsState()
-//
-//    LaunchedEffect(key1 = true, key2 = stopCode) {
-//        stopArrivalViewModel.getStopDetails(stopCode)
-//    }
+
+    LaunchedEffect(key1 = true, key2 = stopCode) {
+        stopArrivalViewModel.getStopDetails(stopCode)
+    }
 
     LaunchedEffect(key1 = true) {
         stopArrivalViewModel.getStopArrivals(stopCode)
@@ -118,6 +119,11 @@ fun StopArrivalScreen(
             false
         ) // initially checked, default to false if null
     }
+
+    LaunchedEffect(key1 = true, key2 = stopCode) {
+        checked = stopViewModel.isFavoriteStop(stopCode)
+    }
+
 //
 //    LaunchedEffect(key1 = true, key2 = stopCode) {
 //        viewModel.getStopArrival(stopCode)
@@ -175,14 +181,35 @@ fun StopArrivalScreen(
                                         "Added stop to favorites",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    //state.line?.let { viewModel.addFavoriteLine(it) }
+                                    stopViewModel.addFavoriteStop(
+                                        Stop(
+                                            StopCode = stopCode,
+                                            StopID = "",
+                                            StopDescrEng = "",
+                                            StopStreet = "",
+                                            StopDescr = stopDesc,
+                                            StopLat = "", StopLng = "",
+                                            distance = ""
+                                        )
+                                    )
+
+                                    /*
+
+                                     StopDescrEng: String?,
+                                    val StopStreet: String?,
+                                    val StopLat: String,
+                                    val StopLng: String,
+                                    val StopID: String,
+                                    val distance: String
+                                     */
+
                                 } else {
                                     Toast.makeText(
                                         context,
                                         "Removed stop from favorites",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    //state.line?.let { viewModel.removeFavoriteLine(lineId) }
+                                    stopViewModel.removeFavoriteStop(stopCode)
                                 }
                             }
                             checked = _checked

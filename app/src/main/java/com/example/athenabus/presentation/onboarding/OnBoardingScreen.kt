@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -17,8 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
@@ -31,7 +28,6 @@ import com.example.athenabus.presentation.common.MaterialElevatedButton
 import com.example.athenabus.presentation.common.MaterialTextButton
 import com.example.athenabus.presentation.onboarding.components.OnBoardingPage
 import com.example.athenabus.presentation.onboarding.components.PageIndicator
-import com.example.athenabus.ui.theme.Dimens.MediumPadding1
 import com.example.athenabus.ui.theme.Dimens.PageIndicatorWidth
 import kotlinx.coroutines.launch
 
@@ -63,7 +59,7 @@ fun OnBoardingScreen(
         }
         Box(
             modifier = Modifier
-                .fillMaxHeight(0.9f)
+                .fillMaxHeight(0.8f)
                 .fillMaxWidth()
         ) {
             Column(horizontalAlignment = Alignment.End) {

@@ -23,5 +23,9 @@ interface BusLineRepository {
     suspend fun addFavoriteLine(line: Line)
     suspend fun isFavoriteLine(line: String): Boolean
     suspend fun removeFavoriteLine(line: String)
+    fun getFavoriteStops(): Flow<Resource<List<Stop>>>
+    suspend fun addFavoriteStop(stop: Stop)
+    suspend fun isFavoriteStop(stopCode: String): Boolean
+    suspend fun removeFavoriteStop(stopCode: String)
     fun getStopDetailsFromCode(routeCode: String): Flow<Resource<Stop>>
 }

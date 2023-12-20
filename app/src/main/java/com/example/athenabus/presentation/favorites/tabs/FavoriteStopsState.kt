@@ -1,10 +1,10 @@
 package com.example.athenabus.presentation.favorites.tabs
 
-import com.example.athenabus.domain.model.Line
+import com.example.athenabus.domain.model.Stop
 
-data class FavoriteLinesState(
+data class FavoriteStopsState(
     val isLoading: Boolean = false,
     val error: String = "",
     val isRefreshing: Boolean = false,
-    val favoriteLines: List<Line> = emptyList(),
+    val favoriteStops: List<Stop> = emptyList(),
 )

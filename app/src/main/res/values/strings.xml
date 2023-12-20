@@ -92,6 +92,7 @@
     <string name="back_online">Επιτυχής σύνδεση</string>
     <string name="press_again_to_exit">Πατήστε ξανά για έξοδο</string>
     <string name="no_favorite_lines_found">Δεν βρέθηκαν αγαπημένες γραμμές</string>
+    <string name="no_favorite_stops_found">Δεν βρέθηκαν αγαπημένες στάσεις</string>
     <string name="bus_category_title">Λεωφορεία</string>
     <string name="unknown_category_title">-</string>
     <string name="trolley_category_title">Τρόλεϊ</string>
