@@ -21,8 +21,10 @@ jobs:
           java-version: 18
           distribution: 'temurin'
 
-      - name: Touch local properties
-        run: touch local.properties
+      - name: Set Google Maps API Key in local.properties
+        env:
+          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        run: echo "GOOGLE_MAPS_API_KEY=${GOOGLE_MAPS_API_KEY}" >> local.properties
 
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
@@ -31,8 +33,7 @@ jobs:
         uses: gradle/gradle-build-action@v2.11.0
 
       - name: Build Project
-        env:
-          GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+        
         run: ./gradlew assemble
 
       - name: Build Debug APK
