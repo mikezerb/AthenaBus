@@ -23,6 +23,7 @@ import androidx.compose.ui.platform.LocalView
 import androidx.core.os.LocaleListCompat
 import androidx.core.view.WindowCompat
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.athenabus.presentation.settings.AppTheme
 import com.example.athenabus.presentation.settings.ThemeViewModel
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -129,28 +130,38 @@ fun AthenaBusTheme(
 ) {
     val themeState by themeViewModel.themeState.collectAsState()
     val amoledTheme = themeState.isAmoledMode
-    val dark = when (themeState.appTheme) {
+    val dark = when (themeState.appTheme.ordinal) {
         0 -> isSystemInDarkTheme()
         1 -> false
         2 -> true
         else -> isSystemInDarkTheme()
     }
+//    val dark = (themeState.appTheme == AppTheme.DARK) ||
+//            (themeState.appTheme == AppTheme.FOLLOW_SYSTEM && isSystemInDarkTheme())
     val dynamicColorMode = themeState.isDynamicMode
     val appColorScheme = AppColorTheme()
-    val currentTheme = appColorScheme.getTheme(appTheme, dark)
+    val currentTheme = appColorScheme.getTheme(
+        appTheme,
+        (themeState.appTheme == AppTheme.DARK) ||
+                (themeState.appTheme == AppTheme.FOLLOW_SYSTEM && isSystemInDarkTheme())
+    )
     val colorScheme = when {
         dynamicColorMode && supportsDynamic() -> {
             val context = LocalContext.current
 
             when {
-                dark && amoledTheme -> dynamicDarkColorScheme(context).copy(
+                dark && amoledTheme -> dynamicDarkColorScheme(
+                    context
+                ).copy(
                     background = Color.Black,
                     surface = Color.Black
                 )
 
-                dark && !amoledTheme -> dynamicDarkColorScheme(context)
-                else -> dynamicLightColorScheme(context)
+                dark && !amoledTheme -> dynamicDarkColorScheme(
+                    context
+                )
 
+                else -> dynamicLightColorScheme(context)
             }
         }
 

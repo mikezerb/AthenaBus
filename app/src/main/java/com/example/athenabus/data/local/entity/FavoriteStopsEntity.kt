@@ -9,4 +9,6 @@ data class FavoriteStopsEntity(
     val StopID: String,
     val StopDescr: String,
     val StopDescrEng: String,
+    val StopLat: String,
+    val StopLng: String
 )

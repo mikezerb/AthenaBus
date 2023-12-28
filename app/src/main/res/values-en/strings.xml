@@ -95,5 +95,7 @@
     <string name="express_category_title">Express</string>
     <string name="aeroplane_category_title">Airport</string>
     <string name="night_category_title">Night</string>
+    <string name="available_routes">Available Routes</string>
+    <string name="incoming_buses">Incoming Buses</string>
 
 </resources>

@@ -100,4 +100,6 @@
     <string name="express_category_title">Express</string>
     <string name="aeroplane_category_title">Αεροδρομίου</string>
     <string name="night_category_title">Νυχτερινά</string>
+    <string name="available_routes">Διαθέσιμες Γραμμές</string>
+    <string name="incoming_buses">Ανερχόμενα Λεωφορεία</string>
 </resources>

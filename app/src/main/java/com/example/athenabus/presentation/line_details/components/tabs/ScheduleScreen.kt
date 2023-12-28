@@ -24,14 +24,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
-import com.example.athenabus.presentation.line_details.RouteScheduleViewModel
+import com.example.athenabus.presentation.line_details.LineDetailsViewModel
 import com.example.athenabus.presentation.line_details.components.TimetableItem
 
 @Composable
 fun ScheduleScreen(
     modifier: Modifier = Modifier,
     line: Line,
-    viewModel: RouteScheduleViewModel = hiltViewModel(),
+    viewModel: LineDetailsViewModel = hiltViewModel(),
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedLine by remember {
@@ -42,7 +42,7 @@ fun ScheduleScreen(
     }
 
     var options: MutableList<String> = mutableListOf()
-    val state = viewModel.state.value
+    val state = viewModel.scheduleState.value
 
     LaunchedEffect(key1 = true, key2 = line) {
         viewModel.getAvailableLines(line.LineID)

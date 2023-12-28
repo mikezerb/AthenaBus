@@ -68,6 +68,7 @@ import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.closest_stops.components.EnableLocation
 import com.example.athenabus.presentation.closest_stops.components.ExpandableClosestStopItem
+import com.example.athenabus.presentation.settings.AppTheme
 import com.example.athenabus.presentation.settings.ThemeViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
@@ -188,10 +189,17 @@ fun NewClosestStopsScreen(
     val mapProperties = MapProperties(
         // Only enable if user has accepted location permissions.
         isMyLocationEnabled = locationValue.currentLocation != null,
-        mapStyleOptions = if (darkThemeState.appTheme == 2 || isSystemInDarkTheme()) {
-            MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark)
-        } else {
+        mapStyleOptions =
+        if (darkThemeState.appTheme == AppTheme.FOLLOW_SYSTEM) {
+            if (isSystemInDarkTheme()) {
+                MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark)
+            } else {
+                MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style)
+            }
+        } else if (darkThemeState.appTheme == AppTheme.LIGHT) {
             MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style)
+        } else {
+            MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark)
         }
     )
     Box(

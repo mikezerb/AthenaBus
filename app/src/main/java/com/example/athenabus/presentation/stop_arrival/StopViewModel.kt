@@ -26,23 +26,23 @@ class StopViewModel @Inject constructor(
     private val isFavoriteStopUseCase: IsFavoriteStopUseCase
 ) : ViewModel() {
 
-    private val _state = mutableStateOf(StopArrivalState())
-    val state: State<StopArrivalState> = _state
+    private val _state = mutableStateOf(StopState())
+    val state: State<StopState> = _state
 
     fun getStopDetails(stopCode: String) {
         getStopDetailsFromCodeUseCase(stopCode).onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     val busLines = result.data
-                    _state.value = StopArrivalState(busStop = busLines)
+                    _state.value = StopState(busStop = busLines)
                 }
 
                 is Resource.Error -> {
-                    _state.value = StopArrivalState(error = result.message ?: "Unexpected error")
+                    _state.value = StopState(error = result.message ?: "Unexpected error")
                 }
 
                 is Resource.Loading -> {
-                    _state.value = StopArrivalState(isLoading = true)
+                    _state.value = StopState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)
@@ -54,16 +54,16 @@ class StopViewModel @Inject constructor(
                 is Resource.Success -> {
                     val routes = result.data
                     Log.d("getStopArrivals", "routes: ${routes?.size}")
-                    _state.value = StopArrivalState(routeStops = routes ?: emptyList())
+                    _state.value = StopState(routeStops = routes ?: emptyList())
                 }
 
                 is Resource.Error -> {
                     Log.d("getStopArrivals", "error: ${result.message ?: "Unexpected error"}")
-                    _state.value = StopArrivalState(error = result.message ?: "Unexpected error")
+                    _state.value = StopState(error = result.message ?: "Unexpected error")
                 }
 
                 is Resource.Loading -> {
-                    _state.value = StopArrivalState(isLoading = true)
+                    _state.value = StopState(isLoading = true)
                 }
             }
         }.launchIn(viewModelScope)

@@ -45,19 +45,11 @@ import com.example.athenabus.presentation.favorites.tabs.FavoriteStopsScreen
 @Composable
 fun FavoriteScreen(
     navController: NavController,
-    viewModel: FavoriteScreenViewModel = hiltViewModel(),
-    stopViewModel: FavoriteScreenStopsViewModel = hiltViewModel(),
-    paddingValues: PaddingValues
+    paddingValues: PaddingValues,
+    viewModel: FavoriteScreenViewModel = hiltViewModel()
 ) {
-    LaunchedEffect(key1 = true) {
-        viewModel.getFavLines()
-    }
-    LaunchedEffect(key1 = true) {
-        stopViewModel.getFavStops()
-    }
-
     val state = viewModel.state.value
-    val stopState = stopViewModel.state.value
+    val stopState = viewModel.stopState.value
 
     val favTabItems = listOf(
         TabItem(
@@ -80,6 +72,7 @@ fun FavoriteScreen(
                 FavoriteStopsScreen(
                     modifier = Modifier.fillMaxSize(),
                     stops = stopState.favoriteStops,
+                    routes = stopState.routesForStops,
                     navController = navController
                 )
             }
@@ -112,6 +105,7 @@ fun FavoriteScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
+
             PrimaryTabRow(selectedTabIndex = selectedTabIndex) {
                 favTabItems.forEachIndexed { index, tabItem ->
                     Tab(
@@ -140,12 +134,18 @@ fun FavoriteScreen(
                     .fillMaxWidth()
                     .weight(1f)
             ) { index ->
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
                     favTabItems[index].screen()
                 }
             }
+
         }
     }
+
+
 }
 
 @Preview(name = "FavoriteScreen")

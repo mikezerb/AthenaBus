@@ -183,8 +183,8 @@ fun FavoriteStopsEntity.toStop(): Stop {
         StopDescr = StopDescr,
         StopDescrEng = StopDescrEng,
         StopStreet = "",
-        StopLat = "",
-        StopLng = "",
+        StopLat = StopLat,
+        StopLng = StopLng,
         distance = ""
     )
 }
@@ -195,6 +195,8 @@ fun Stop.toStopEntity(): FavoriteStopsEntity {
         StopID = StopID,
         StopDescr = StopDescr,
         StopDescrEng = StopDescrEng!!,
+        StopLat = StopLat,
+        StopLng = StopLng
     )
 }
 

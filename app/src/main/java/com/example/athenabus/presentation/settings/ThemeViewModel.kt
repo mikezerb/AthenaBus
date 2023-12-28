@@ -31,7 +31,7 @@ class ThemeViewModel @Inject constructor(
         ThemeState(
             isAmoledMode = false,
             isDynamicMode = supportsDynamic(),
-            appTheme = 0
+            appTheme = AppTheme.FOLLOW_SYSTEM
         )
     )
     val themeState: StateFlow<ThemeState> = _themeState
@@ -42,11 +42,20 @@ class ThemeViewModel @Inject constructor(
                 ThemeState(
                     preferences[IS_AMOLED_THEME_KEY] ?: false,
                     preferences[IS_DYNAMIC_MODE_KEY] ?: supportsDynamic(),
-                    preferences[APP_THEME_KEY] ?: 0
+                    preferences[APP_THEME_KEY]?.let { mapIntToAppTheme(it) } ?: AppTheme.FOLLOW_SYSTEM
                 )
             }.collect {
                 _themeState.value = it
             }
+        }
+    }
+
+    private fun mapIntToAppTheme(themeValue: Int): AppTheme {
+        return when (themeValue) {
+            0 -> AppTheme.FOLLOW_SYSTEM
+            1 -> AppTheme.LIGHT
+            2 -> AppTheme.DARK
+            else -> AppTheme.FOLLOW_SYSTEM
         }
     }
 
@@ -60,6 +69,7 @@ class ThemeViewModel @Inject constructor(
 
     fun setAppTheme(theme: Int) {
         viewModelScope.launch(Dispatchers.IO) {
+            Log.d("setAppTheme", "theme: $theme")
             dataStore.edit { settings ->
                 settings[APP_THEME_KEY] = theme
             }
@@ -71,10 +81,6 @@ class ThemeViewModel @Inject constructor(
             dataStore.edit { preferences ->
                 preferences[IS_DYNAMIC_MODE_KEY] =
                     !(preferences[IS_DYNAMIC_MODE_KEY] ?: supportsDynamic())
-                Log.d(
-                    "toggleDynamicColors",
-                    "IS_DYNAMIC_MODE_KEY: ${preferences[IS_DYNAMIC_MODE_KEY]}"
-                )
             }
         }
     }

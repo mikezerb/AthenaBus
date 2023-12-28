@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.favorites.tabs
+package com.example.athenabus.presentation.favorites
 
 import com.example.athenabus.domain.model.Line
 

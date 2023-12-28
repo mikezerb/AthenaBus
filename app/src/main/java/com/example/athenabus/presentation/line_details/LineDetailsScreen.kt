@@ -69,25 +69,17 @@ import kotlinx.coroutines.launch
 fun LineDetailsScreen(
     modifier: Modifier = Modifier,
     navController: NavController = rememberNavController(),
-    lineId: String = "",
+    lineId: String,
     viewModel: LineDetailsViewModel = hiltViewModel(),
-    routeViewModel: RouteDetailsViewModel = hiltViewModel(),
 ) {
     val state = viewModel.state.value
-    val routeState = routeViewModel.state.value
+    val routeState = viewModel.routeState.value
 
     val checkedState = remember { mutableStateOf(state.line?.isFavorite) }
     var checked by remember {
         mutableStateOf(
             state.line?.isFavorite ?: false
         ) // initially checked, default to false if null
-    }
-
-    LaunchedEffect(true, key2 = lineId) {
-        viewModel.getLine(lineId)
-    }
-    LaunchedEffect(key1 = true, key2 = lineId) {
-        routeViewModel.getLineCodes(lineId)
     }
 
     LaunchedEffect(key1 = true, key2 = lineId) {
@@ -270,5 +262,5 @@ fun LineDetailsScreen(
 @Preview(name = "LineDetailsScreen")
 @Composable
 private fun PreviewLineDetailsScreen() {
-    LineDetailsScreen()
+    LineDetailsScreen(lineId = "")
 }

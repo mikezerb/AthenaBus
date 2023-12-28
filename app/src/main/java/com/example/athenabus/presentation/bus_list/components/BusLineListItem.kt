@@ -39,22 +39,7 @@ fun BusLineListItem(
                 indication = rememberRipple(),
             )
             .fillMaxWidth(),
-        leadingContent = { // Display Line ID
-//            Text(
-//                modifier = Modifier
-//                    .drawBehind {
-//                        drawRoundRect(
-//                            color = color,
-//                            cornerRadius = CornerRadius(16.dp.toPx())
-//                        )
-//                    }
-//                    .padding(horizontal = 8.dp)
-//                    .defaultMinSize(minWidth = 52.dp),
-//                text = busLine.LineID,
-//                textAlign = TextAlign.Center,
-//                color = MaterialTheme.colorScheme.onSurfaceVariant,
-//                style = MaterialTheme.typography.headlineMedium
-//            )
+        leadingContent = {
             BusLineIDType(
                 lineId = busLine.LineID,
                 category = busLine.Category,
@@ -63,7 +48,6 @@ fun BusLineListItem(
         },
         headlineContent = { // Display Line Description
             Text(
-                modifier = Modifier.padding(bottom = 8.dp),
                 text = busLine.LineDescr,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,

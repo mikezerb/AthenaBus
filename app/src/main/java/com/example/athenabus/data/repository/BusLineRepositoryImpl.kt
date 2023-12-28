@@ -1,5 +1,6 @@
 package com.example.athenabus.data.repository
 
+import android.util.Log
 import com.example.athenabus.common.Resource
 import com.example.athenabus.data.local.FavoritesDao
 import com.example.athenabus.data.local.LineCategory
@@ -189,10 +190,16 @@ class BusLineRepositoryImpl @Inject constructor(
         emit(Resource.Loading())
         try {
             val arrivals = api.getStopArrivals(stopCode = stopCode)?.map { it.toArrival() }
+
             emit(Resource.Success(data = arrivals ?: emptyList()))
         } catch (e: HttpException) {
+            Log.d("getStopArrivals", "HttpException")
             emit(Resource.Error(message = e.localizedMessage ?: "error"))
+        } catch (e: KotlinNullPointerException) {   // response body is null
+            Log.d("getStopArrivals", "KotlinNullPointerException")
+            emit(Resource.Success(data = emptyList()))
         } catch (e: Exception) {
+            Log.d("getStopArrivals", "Exception")
             emit(Resource.Error(message = e.message ?: "An error occurred"))
         }
     }

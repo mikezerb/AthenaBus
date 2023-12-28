@@ -9,8 +9,8 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -44,6 +44,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.pluralStringResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -53,14 +54,12 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Stop
-import com.example.athenabus.presentation.closest_stops.ArrivalsForStopViewModel
+import com.example.athenabus.presentation.settings.AppTheme
 import com.example.athenabus.presentation.settings.ThemeViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
@@ -73,33 +72,28 @@ import kotlinx.coroutines.launch
 @Composable
 fun StopArrivalScreen(
     navController: NavController = rememberNavController(),
-    viewModel: ArrivalsForStopViewModel = hiltViewModel(),
-    stopArrivalViewModel: StopArrivalViewModel = hiltViewModel(),
-    stopViewModel: StopViewModel = hiltViewModel(),
+    viewModel: StopArrivalViewModel = hiltViewModel(),
     themeViewModel: ThemeViewModel = hiltViewModel(),
     stopCode: String,
     stopDesc: String,
     stopLat: String,
     stopLng: String,
 ) {
-
     val state = viewModel.state.value
-    val stopArrivalState = stopArrivalViewModel.state.value
-    val stopState = stopViewModel.state.value
+    val stopState = viewModel.stopState.value
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+
     val darkThemeState by themeViewModel.themeState.collectAsState()
 
+    var checked by remember {
+        mutableStateOf(
+            false
+        ) // initially checked, default to false if null
+    }
+
     LaunchedEffect(key1 = true, key2 = stopCode) {
-        stopArrivalViewModel.getStopDetails(stopCode)
-    }
-
-    LaunchedEffect(key1 = true) {
-        stopArrivalViewModel.getStopArrivals(stopCode)
-    }
-
-    LaunchedEffect(key1 = true) {
-        stopViewModel.getRoutesForStop(stopCode)
+        checked = viewModel.isFavoriteStop(stopCode)
     }
 
     val sheetState = rememberStandardBottomSheetState(
@@ -113,22 +107,6 @@ fun StopArrivalScreen(
         mutableStateOf(false)
     }
     var showSnackbar by remember { mutableStateOf(false) }
-
-    var checked by remember {
-        mutableStateOf(
-            false
-        ) // initially checked, default to false if null
-    }
-
-    LaunchedEffect(key1 = true, key2 = stopCode) {
-        checked = stopViewModel.isFavoriteStop(stopCode)
-    }
-
-//
-//    LaunchedEffect(key1 = true, key2 = stopCode) {
-//        viewModel.getStopArrival(stopCode)
-//    }
-
 
     var isMapLoaded by remember { mutableStateOf(false) }
 
@@ -149,10 +127,16 @@ fun StopArrivalScreen(
     val mapProperties = MapProperties(
         // Only enable if user has accepted location permissions.
         isMyLocationEnabled = false,
-        mapStyleOptions = if (darkThemeState.appTheme == 2 || isSystemInDarkTheme()) {
-            MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark)
-        } else {
+        mapStyleOptions = if (darkThemeState.appTheme == AppTheme.FOLLOW_SYSTEM) {
+            if (isSystemInDarkTheme()) {
+                MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark)
+            } else {
+                MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style)
+            }
+        } else if (darkThemeState.appTheme == AppTheme.LIGHT) {
             MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style)
+        } else {
+            MapStyleOptions.loadRawResourceStyle(context, R.raw.map_style_dark)
         }
     )
 
@@ -181,35 +165,22 @@ fun StopArrivalScreen(
                                         "Added stop to favorites",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    stopViewModel.addFavoriteStop(
+                                    viewModel.addFavoriteStop(
                                         Stop(
                                             StopCode = stopCode,
-                                            StopID = "",
-                                            StopDescrEng = "",
-                                            StopStreet = "",
-                                            StopDescr = stopDesc,
-                                            StopLat = "", StopLng = "",
+                                            StopID = "", StopDescrEng = "",
+                                            StopStreet = "", StopDescr = stopDesc,
+                                            StopLat = stopLat, StopLng = stopLng,
                                             distance = ""
                                         )
                                     )
-
-                                    /*
-
-                                     StopDescrEng: String?,
-                                    val StopStreet: String?,
-                                    val StopLat: String,
-                                    val StopLng: String,
-                                    val StopID: String,
-                                    val distance: String
-                                     */
-
                                 } else {
                                     Toast.makeText(
                                         context,
                                         "Removed stop from favorites",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    stopViewModel.removeFavoriteStop(stopCode)
+                                    viewModel.removeFavoriteStop(stopCode)
                                 }
                             }
                             checked = _checked
@@ -221,7 +192,7 @@ fun StopArrivalScreen(
                     }
                     IconButton(onClick = {
                         scope.launch {
-                            stopArrivalViewModel.getStopArrivals(stopCode)
+                            viewModel.getStopArrivals(stopCode)
                         }
                     }) {
                         Icon(imageVector = Icons.Default.Refresh, contentDescription = null)
@@ -244,68 +215,97 @@ fun StopArrivalScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp, vertical = 4.dp)
-                    .sizeIn(maxHeight = 500.dp)
                     .defaultMinSize(minHeight = 200.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (stopArrivalState.stopArrivals.isEmpty()) {
+                if (state.isLoading || stopState.isLoading) {
+                    CircularProgressIndicator()
+                } else if (state.error.isNotEmpty()) {
+                    Text(text = state.error)
+                } else if (state.stopArrivals.isEmpty()) {
+                    if (stopState.routeStops.isNotEmpty()) {
+                        Text(text = stringResource(R.string.available_routes))
+                        LazyRow() {
+                            items(stopState.routeStops) { route ->
+                                ListItem(
+                                    headlineContent = { Text(text = route.LineID) },
+                                    supportingContent = { Text(text = route.LineDescr ) }
+                                )
+                            }
+                        }
+                    } else if (stopState.error.isNotEmpty()) {
+                        Text(text = stopState.error)
+                    }
+                    HorizontalDivider(
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        thickness = 2.dp
+                    )
                     Text(
+                        modifier = Modifier.padding(vertical = 16.dp),
                         text = "No Incoming Buses",
                         style = MaterialTheme.typography.titleLarge
                     )
                 } else {
-                    Text(
-                        modifier = Modifier.padding(bottom = 12.dp),
-                        text = "Incoming Buses",
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                    HorizontalDivider()
-                    if (stopArrivalState.stopArrivals.isNotEmpty()) {
-                        LazyColumn(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(bottom = 8.dp)
-                        ) {
-                            items(stopArrivalState.stopArrivals) { item ->
-                                val lineId =
-                                    stopState.routeStops.find { it.RouteCode == item.route_code }?.LineID
-                                        ?: ""
-                                val lineDesc =
-                                    stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr
-                                        ?: ""
+                    if (stopState.routeStops.isNotEmpty()) {
+                        Text(text = stringResource(R.string.available_routes))
+                        LazyRow() {
+                            items(stopState.routeStops) { route ->
                                 ListItem(
-                                    headlineContent = {
-                                        Text(
-                                            text = lineId,
-                                            style = MaterialTheme.typography.titleLarge,
-                                        )
-                                    },
-                                    supportingContent = {
-                                        Text(
-                                            text = lineDesc,
-                                            overflow = TextOverflow.Ellipsis,
-                                            maxLines = 2
-                                        )
-                                    },
-                                    trailingContent = {
-                                        Text(
-                                            text = item.btime2 + " " + pluralStringResource(
-                                                id = R.plurals.minutes_arrive,
-                                                count = item.btime2.toInt()
-                                            ),
-                                            style = MaterialTheme.typography.labelLarge,
-                                        )
-                                    }
+                                    headlineContent = { Text(text = route.LineID) },
+                                    supportingContent = { Text(route.LineDescr) }
                                 )
                             }
                         }
-                    } else if (stopArrivalState.isLoading) {
-                        CircularProgressIndicator()
-                    } else if (stopArrivalState.error.isNotEmpty()) {
-                        Text(text = stopArrivalState.error)
+                    } else if (stopState.error.isNotEmpty()) {
+                        Text(text = stopState.error)
+                    }
+                    HorizontalDivider()
+                    Text(
+                        modifier = Modifier.padding(vertical = 8.dp),
+                        text = stringResource(R.string.incoming_buses),
+                        style = MaterialTheme.typography.titleLarge
+                    )
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 12.dp)
+                    ) {
+                        items(state.stopArrivals) { item ->
+                            val lineId =
+                                stopState.routeStops.find { it.RouteCode == item.route_code }?.LineID
+                                    ?: ""
+                            val lineDesc =
+                                stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr
+                                    ?: ""
+                            ListItem(
+                                headlineContent = {
+                                    Text(
+                                        text = lineId,
+                                        style = MaterialTheme.typography.titleLarge,
+                                    )
+                                },
+                                supportingContent = {
+                                    Text(
+                                        text = lineDesc,
+                                        overflow = TextOverflow.Ellipsis,
+                                        maxLines = 2
+                                    )
+                                },
+                                trailingContent = {
+                                    Text(
+                                        text = item.btime2 + " " + pluralStringResource(
+                                            id = R.plurals.minutes_arrive,
+                                            count = item.btime2.toInt()
+                                        ),
+                                        style = MaterialTheme.typography.labelLarge,
+                                    )
+                                }
+                            )
+                        }
                     }
                 }
+
             }
         }
     ) {
@@ -323,14 +323,6 @@ fun StopArrivalScreen(
                     isMapLoaded = true
                 },
             ) {
-//                LaunchedEffect(key1 = isMapLoaded) {
-//                    cameraPositionState.centerOnLatLng(
-//                        LatLng(
-//                            stopLat.toDouble(),
-//                            stopLng.toDouble()
-//                        )
-//                    )
-//                }
                 MarkerComposable(
                     state = MarkerState(
                         position = LatLng(
@@ -351,12 +343,3 @@ fun StopArrivalScreen(
         }
     }
 }
-
-private suspend fun CameraPositionState.centerOnLatLng(
-    coords: LatLng
-) = animate(
-    update = CameraUpdateFactory.newLatLngZoom(
-        coords,
-        19f
-    ),
-)
