@@ -5,9 +5,9 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -208,14 +208,14 @@ fun StopArrivalScreen(
                 },
             )
         },
-        sheetShadowElevation = 8.dp,
-        sheetPeekHeight = 150.dp,
+        sheetShadowElevation = 16.dp,
+        sheetPeekHeight = 200.dp,
         sheetContent = {
             Column(
                 modifier = Modifier
+                    .heightIn(min = 200.dp, max = 500.dp)//This will set the max height
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 4.dp)
-                    .defaultMinSize(minHeight = 200.dp),
+                    .padding(horizontal = 8.dp, vertical = 4.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -298,7 +298,7 @@ fun StopArrivalScreen(
                                             id = R.plurals.minutes_arrive,
                                             count = item.btime2.toInt()
                                         ),
-                                        style = MaterialTheme.typography.labelLarge,
+                                        style = MaterialTheme.typography.titleSmall,
                                     )
                                 }
                             )

@@ -50,6 +50,7 @@ import com.example.athenabus.presentation.bus_list.components.BusLineList
 import com.example.athenabus.presentation.bus_list.components.ChangeLayoutButton
 import com.example.athenabus.presentation.bus_list.components.ShowFilterButton
 import com.example.athenabus.presentation.bus_list.components.SingleLineFilters
+import com.example.athenabus.presentation.main_screen.components.ConnectivityStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -164,6 +165,7 @@ fun BusLineListScreen(
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
         ) {
+            ConnectivityStatus(context)
             Row(
                 Modifier
                     .fillMaxWidth()
@@ -263,14 +265,14 @@ fun BusLineListScreen(
                     )
                 }
             }
-            BusLineList(
-                modifier = Modifier.fillMaxSize(),
-                navController = navController,
-                isGridLayout = isGridViewEnabled,
-                lines = searchedList,
-                search = searchQuery.value,
-            )
-            if (state.error.isNotBlank()) {
+            if (state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(54.dp)
+                        .align(Alignment.CenterHorizontally),
+                    strokeWidth = 6.dp
+                )
+            } else if (state.error.isNotBlank()) {
                 Text(
                     text = state.error,
                     color = MaterialTheme.colorScheme.error,
@@ -279,13 +281,13 @@ fun BusLineListScreen(
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp)
                 )
-            }
-            if (state.isLoading) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .size(54.dp)
-                        .align(Alignment.CenterHorizontally),
-                    strokeWidth = 6.dp
+            } else if (state.busLines.isNotEmpty()) {
+                BusLineList(
+                    modifier = Modifier.fillMaxSize(),
+                    navController = navController,
+                    isGridLayout = isGridViewEnabled,
+                    lines = searchedList,
+                    search = searchQuery.value,
                 )
             }
         }
