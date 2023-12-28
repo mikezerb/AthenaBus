@@ -226,11 +226,11 @@ fun StopArrivalScreen(
                 } else if (state.stopArrivals.isEmpty()) {
                     if (stopState.routeStops.isNotEmpty()) {
                         Text(text = stringResource(R.string.available_routes))
-                        LazyRow() {
+                        LazyRow {
                             items(stopState.routeStops) { route ->
                                 ListItem(
                                     headlineContent = { Text(text = route.LineID) },
-                                    supportingContent = { Text(text = route.LineDescr ) }
+                                    supportingContent = { Text(text = route.LineDescr) }
                                 )
                             }
                         }
@@ -249,7 +249,7 @@ fun StopArrivalScreen(
                 } else {
                     if (stopState.routeStops.isNotEmpty()) {
                         Text(text = stringResource(R.string.available_routes))
-                        LazyRow() {
+                        LazyRow {
                             items(stopState.routeStops) { route ->
                                 ListItem(
                                     headlineContent = { Text(text = route.LineID) },

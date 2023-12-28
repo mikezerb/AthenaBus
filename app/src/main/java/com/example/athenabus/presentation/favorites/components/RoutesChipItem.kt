@@ -1,9 +1,7 @@
 package com.example.athenabus.presentation.favorites.components
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -19,7 +17,7 @@ fun RoutesChipItem(
     modifier: Modifier = Modifier,
     routes: List<String> = emptyList()
 ) {
-    LazyRow{
+    LazyRow {
         items(routes.distinct()) { route ->
             ElevatedAssistChip(
                 modifier = Modifier.padding(4.dp),

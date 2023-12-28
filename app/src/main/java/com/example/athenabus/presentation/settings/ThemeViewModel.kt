@@ -42,7 +42,8 @@ class ThemeViewModel @Inject constructor(
                 ThemeState(
                     preferences[IS_AMOLED_THEME_KEY] ?: false,
                     preferences[IS_DYNAMIC_MODE_KEY] ?: supportsDynamic(),
-                    preferences[APP_THEME_KEY]?.let { mapIntToAppTheme(it) } ?: AppTheme.FOLLOW_SYSTEM
+                    preferences[APP_THEME_KEY]?.let { mapIntToAppTheme(it) }
+                        ?: AppTheme.FOLLOW_SYSTEM
                 )
             }.collect {
                 _themeState.value = it

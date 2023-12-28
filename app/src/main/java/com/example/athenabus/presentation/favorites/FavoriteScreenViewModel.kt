@@ -17,7 +17,7 @@ import javax.inject.Inject
 class FavoriteScreenViewModel @Inject constructor(
     private val getFavoriteLinesUseCase: GetFavoriteLinesUseCase,
     private val getFavoriteStopsUseCase: GetFavoriteStopsUseCase,
-    ) : ViewModel() {
+) : ViewModel() {
 
     private val _state = mutableStateOf(FavoriteLinesState())
     val state: State<FavoriteLinesState> = _state
@@ -51,6 +51,7 @@ class FavoriteScreenViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
     }
+
     fun getFavStops() {
         getFavoriteStopsUseCase().onEach { result ->
             when (result) {

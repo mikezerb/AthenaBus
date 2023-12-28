@@ -68,7 +68,7 @@ fun OnBoardingPage(
 @Preview
 @Composable
 fun OnBoardingPreview() {
-        OnBoardingPage(
-            page = PageData.pages[0]
-        )
+    OnBoardingPage(
+        page = PageData.pages[0]
+    )
 }

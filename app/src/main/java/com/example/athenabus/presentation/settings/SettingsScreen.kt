@@ -120,7 +120,10 @@ fun SettingsScreen(
                 options = themeOptions,
                 selected = themeState.appTheme.ordinal,
                 onSelect = { index ->
-                    Log.d("onSelect", "index: $index, themeState.appTheme.ordinal: ${themeState.appTheme.ordinal}")
+                    Log.d(
+                        "onSelect",
+                        "index: $index, themeState.appTheme.ordinal: ${themeState.appTheme.ordinal}"
+                    )
                     themeViewModel.setAppTheme(index)
                 },
                 icon = {

@@ -1,7 +1,6 @@
 package com.example.athenabus.presentation.favorites
 
 import com.example.athenabus.domain.model.Route
-import com.example.athenabus.domain.model.Stop
 
 data class FavoriteStopsRouteState(
     val isLoading: Boolean = false,
