@@ -41,7 +41,10 @@ fun BusLineList(
                 columns = StaggeredGridCells.Fixed(2),
                 modifier = modifier
             ) {
-                items(lines) { line ->
+                items(
+                    items = lines,
+                    key = { it.LineCode }
+                ) { line ->
                     GridBusLineItem(
                         busLine = line, onItemClick =
                         {
@@ -62,7 +65,10 @@ fun BusLineList(
                 columns = StaggeredGridCells.Fixed(1),
                 modifier = modifier
             ) {
-                items(lines) { line ->
+                items(
+                    items = lines,
+                    key = { it.LineCode }
+                ) { line ->
                     BusLineListItem(
                         busLine = line,
                         onItemClick =
