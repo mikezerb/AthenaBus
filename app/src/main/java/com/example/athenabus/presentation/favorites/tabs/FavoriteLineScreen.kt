@@ -24,11 +24,10 @@ fun FavoriteLineScreen(
     navController: NavController = rememberNavController(),
 ) {
     val state = viewModel.state.value
-
-    if (state.favoriteLines.isEmpty()) {
-        EmptyScreen(title = stringResource(R.string.no_favorite_lines_found))
-    } else if (state.isLoading) {
+    if (state.isLoading) {
         CircularProgressIndicator()
+    } else if (state.favoriteLines.isEmpty()) {
+        EmptyScreen(title = stringResource(R.string.no_favorite_lines_found))
     } else {
         Column(Modifier.fillMaxSize()) {
             LazyColumn {

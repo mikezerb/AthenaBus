@@ -1,6 +1,6 @@
 package com.example.athenabus.presentation.favorites.tabs
 
-import androidx.compose.foundation.clickable
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,6 +9,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -28,22 +29,17 @@ fun FavoriteStopsScreen(
     val state = viewModel.stopState.value
 
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
-    if (state.favoriteStops.isEmpty()) {
-        EmptyScreen(title = stringResource(R.string.no_favorite_stops_found))
-    } else if (state.isLoading) {
+    if (state.isLoading) {
         CircularProgressIndicator()
+    } else if (state.favoriteStops.isEmpty()) {
+        EmptyScreen(title = stringResource(R.string.no_favorite_stops_found))
     } else {
         Column(Modifier.fillMaxSize()) {
             LazyColumn {
                 items(state.favoriteStops, key = { it.StopCode }) { stop ->
                     FavoriteStopItem(
-                        modifier = Modifier.clickable {
-                            navController.navigate(
-                                com.example.athenabus.presentation.navigation.Route.StopActivity.route
-                                        + "?stopCode=${stop.StopCode}&stopDesc=${stop.StopDescr}&stopLat=${stop.StopLat}&stopLng=${stop.StopLng}"
-                            )
-                        },
                         stop = stop,
                         routes = state.routesForStops[stop.StopCode]?.map { it.LineID },
                         onRouteClick = { lineId ->
@@ -52,9 +48,17 @@ fun FavoriteStopsScreen(
                                         "?lineId=${lineId}"
                             )
                         },
+                        onStopClick = { clickStop ->
+                            navController.navigate(
+                                com.example.athenabus.presentation.navigation.Route.StopActivity.route
+                                        + "?stopCode=${clickStop.StopCode}&stopDesc=${clickStop.StopDescr}&stopLat=${clickStop.StopLat}&stopLng=${clickStop.StopLng}"
+                            )
+                        },
                         onDelete = { stopId ->
                             scope.launch {
                                 viewModel.removeFavoriteStop(stopId)
+                                Toast.makeText(context, "Stop removed", Toast.LENGTH_SHORT).show()
+                                viewModel.checkFavoriteStops()
                             }
                         }
                     )

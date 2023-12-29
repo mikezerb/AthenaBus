@@ -1,6 +1,10 @@
 package com.example.athenabus.presentation.favorites.components
 
+import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.PressInteraction
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
@@ -19,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.DpOffset
@@ -31,9 +36,12 @@ fun FavoriteStopItem(
     modifier: Modifier = Modifier,
     stop: Stop,
     routes: List<String>? = emptyList(),
+    onStopClick: (Stop) -> Unit,
     onRouteClick: (String) -> Unit,
     onDelete: (String) -> Unit
 ) {
+    val density = LocalDensity.current
+
     var isContextMenuVisible by rememberSaveable {
         mutableStateOf(false)
     }
@@ -43,17 +51,32 @@ fun FavoriteStopItem(
     var itemHeight by remember {
         mutableStateOf(0.dp)
     }
+
+    val interactionSource = remember {
+        MutableInteractionSource()
+    }
+
     ListItem(
         modifier = modifier
             .fillMaxWidth()
+            .indication(interactionSource, LocalIndication.current)
             .onSizeChanged {
-                itemHeight = it.height.dp
+                itemHeight = with(density) { it.height.toDp() }
             }
             .pointerInput(true) {
                 detectTapGestures(
                     onLongPress = {
                         isContextMenuVisible = true
-                        pressOffset = DpOffset(it.x.dp, it.y.toDp())
+                        pressOffset = DpOffset(it.x.toDp(), it.y.toDp())
+                    },
+                    onPress = {
+                        val press = PressInteraction.Press(it)
+                        interactionSource.emit(press)
+                        tryAwaitRelease()
+                        interactionSource.emit(PressInteraction.Release(press))
+                    },
+                    onTap = {
+                        onStopClick(stop)
                     }
                 )
             },
@@ -106,6 +129,7 @@ private fun PreviewFavoriteStopItem() {
             StopStreet = null
         ),
         onRouteClick = { },
+        onStopClick = { },
         onDelete = { }
     )
 }
