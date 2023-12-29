@@ -1,7 +1,9 @@
 package com.example.athenabus.domain.model
 
+import androidx.compose.runtime.Stable
 import com.example.athenabus.data.local.LineCategory
 
+@Stable
 data class Line(
     val LineCode: String,
     val LineID: String,

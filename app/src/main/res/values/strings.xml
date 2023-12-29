@@ -92,6 +92,7 @@
     <string name="back_online">Επιτυχής σύνδεση</string>
     <string name="press_again_to_exit">Πατήστε ξανά για έξοδο</string>
     <string name="no_favorite_lines_found">Δεν βρέθηκαν αγαπημένες γραμμές</string>
+    <string name="no_favorite_stops_found">Δεν βρέθηκαν αγαπημένες στάσεις</string>
     <string name="bus_category_title">Λεωφορεία</string>
     <string name="unknown_category_title">-</string>
     <string name="trolley_category_title">Τρόλεϊ</string>
@@ -99,4 +100,7 @@
     <string name="express_category_title">Express</string>
     <string name="aeroplane_category_title">Αεροδρομίου</string>
     <string name="night_category_title">Νυχτερινά</string>
+    <string name="available_routes">Διαθέσιμες Γραμμές</string>
+    <string name="incoming_buses">Ανερχόμενα Λεωφορεία</string>
+    <string name="remove_stop">Αφαίρεση %1$s</string>
 </resources>

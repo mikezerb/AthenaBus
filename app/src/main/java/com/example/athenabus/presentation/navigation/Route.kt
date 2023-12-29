@@ -27,9 +27,13 @@ sealed class Route(
     object ClosestStopsActivityScreen : Route(route = "closestStopsActivity")
     object LineDetailsActivity : Route(route = "lineDetailsScreen")
     object LineDetailActivityScreen :
-        Route(route = "lineDetailsScreen?lineId={lineId}&lineCode={lineCode}&lineDesc={lineDesc}&isFav={isFav}")
+        Route(route = "lineDetailsScreen?lineId={lineId}")
 
     object AboutActivity : Route(route = "aboutActivity")
     object AboutActivityScreen : Route(route = "aboutActivityScreen")
+
+    object StopActivity : Route(route = "stopActivity")
+    object StopActivityScreen :
+        Route(route = "stopActivity?stopCode={stopCode}&stopDesc={stopDesc}&stopLat={stopLat}&stopLng={stopLng}")
 
 }

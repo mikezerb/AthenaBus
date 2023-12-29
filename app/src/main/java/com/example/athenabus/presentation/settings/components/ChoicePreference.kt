@@ -33,7 +33,7 @@ import com.example.athenabus.R
 fun ChoicePreference(
     @StringRes title: Int,
     options: List<ImageVector>,
-    selected: Int = 0,
+    selected: Int,
     onSelect: (Int) -> Unit,
     icon: @Composable (() -> Unit)? = null,
 ) {
@@ -92,7 +92,7 @@ fun ChoicePreference(
 @Preview
 @Composable
 private fun PreviewChoicePreference() {
-    var selectedIndex by remember { mutableIntStateOf(2) }
+    var selectedIndex by remember { mutableIntStateOf(0) }
     val list =
         listOf(Icons.Rounded.MotionPhotosAuto, Icons.Rounded.LightMode, Icons.Rounded.DarkMode)
     Column {

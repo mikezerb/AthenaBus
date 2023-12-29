@@ -35,6 +35,5 @@ fun PageIndicator(
 
             }
         }
-
     }
 }

@@ -1,6 +1,5 @@
 package com.example.athenabus.presentation.line_details
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
@@ -70,32 +69,17 @@ import kotlinx.coroutines.launch
 fun LineDetailsScreen(
     modifier: Modifier = Modifier,
     navController: NavController = rememberNavController(),
-    lineId: String = "",
-    lineCode: String = "",
-    lineDesc: String = "",
-    isFav: Boolean = false,
+    lineId: String,
     viewModel: LineDetailsViewModel = hiltViewModel(),
-    routeViewModel: RouteDetailsViewModel = hiltViewModel(),
 ) {
-    Log.d(
-        "LineDetailsScreen",
-        "LineID: $lineId, LineCode: $lineCode, lineDesc: $lineDesc isFav = $isFav"
-    )
     val state = viewModel.state.value
-    val routeState = routeViewModel.state.value
+    val routeState = viewModel.routeState.value
 
     val checkedState = remember { mutableStateOf(state.line?.isFavorite) }
     var checked by remember {
         mutableStateOf(
             state.line?.isFavorite ?: false
         ) // initially checked, default to false if null
-    }
-
-    LaunchedEffect(true, key2 = lineId) {
-        viewModel.getLine(lineId)
-    }
-    LaunchedEffect(key1 = true, key2 = lineId) {
-        routeViewModel.getLineCodes(lineId)
     }
 
     LaunchedEffect(key1 = true, key2 = lineId) {
@@ -110,7 +94,8 @@ fun LineDetailsScreen(
             screen = {
                 state.line?.let {
                     StopsScreen(
-                        routes = routeState.availableRoutes
+                        routes = routeState.availableRoutes,
+                        navController = navController
                     )
                 }
             }
@@ -277,5 +262,5 @@ fun LineDetailsScreen(
 @Preview(name = "LineDetailsScreen")
 @Composable
 private fun PreviewLineDetailsScreen() {
-    LineDetailsScreen()
+    LineDetailsScreen(lineId = "")
 }

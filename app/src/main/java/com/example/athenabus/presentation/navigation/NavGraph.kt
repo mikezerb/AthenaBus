@@ -28,7 +28,6 @@ fun NavGraph(
                 OnBoardingScreen(event = viewModel::onEvent)
             }
         }
-
         navigation(
             route = Route.MainActivity.route,
             startDestination = Route.HomeScreen.route
@@ -36,11 +35,6 @@ fun NavGraph(
             composable(route = Route.HomeScreen.route) {
                 MainScreen()
             }
-            composable(route = Route.SettingsActivityScreen.route) {
-//                SettingsScreen()
-            }
         }
-
-
     }
 }

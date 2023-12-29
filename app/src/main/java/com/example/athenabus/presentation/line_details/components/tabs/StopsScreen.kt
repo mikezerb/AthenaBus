@@ -1,7 +1,6 @@
 package com.example.athenabus.presentation.line_details.components.tabs
 
 import DropdownMenuSelection
-import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -26,16 +25,19 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Route
-import com.example.athenabus.presentation.line_details.RouteStopsViewModel
+import com.example.athenabus.presentation.line_details.LineDetailsViewModel
 import com.example.athenabus.presentation.line_details.components.StopItem
 
 @Composable
 fun StopsScreen(
     modifier: Modifier = Modifier,
     routes: List<Route>,
-    viewModel: RouteStopsViewModel = hiltViewModel(),
+    viewModel: LineDetailsViewModel = hiltViewModel(),
+    navController: NavController = rememberNavController()
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -49,7 +51,8 @@ fun StopsScreen(
         mutableStateOf("")
     }
     val context = LocalContext.current
-    val state = viewModel.state.value
+    val state = viewModel.stopState.value
+
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -95,11 +98,9 @@ fun StopsScreen(
                     StopItem(
                         stop = stop,
                         onItemClick = {
-                            Toast.makeText(
-                                context,
-                                "Clicked ${stop.StopDescr}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            navController.navigate(
+                                com.example.athenabus.presentation.navigation.Route.StopActivity.route + "?stopCode=${stop.StopCode}&stopDesc=${stop.StopDescr}&stopLat=${stop.StopLat}&stopLng=${stop.StopLng}"
+                            )
                         }
                     )
                     HorizontalDivider()

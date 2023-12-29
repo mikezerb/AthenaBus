@@ -1,35 +1,37 @@
 package com.example.athenabus.presentation.favorites.tabs
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
-import com.example.athenabus.domain.model.Line
 import com.example.athenabus.presentation.bus_list.components.BusLineListItem
 import com.example.athenabus.presentation.common.EmptyScreen
+import com.example.athenabus.presentation.favorites.FavoriteScreenViewModel
 import com.example.athenabus.presentation.navigation.Route
 
 @Composable
 fun FavoriteLineScreen(
-    modifier: Modifier = Modifier,
-    lines: List<Line> = emptyList(),
+    viewModel: FavoriteScreenViewModel = hiltViewModel(),
     navController: NavController = rememberNavController(),
 ) {
-    Log.d("FavoriteLineScreen", "lines: ${lines.size}")
-
-    if (lines.isEmpty()) {
+    val state = viewModel.state.value
+    if (state.isLoading) {
+        CircularProgressIndicator()
+    } else if (state.favoriteLines.isEmpty()) {
         EmptyScreen(title = stringResource(R.string.no_favorite_lines_found))
     } else {
-        Column(modifier) {
+        Column(Modifier.fillMaxSize()) {
             LazyColumn {
-                items(lines) { line ->
+                items(state.favoriteLines, key = { it.LineCode }) { line ->
                     BusLineListItem(
                         busLine = line,
                         onItemClick =
@@ -39,7 +41,6 @@ fun FavoriteLineScreen(
                                         "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}"
                             )
                         },
-                        onToggleFavorite = { }
                     )
                 }
             }

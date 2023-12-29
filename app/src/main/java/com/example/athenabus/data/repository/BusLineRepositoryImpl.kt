@@ -1,5 +1,6 @@
 package com.example.athenabus.data.repository
 
+import android.util.Log
 import com.example.athenabus.common.Resource
 import com.example.athenabus.data.local.FavoritesDao
 import com.example.athenabus.data.local.LineCategory
@@ -11,6 +12,7 @@ import com.example.athenabus.data.mapper.toDailySchedule
 import com.example.athenabus.data.mapper.toFavoriteLineEntity
 import com.example.athenabus.data.mapper.toRoute
 import com.example.athenabus.data.mapper.toStop
+import com.example.athenabus.data.mapper.toStopEntity
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.domain.model.Arrival
 import com.example.athenabus.domain.model.DailySchedule
@@ -187,11 +189,17 @@ class BusLineRepositoryImpl @Inject constructor(
     override fun getStopArrivals(stopCode: String): Flow<Resource<List<Arrival>>> = flow {
         emit(Resource.Loading())
         try {
-            val arrivals = api.getStopArrivals(stopCode = stopCode).map { it.toArrival() }
-            emit(Resource.Success(data = arrivals))
+            val arrivals = api.getStopArrivals(stopCode = stopCode)?.map { it.toArrival() }
+
+            emit(Resource.Success(data = arrivals ?: emptyList()))
         } catch (e: HttpException) {
+            Log.d("getStopArrivals", "HttpException")
             emit(Resource.Error(message = e.localizedMessage ?: "error"))
+        } catch (e: KotlinNullPointerException) {   // response body is null
+            Log.d("getStopArrivals", "KotlinNullPointerException")
+            emit(Resource.Success(data = emptyList()))
         } catch (e: Exception) {
+            Log.d("getStopArrivals", "Exception")
             emit(Resource.Error(message = e.message ?: "An error occurred"))
         }
     }
@@ -252,5 +260,39 @@ class BusLineRepositoryImpl @Inject constructor(
 
     override suspend fun removeFavoriteLine(line: String) {
         favoritesDao.deleteFavoriteFromID(line)
+    }
+
+    override fun getFavoriteStops(): Flow<Resource<List<Stop>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val favorites = favoritesDao.getFavoriteStops().map { it.toStop() }
+            emit(Resource.Success(data = favorites))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An error occurred"))
+        }
+    }
+
+    override suspend fun addFavoriteStop(stop: Stop) {
+        favoritesDao.insertFavoriteStop(stop.toStopEntity())
+    }
+
+    override suspend fun isFavoriteStop(stopCode: String): Boolean {
+        return favoritesDao.checkFavoriteStop(stopCode) != 0
+    }
+
+    override suspend fun removeFavoriteStop(stopCode: String) {
+        favoritesDao.deleteFavoriteStop(stopCode)
+    }
+
+    override fun getStopDetailsFromCode(stopCode: String): Flow<Resource<Stop>> = flow {
+        emit(Resource.Loading())
+        try {
+            val stop = api.getStopNameAndXY(stopCode = stopCode).first().toStop(stopCode)
+            emit(Resource.Success(data = stop))
+        } catch (e: HttpException) {
+            emit(Resource.Error(message = e.localizedMessage ?: "error"))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An error occurred"))
+        }
     }
 }

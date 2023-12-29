@@ -6,6 +6,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.LocaleList
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.animation.AnimatedVisibility
@@ -117,8 +118,12 @@ fun SettingsScreen(
             ChoicePreference(
                 title = R.string.theme_settings_theme_title,
                 options = themeOptions,
-                selected = themeState.appTheme,
+                selected = themeState.appTheme.ordinal,
                 onSelect = { index ->
+                    Log.d(
+                        "onSelect",
+                        "index: $index, themeState.appTheme.ordinal: ${themeState.appTheme.ordinal}"
+                    )
                     themeViewModel.setAppTheme(index)
                 },
                 icon = {
@@ -130,7 +135,7 @@ fun SettingsScreen(
             )
             HorizontalDivider()
             AnimatedVisibility(
-                visible = themeState.appTheme == 2 || (themeState.appTheme == 0 && isSystemInDarkTheme()),
+                visible = themeState.appTheme == AppTheme.DARK || (themeState.appTheme == AppTheme.FOLLOW_SYSTEM && isSystemInDarkTheme()),
                 enter = expandVertically(
                     expandFrom = Alignment.Top,
                     animationSpec = tween(durationMillis = 200)
