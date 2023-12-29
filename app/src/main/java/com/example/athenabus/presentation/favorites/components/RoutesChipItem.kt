@@ -15,13 +15,14 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun RoutesChipItem(
     modifier: Modifier = Modifier,
-    routes: List<String> = emptyList()
+    routes: List<String> = emptyList(),
+    onRouteClick: (String) -> Unit
 ) {
     LazyRow {
         items(routes.distinct()) { route ->
             ElevatedAssistChip(
                 modifier = Modifier.padding(4.dp),
-                onClick = { /*TODO*/ },
+                onClick = { onRouteClick(route) },
                 label = { Text(text = route) }
             )
 
@@ -35,6 +36,6 @@ private fun PreviewRoutesChipItem() {
 
     var routes = listOf("608", "608", "550", "224")
     Column(Modifier.fillMaxSize()) {
-        RoutesChipItem(routes = routes)
+        RoutesChipItem(routes = routes, onRouteClick = { })
     }
 }

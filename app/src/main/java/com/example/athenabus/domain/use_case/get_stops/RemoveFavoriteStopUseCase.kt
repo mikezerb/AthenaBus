@@ -7,8 +7,8 @@ class RemoveFavoriteStopUseCase @Inject constructor(
     private val repository: BusLineRepository,
 ) {
 
-    suspend operator fun invoke(stop: String) {
-        return repository.removeFavoriteStop(stop)
+    suspend operator fun invoke(stopCode: String) {
+        return repository.removeFavoriteStop(stopCode)
     }
 
 }

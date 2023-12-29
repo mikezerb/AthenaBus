@@ -97,5 +97,6 @@
     <string name="night_category_title">Night</string>
     <string name="available_routes">Available Routes</string>
     <string name="incoming_buses">Incoming Buses</string>
+    <string name="remove_stop">Remove %1$s</string>
 
 </resources>

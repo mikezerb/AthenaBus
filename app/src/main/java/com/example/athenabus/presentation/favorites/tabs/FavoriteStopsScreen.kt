@@ -2,33 +2,41 @@ package com.example.athenabus.presentation.favorites.tabs
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
-import com.example.athenabus.domain.model.Route
-import com.example.athenabus.domain.model.Stop
 import com.example.athenabus.presentation.common.EmptyScreen
+import com.example.athenabus.presentation.favorites.FavoriteScreenViewModel
 import com.example.athenabus.presentation.favorites.components.FavoriteStopItem
+import kotlinx.coroutines.launch
 
 @Composable
 fun FavoriteStopsScreen(
-    modifier: Modifier = Modifier,
-    stops: List<Stop> = emptyList(),
-    routes: HashMap<String, List<Route>> = HashMap(),
+    viewModel: FavoriteScreenViewModel = hiltViewModel(),
     navController: NavController = rememberNavController(),
 ) {
-    if (stops.isEmpty()) {
+    val state = viewModel.stopState.value
+
+    val scope = rememberCoroutineScope()
+
+    if (state.favoriteStops.isEmpty()) {
         EmptyScreen(title = stringResource(R.string.no_favorite_stops_found))
+    } else if (state.isLoading) {
+        CircularProgressIndicator()
     } else {
-        Column(modifier) {
+        Column(Modifier.fillMaxSize()) {
             LazyColumn {
-                items(stops) { stop ->
+                items(state.favoriteStops, key = { it.StopCode }) { stop ->
                     FavoriteStopItem(
                         modifier = Modifier.clickable {
                             navController.navigate(
@@ -37,7 +45,18 @@ fun FavoriteStopsScreen(
                             )
                         },
                         stop = stop,
-                        routes = routes[stop.StopCode]?.map { it.LineID }
+                        routes = state.routesForStops[stop.StopCode]?.map { it.LineID },
+                        onRouteClick = { lineId ->
+                            navController.navigate(
+                                com.example.athenabus.presentation.navigation.Route.LineDetailsActivity.route +
+                                        "?lineId=${lineId}"
+                            )
+                        },
+                        onDelete = { stopId ->
+                            scope.launch {
+                                viewModel.removeFavoriteStop(stopId)
+                            }
+                        }
                     )
                 }
             }

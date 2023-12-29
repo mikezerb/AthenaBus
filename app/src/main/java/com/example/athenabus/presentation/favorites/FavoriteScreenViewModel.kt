@@ -1,13 +1,15 @@
 package com.example.athenabus.presentation.favorites
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.athenabus.common.Resource
+import com.example.athenabus.domain.model.Route
 import com.example.athenabus.domain.use_case.bus_lines.GetFavoriteLinesUseCase
+import com.example.athenabus.domain.use_case.get_route.GetRoutesForStopsUseCase
 import com.example.athenabus.domain.use_case.get_stops.GetFavoriteStopsUseCase
+import com.example.athenabus.domain.use_case.get_stops.RemoveFavoriteStopUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -17,6 +19,8 @@ import javax.inject.Inject
 class FavoriteScreenViewModel @Inject constructor(
     private val getFavoriteLinesUseCase: GetFavoriteLinesUseCase,
     private val getFavoriteStopsUseCase: GetFavoriteStopsUseCase,
+    private val getRoutesForStopsUseCase: GetRoutesForStopsUseCase,
+    private val removeFavoriteStopUseCase: RemoveFavoriteStopUseCase
 ) : ViewModel() {
 
     private val _state = mutableStateOf(FavoriteLinesState())
@@ -25,9 +29,19 @@ class FavoriteScreenViewModel @Inject constructor(
     private val _stopState = mutableStateOf(FavoriteStopsState())
     val stopState: State<FavoriteStopsState> = _stopState
 
+    private val routesForStop = HashMap<String, List<Route>>()
+
     init {
         getFavLines()
         getFavStops()
+    }
+
+    fun checkFavoriteStops() {
+        getFavStops()
+    }
+
+    fun checkFavoriteLines() {
+        getFavLines()
     }
 
     private fun getFavLines() {
@@ -35,12 +49,10 @@ class FavoriteScreenViewModel @Inject constructor(
             when (result) {
                 is Resource.Success -> {
                     val favLines = result.data ?: emptyList()
-                    Log.d("UseCaseLines", "result: ${result.data?.size}")
                     _state.value = FavoriteLinesState(favoriteLines = favLines)
                 }
 
                 is Resource.Error -> {
-                    Log.d("UseCaseLines", "Error: ${result.message}")
                     _state.value =
                         FavoriteLinesState(error = result.message ?: "Unexpected error")
                 }
@@ -52,17 +64,19 @@ class FavoriteScreenViewModel @Inject constructor(
         }.launchIn(viewModelScope)
     }
 
-    fun getFavStops() {
+    private fun getFavStops() {
         getFavoriteStopsUseCase().onEach { result ->
             when (result) {
                 is Resource.Success -> {
                     val favStops = result.data ?: emptyList()
-                    Log.d("UseCaseStops", "result: ${result.data?.size}")
-                    _stopState.value = FavoriteStopsState(favoriteStops = favStops)
+                    favStops.forEach { stop ->
+                        getRouteForStop(stop.StopCode)
+                    }
+                    _stopState.value =
+                        FavoriteStopsState(favoriteStops = favStops, routesForStops = routesForStop)
                 }
 
                 is Resource.Error -> {
-                    Log.d("UseCaseStops", "Error: ${result.message}")
                     _stopState.value =
                         FavoriteStopsState(error = result.message ?: "Unexpected error")
                 }
@@ -72,5 +86,29 @@ class FavoriteScreenViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
+    }
+
+    private fun getRouteForStop(stopCode: String) {
+        getRoutesForStopsUseCase(stopCode).onEach { result ->
+            when (result) {
+                is Resource.Success -> {
+                    val favStops = result.data ?: emptyList()
+                    routesForStop[stopCode] = favStops
+                }
+
+                is Resource.Error -> {
+                    _stopState.value =
+                        FavoriteStopsState(error = result.message ?: "Unexpected error")
+                }
+
+                is Resource.Loading -> {
+                    _stopState.value = FavoriteStopsState(isLoading = true)
+                }
+            }
+        }.launchIn(viewModelScope)
+    }
+
+    suspend fun removeFavoriteStop(stopCode: String) {
+        removeFavoriteStopUseCase(stopCode)
     }
 }

@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.main_screen.components
+package com.example.athenabus.presentation.common
 
 import android.content.Context
 import androidx.compose.animation.AnimatedVisibility

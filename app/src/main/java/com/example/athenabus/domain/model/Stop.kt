@@ -1,5 +1,8 @@
 package com.example.athenabus.domain.model
 
+import androidx.compose.runtime.Stable
+
+@Stable
 data class Stop(
     val StopCode: String,
     val StopDescr: String,

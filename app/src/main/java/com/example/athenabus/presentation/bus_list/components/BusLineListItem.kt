@@ -22,17 +22,14 @@ import com.example.athenabus.sample.SampleLineProvider
 fun BusLineListItem(
     modifier: Modifier = Modifier,
     busLine: Line,
-    onItemClick: (Line) -> Unit,
-    onToggleFavorite: (Line) -> Unit,
-    showFavouriteIcon: Boolean = false
+    onItemClick: () -> Unit,
 ) {
-    val color = MaterialTheme.colorScheme.surfaceVariant
     val interactionSource = remember { MutableInteractionSource() }
     val context = LocalContext.current
     ListItem(
         modifier = modifier
             .clickable(
-                onClick = { onItemClick(busLine) },
+                onClick = { onItemClick() },
                 interactionSource = interactionSource,
                 indication = rememberRipple(),
             )
@@ -71,6 +68,5 @@ private fun PreviewBusLineListItem(@PreviewParameter(SampleLineProvider::class) 
         modifier = Modifier.fillMaxWidth(),
         busLine = line,
         onItemClick = { },
-        onToggleFavorite = { },
     )
 }

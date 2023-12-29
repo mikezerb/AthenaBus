@@ -102,4 +102,5 @@
     <string name="night_category_title">Νυχτερινά</string>
     <string name="available_routes">Διαθέσιμες Γραμμές</string>
     <string name="incoming_buses">Ανερχόμενα Λεωφορεία</string>
+    <string name="remove_stop">Αφαίρεση %1$s</string>
 </resources>

@@ -56,7 +56,6 @@ class FavoriteStopsRouteViewModel @Inject constructor(
                 }
             }
         }.launchIn(viewModelScope)
-
     }
 
 }

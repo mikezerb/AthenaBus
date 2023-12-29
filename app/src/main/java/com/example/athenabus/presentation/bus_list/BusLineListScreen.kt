@@ -50,7 +50,7 @@ import com.example.athenabus.presentation.bus_list.components.BusLineList
 import com.example.athenabus.presentation.bus_list.components.ChangeLayoutButton
 import com.example.athenabus.presentation.bus_list.components.ShowFilterButton
 import com.example.athenabus.presentation.bus_list.components.SingleLineFilters
-import com.example.athenabus.presentation.main_screen.components.ConnectivityStatus
+import com.example.athenabus.presentation.common.ConnectivityStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

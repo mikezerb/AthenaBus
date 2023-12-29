@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -25,7 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,9 +47,10 @@ fun FavoriteScreen(
     paddingValues: PaddingValues,
     viewModel: FavoriteScreenViewModel = hiltViewModel()
 ) {
-    val state = viewModel.state.value
-    val stopState = viewModel.stopState.value
-
+    LaunchedEffect(key1 = Unit) {
+        viewModel.checkFavoriteLines()
+        viewModel.checkFavoriteStops()
+    }
     val favTabItems = listOf(
         TabItem(
             title = stringResource(R.string.favourite_lines_title),
@@ -58,8 +58,7 @@ fun FavoriteScreen(
             unSelectedIcon = Icons.Outlined.DirectionsBus,
             screen = {
                 FavoriteLineScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    lines = state.favoriteLines,
+                    viewModel = viewModel,
                     navController = navController
                 )
             }
@@ -70,9 +69,7 @@ fun FavoriteScreen(
             unSelectedIcon = Icons.Outlined.FollowTheSigns,
             screen = {
                 FavoriteStopsScreen(
-                    modifier = Modifier.fillMaxSize(),
-                    stops = stopState.favoriteStops,
-                    routes = stopState.routesForStops,
+                    viewModel = viewModel,
                     navController = navController
                 )
             }
@@ -85,8 +82,7 @@ fun FavoriteScreen(
             .padding(paddingValues),
         color = MaterialTheme.colorScheme.background
     ) {
-
-        var selectedTabIndex by remember { mutableStateOf(0) }
+        var selectedTabIndex by rememberSaveable { mutableStateOf(0) }
         val pagerState = rememberPagerState { favTabItems.size }
 
         LaunchedEffect(selectedTabIndex) {
@@ -94,10 +90,10 @@ fun FavoriteScreen(
         }
 
         LaunchedEffect(pagerState.currentPage) {
-            // Used for more than two pages
-//                if (!pagerState.isScrollInProgress) {
-//                    selectedTabIndex = pagerState.currentPage
-//                }
+//            Used for more than two pages
+//            if (!pagerState.isScrollInProgress) {
+//                selectedTabIndex = pagerState.currentPage
+//            }
             selectedTabIndex = pagerState.currentPage
 
         }
@@ -105,7 +101,6 @@ fun FavoriteScreen(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-
             PrimaryTabRow(selectedTabIndex = selectedTabIndex) {
                 favTabItems.forEachIndexed { index, tabItem ->
                     Tab(
@@ -131,7 +126,6 @@ fun FavoriteScreen(
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier
-                    .fillMaxWidth()
                     .weight(1f)
             ) { index ->
                 Box(

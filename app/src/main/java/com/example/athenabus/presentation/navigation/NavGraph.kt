@@ -28,7 +28,6 @@ fun NavGraph(
                 OnBoardingScreen(event = viewModel::onEvent)
             }
         }
-
         navigation(
             route = Route.MainActivity.route,
             startDestination = Route.HomeScreen.route

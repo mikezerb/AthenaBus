@@ -78,7 +78,6 @@ fun BusLineList(
                                         "?lineId=${line.LineID}"
                             )
                         },
-                        onToggleFavorite = { }
                     )
                 }
             }
