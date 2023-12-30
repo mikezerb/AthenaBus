@@ -60,8 +60,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.presentation.common.TabItem
-import com.example.athenabus.presentation.line_details.components.tabs.ScheduleScreen
-import com.example.athenabus.presentation.line_details.components.tabs.StopsScreen
+import com.example.athenabus.presentation.line_details.tabs.ScheduleScreen
+import com.example.athenabus.presentation.line_details.tabs.StopsScreen
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
