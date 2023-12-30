@@ -94,7 +94,7 @@ fun LineDetailsScreen(
             screen = {
                 state.line?.let {
                     StopsScreen(
-                        routes = routeState.availableRoutes,
+                        routes = routeState.availableRoutes.sortedBy { it.RouteCode },
                         navController = navController
                     )
                 }

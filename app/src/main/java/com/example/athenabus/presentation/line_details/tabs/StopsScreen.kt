@@ -10,8 +10,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -37,15 +37,18 @@ fun StopsScreen(
     var expanded by remember { mutableStateOf(false) }
 
     var selectedRoute by remember {
-        mutableStateOf("")
+        mutableStateOf(routes.first().RouteDescr)
     }
-    var selected by remember {
-        mutableIntStateOf(0)
-    }
+
     var selectedRouteCode by remember {
-        mutableStateOf("")
+        mutableStateOf(routes.first().RouteCode)
     }
     val state = viewModel.stopState.value
+
+    LaunchedEffect(key1 = selectedRoute) {
+        viewModel.getStops(selectedRouteCode)
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize(),
@@ -56,7 +59,7 @@ fun StopsScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(4.dp),
-            itemList = routes.sortedBy { it.RouteCode }.map { it.RouteDescr },
+            itemList = routes.map { it.RouteDescr },
             initialText = stringResource(id = R.string.choose_direction),
             onDismiss = { expanded = false },
             onClick = { route, i ->
