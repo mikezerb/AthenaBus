@@ -22,8 +22,9 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberDrawerState
+import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -36,10 +37,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.window.layout.DisplayFeature
 import com.example.athenabus.R
 import com.example.athenabus.presentation.common.BackPressAction
 import com.example.athenabus.presentation.common.MaterialBottomNavBar
@@ -51,29 +54,21 @@ import com.example.athenabus.presentation.navigation.Route
 import kotlinx.coroutines.launch
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3WindowSizeClassApi::class)
 @Composable
 fun MainScreen(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    windowSize: WindowSizeClass,
+    displayFeatures: List<DisplayFeature>,
 ) {
-
     BackPressAction()
 
-    /**
-     * bottom bar variables for nested scroll
-     */
-    val bottomBarHeight = 56.dp
-    val bottomBarOffsetHeightPx = remember { mutableStateOf(0f) }
-
-    val scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior()
     val snackbarHostState = remember { SnackbarHostState() }
     var showBottomBar by rememberSaveable { mutableStateOf(true) }
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
-//    val connectivityObserver = NetworkConnectivityObserver(context)
-//    val networkStatus by connectivityObserver.observe()
-//        .collectAsState(initial = ConnectionStatus.Initial)
+
     showBottomBar = when (navBackStackEntry?.destination?.route) {
         Route.SettingsActivityScreen.route -> false // on this screen bottom bar should be hidden
         Route.LineDetailActivityScreen.route -> false // on this screen bottom bar should be hidden
@@ -201,8 +196,13 @@ fun MainScreen(
     }
 }
 
-@Preview(name = "MainScreen")
+@OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
+@Preview(name = "MainScreen", showBackground = true, widthDp = 700, heightDp = 500)
 @Composable
 private fun PreviewMainScreen() {
-    MainScreen(navController = rememberNavController())
+    MainScreen(
+        navController = rememberNavController(),
+        windowSize = WindowSizeClass.calculateFromSize(DpSize(400.dp, 900.dp)),
+        displayFeatures = emptyList(),
+    )
 }

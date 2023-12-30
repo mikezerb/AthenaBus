@@ -1,18 +1,22 @@
 package com.example.athenabus.presentation.navigation
 
+import androidx.compose.material3.windowsizeclass.WindowSizeClass
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
+import androidx.window.layout.DisplayFeature
 import com.example.athenabus.presentation.main_screen.MainScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingScreen
 import com.example.athenabus.presentation.onboarding.OnBoardingViewModel
 
 @Composable
 fun NavGraph(
-    startDestination: String
+    startDestination: String,
+    windowSize: WindowSizeClass,
+    displayFeatures: List<DisplayFeature>,
 ) {
     val navController = rememberNavController()
 
@@ -33,7 +37,7 @@ fun NavGraph(
             startDestination = Route.HomeScreen.route
         ) {
             composable(route = Route.HomeScreen.route) {
-                MainScreen()
+                MainScreen(windowSize = windowSize, displayFeatures = displayFeatures)
             }
         }
     }
