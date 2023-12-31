@@ -8,6 +8,7 @@ import com.example.athenabus.data.local.TelematicsLineDao
 import com.example.athenabus.data.mapper.toArrival
 import com.example.athenabus.data.mapper.toBusLine
 import com.example.athenabus.data.mapper.toBusLineEntity
+import com.example.athenabus.data.mapper.toBusLocation
 import com.example.athenabus.data.mapper.toDailySchedule
 import com.example.athenabus.data.mapper.toFavoriteLineEntity
 import com.example.athenabus.data.mapper.toRoute
@@ -15,6 +16,7 @@ import com.example.athenabus.data.mapper.toStop
 import com.example.athenabus.data.mapper.toStopEntity
 import com.example.athenabus.data.remote.OASATelematicsAPI
 import com.example.athenabus.domain.model.Arrival
+import com.example.athenabus.domain.model.BusLocation
 import com.example.athenabus.domain.model.DailySchedule
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Route
@@ -289,6 +291,18 @@ class BusLineRepositoryImpl @Inject constructor(
         try {
             val stop = api.getStopNameAndXY(stopCode = stopCode).first().toStop(stopCode)
             emit(Resource.Success(data = stop))
+        } catch (e: HttpException) {
+            emit(Resource.Error(message = e.localizedMessage ?: "error"))
+        } catch (e: Exception) {
+            emit(Resource.Error(message = e.message ?: "An error occurred"))
+        }
+    }
+
+    override fun getBusLocation(routeCode: String): Flow<Resource<List<BusLocation>>> = flow {
+        emit(Resource.Loading())
+        try {
+            val busLocations = api.getBusLocation(routeCode = routeCode).map { it.toBusLocation() }
+            emit(Resource.Success(data = busLocations))
         } catch (e: HttpException) {
             emit(Resource.Error(message = e.localizedMessage ?: "error"))
         } catch (e: Exception) {

@@ -37,11 +37,18 @@ fun StopsScreen(
     var expanded by remember { mutableStateOf(false) }
 
     var selectedRoute by remember {
-        mutableStateOf(routes.first().RouteDescr)
+        if (routes.isNotEmpty()) {
+            mutableStateOf(routes.first().RouteDescr)
+        } else
+            mutableStateOf("")
     }
 
     var selectedRouteCode by remember {
-        mutableStateOf(routes.first().RouteCode)
+        if (routes.isNotEmpty()) {
+            mutableStateOf(routes.first().RouteCode)
+        } else {
+            mutableStateOf("")
+        }
     }
     val state = viewModel.stopState.value
 

@@ -24,6 +24,7 @@ import com.example.athenabus.presentation.bus_list.BusLineListScreen
 import com.example.athenabus.presentation.closest_stops.NewClosestStopsScreen
 import com.example.athenabus.presentation.favorites.FavoriteScreen
 import com.example.athenabus.presentation.line_details.LineDetailsScreen
+import com.example.athenabus.presentation.line_on_map.LinesOnMapScreen
 import com.example.athenabus.presentation.settings.SettingsScreen
 import com.example.athenabus.presentation.stop_arrival.StopArrivalScreen
 
@@ -104,6 +105,18 @@ fun MainNavGraph(navController: NavHostController, paddingValues: PaddingValues)
                 stopDesc = navBackStackEntry.arguments?.getString("stopDesc") ?: "",
                 stopLat = navBackStackEntry.arguments?.getString("stopLat") ?: "",
                 stopLng = navBackStackEntry.arguments?.getString("stopLng") ?: "",
+                navController = navController
+            )
+        }
+
+        composable(
+            route = Route.LinesOnMapActivityScreen.route,
+            arguments = listOf(
+                navArgument(name = "lineId") { type = NavType.StringType }
+            )
+        ) { navBackStackEntry ->
+            LinesOnMapScreen(
+                lineId = navBackStackEntry.arguments?.getString("lineId") ?: "",
                 navController = navController
             )
         }

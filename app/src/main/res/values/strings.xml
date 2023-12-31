@@ -103,4 +103,5 @@
     <string name="available_routes">Διαθέσιμες Γραμμές</string>
     <string name="incoming_buses">Ανερχόμενα Λεωφορεία</string>
     <string name="remove_stop">Αφαίρεση %1$s</string>
+    <string name="bus_locations">Τοποθεσία λεωφορείων</string>
 </resources>
