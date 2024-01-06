@@ -5,6 +5,8 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
@@ -61,8 +63,8 @@ fun BusLineList(
             exit = fadeOut(animationSpec = tween(300))
         ) {
             //Using LazyVerticalStaggeredGrid with 1 column because LazyColumn with filter crashes...
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(1),
+            LazyColumn(
+//                columns = StaggeredGridCells.Fixed(1),
                 modifier = modifier
             ) {
                 items(
