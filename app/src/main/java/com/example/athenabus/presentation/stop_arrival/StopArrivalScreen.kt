@@ -213,8 +213,8 @@ fun StopArrivalScreen(
         sheetContent = {
             Column(
                 modifier = Modifier
-                    .heightIn(min = 200.dp, max = 500.dp)//This will set the max height
                     .fillMaxWidth()
+                    .heightIn(min = 200.dp, max = 500.dp)//This will set the max height
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -309,35 +309,37 @@ fun StopArrivalScreen(
             }
         }
     ) {
-        Box(
-            Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            GoogleMap(
-                modifier = Modifier.fillMaxSize(),
-                cameraPositionState = cameraPositionState,
-                properties = mapProperties,
-                uiSettings = uiSettings,
-                onMapLoaded = {
-                    isMapLoaded = true
-                },
+        Column(Modifier.padding(it)) {
+            Box(
+                Modifier
+                    .weight(1f)
+                    .fillMaxSize()
             ) {
-                MarkerComposable(
-                    state = MarkerState(
-                        position = LatLng(
-                            stopLat.toDouble(),
-                            stopLng.toDouble()
-                        )
-                    ),
-                    title = stopDesc,
-                    draggable = false,
+                GoogleMap(
+                    modifier = Modifier.fillMaxSize(),
+                    cameraPositionState = cameraPositionState,
+                    properties = mapProperties,
+                    uiSettings = uiSettings,
+                    onMapLoaded = {
+                        isMapLoaded = true
+                    },
                 ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.bus_stop_new),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.surfaceTint
-                    )
+                    MarkerComposable(
+                        state = MarkerState(
+                            position = LatLng(
+                                stopLat.toDouble(),
+                                stopLng.toDouble()
+                            )
+                        ),
+                        title = stopDesc,
+                        draggable = false,
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.bus_stop_new),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.surfaceTint
+                        )
+                    }
                 }
             }
         }

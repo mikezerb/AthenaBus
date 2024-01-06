@@ -2,6 +2,7 @@ package com.example.athenabus.presentation.line_details.tabs
 
 import DropdownMenuSelection
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -37,11 +38,11 @@ fun StopsScreen(
     var expanded by remember { mutableStateOf(false) }
 
     var selectedRoute by remember {
-        mutableStateOf(routes.first().RouteDescr)
+        mutableStateOf(routes.firstOrNull()?.RouteDescr ?: "")
     }
 
     var selectedRouteCode by remember {
-        mutableStateOf(routes.first().RouteCode)
+        mutableStateOf(routes.firstOrNull()?.RouteCode ?: "")
     }
     val state = viewModel.stopState.value
 
@@ -74,14 +75,21 @@ fun StopsScreen(
         )
 
         if (state.isLoading) {
-            CircularProgressIndicator()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
         } else if (state.error.isNotEmpty()) {
             Text(
                 text = state.error,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.error
             )
-        } else {
+        } else if (state.stops.isNotEmpty()) {
             BusStopItems(
                 items = state.stops,
                 onStopClick = { stop ->

@@ -52,6 +52,7 @@ fun DropdownMenuSelection(
             trailingIcon = {
                 TrailingIcon(expanded = expanded)
             },
+            enabled = itemList.size > 1,
             textStyle = MaterialTheme.typography.titleSmall,
         )
         ExposedDropdownMenu(
