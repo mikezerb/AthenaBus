@@ -23,6 +23,7 @@ fun BusLineListItem(
     modifier: Modifier = Modifier,
     busLine: Line,
     onItemClick: () -> Unit,
+    isEnglish: Boolean = false
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val context = LocalContext.current
@@ -43,7 +44,7 @@ fun BusLineListItem(
         },
         headlineContent = { // Display Line Description
             Text(
-                text = busLine.LineDescr,
+                text = if (isEnglish) busLine.LineDescrEng else busLine.LineDescr,
                 style = MaterialTheme.typography.bodyMedium,
                 textAlign = TextAlign.Start,
                 maxLines = 2,
