@@ -5,6 +5,7 @@ import com.example.athenabus.data.local.entity.FavoriteLinesEntity
 import com.example.athenabus.data.local.entity.FavoriteStopsEntity
 import com.example.athenabus.data.local.entity.RouteEntity
 import com.example.athenabus.data.remote.dto.ArrivalStopDtoItem
+import com.example.athenabus.data.remote.dto.BusLocationDtoItem
 import com.example.athenabus.data.remote.dto.ClosestStopDtoItem
 import com.example.athenabus.data.remote.dto.Come
 import com.example.athenabus.data.remote.dto.DailyScheduleDto
@@ -15,6 +16,7 @@ import com.example.athenabus.data.remote.dto.StopDetailsDtoItem
 import com.example.athenabus.data.remote.dto.WebGetRouteDtoItem
 import com.example.athenabus.data.remote.dto.WebGetStopsDtoItem
 import com.example.athenabus.domain.model.Arrival
+import com.example.athenabus.domain.model.BusLocation
 import com.example.athenabus.domain.model.ComeUI
 import com.example.athenabus.domain.model.DailySchedule
 import com.example.athenabus.domain.model.GoUI
@@ -217,5 +219,14 @@ fun Go.toGoUI(): GoUI {
 fun Come.toComeUI(): ComeUI {
     return ComeUI(
         time = sdd_start1 ?: "122"
+    )
+}
+
+fun BusLocationDtoItem.toBusLocation(): BusLocation {
+    return BusLocation(
+        CS_LAT = CS_LAT,
+        CS_LNG = CS_LNG,
+        ROUTE_CODE = ROUTE_CODE,
+        VEH_NO = VEH_NO
     )
 }

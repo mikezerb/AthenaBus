@@ -62,6 +62,7 @@ import com.example.athenabus.R
 import com.example.athenabus.presentation.common.TabItem
 import com.example.athenabus.presentation.line_details.tabs.ScheduleScreen
 import com.example.athenabus.presentation.line_details.tabs.StopsScreen
+import com.example.athenabus.presentation.navigation.Route
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -129,7 +130,9 @@ fun LineDetailsScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = {
+                        navController.navigate(Route.LinesOnMapActivity.route + "?lineId=$lineId")
+                    }) {
                         Icon(imageVector = Icons.Default.Map, contentDescription = null)
                     }
                     IconToggleButton(

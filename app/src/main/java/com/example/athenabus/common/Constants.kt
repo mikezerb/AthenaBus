@@ -13,6 +13,7 @@ object Constants {
     const val SELECTED_LANG_CODE = "langCode"
     const val PARAM_LINE_ID = "lineId"
     const val PARAM_STOP_CODE = "stopCode"
+    const val PARAM_ROUTE_CODE = "routeCode"
     const val GITHUB_LINK = "https://github.com/mikezerb"
     const val OASA_NEWS_LINK =
         "https://www.oasa.gr/blog/category/%ce%b1%ce%bd%ce%b1%ce%ba%ce%bf%ce%b9%ce%bd%cf%8e%cf%83%ce%b5%ce%b9%cf%82/"
