@@ -12,7 +12,8 @@ AthenaBus achieves the following things:
 - [x] **Line Information**: View detailed information for each bus line, including stops, schedules, and real-time bus arrivals.
 - [x] **Location-Based Services**: Utilize the device's location services to identify and display the nearest bus stops and real-time bus arrival information.
 - [x] **Favorites Management**: Streamline your experience by saving frequently used bus lines and stops for quick and convenient access.
-- [ ] **Interactive Maps**: Gain a visual understanding of bus locations and routes through the application's map feature.
+- [x] **Interactive Maps**: Gain a visual understanding of bus locations and routes through the application's map feature.
+## Future 🚀 
 - [ ] **Notifications**: Receive timely notifications on bus arrivals at your selected stops, enhancing your travel planning and efficiency.
 
 ## Building Blocks 🛠
