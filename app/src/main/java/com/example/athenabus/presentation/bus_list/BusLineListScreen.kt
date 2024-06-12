@@ -33,7 +33,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -68,14 +67,9 @@ fun BusLineListScreen(
 
     // Create a MutableState to store the search query
     val searchQuery = rememberSaveable { mutableStateOf("") }
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
-    var trolleySelected by remember { mutableStateOf(false) }
-    var busesSelected by remember { mutableStateOf(false) }
-    var nightSelected by remember { mutableStateOf(false) }
-    var n24Selected by remember { mutableStateOf(false) }
-    var expressSelected by remember { mutableStateOf(false) }
-    var aeroplaneSelected by remember { mutableStateOf(false) }
+
+
     val trolleyList: List<String> = listOf(
         "10", "11", "12", "15",
         "16", "17", "18", "19", "19Β", "20", "21", "24", "25"
@@ -157,6 +151,24 @@ fun BusLineListScreen(
                 startsWithSearchQuery
             }
         }
+    }
+
+    var filteredLines by remember { mutableStateOf(state.busLines) }
+
+    filteredLines = state.busLines.filter { line ->
+
+        var isSearchMatch = (
+                line.LineDescrEng.contains(searchQuery.value, ignoreCase = true) ||
+                        line.LineDescr.contains(searchQuery.value, ignoreCase = true) ||
+                        line.LineID.startsWith(searchQuery.value, ignoreCase = true)
+                )
+
+        if (selectedFilter.isNotEmpty()) {
+            isSearchMatch = isSearchMatch && (line.Category.categoryName == selectedFilter)
+        }
+
+        // Apply the filtering conditions
+        isSearchMatch
     }
 
     Surface(Modifier.padding(paddingValues)) {
@@ -286,13 +298,10 @@ fun BusLineListScreen(
                     modifier = Modifier.fillMaxSize(),
                     navController = navController,
                     isGridLayout = isGridViewEnabled,
-                    lines = searchedList,
+                    lines = filteredLines,
                     search = searchQuery.value,
                 )
             }
         }
     }
 }
-
-
-// Function to filter lines based on the selected category

@@ -1,6 +1,7 @@
 package com.example.athenabus.data.remote
 
 import com.example.athenabus.data.remote.dto.ArrivalStopDto
+import com.example.athenabus.data.remote.dto.BusLocationDto
 import com.example.athenabus.data.remote.dto.ClosestStopDto
 import com.example.athenabus.data.remote.dto.DailyScheduleDto
 import com.example.athenabus.data.remote.dto.LineDto
@@ -58,4 +59,13 @@ interface OASATelematicsAPI {
         @Query("act") action: String = "getStopNameAndXY",
         @Query("p1") stopCode: String,
     ): StopDetailsDto
+
+
+    @GET("api/")
+    suspend fun getBusLocation(
+        @Query("act") action: String = "getBusLocation",
+        @Query("p1") routeCode: String,
+    ): BusLocationDto
+
+
 }

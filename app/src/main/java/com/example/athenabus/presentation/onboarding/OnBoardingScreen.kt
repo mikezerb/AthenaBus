@@ -22,7 +22,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.athenabus.R
 import com.example.athenabus.data.local.PageData.pages
 import com.example.athenabus.presentation.common.MaterialElevatedButton
 import com.example.athenabus.presentation.common.MaterialTextButton
@@ -46,13 +48,13 @@ fun OnBoardingScreen(
         val pagerState = rememberPagerState(initialPage = 0) {
             pages.size
         }
-
+        val context = LocalContext.current
         val buttonState = remember {
             derivedStateOf {
                 when (pagerState.currentPage) {
-                    0 -> listOf("", "Next")
-                    1 -> listOf("", "Next")
-                    2 -> listOf("", "Get Started")
+                    0 -> listOf("", context.getString(R.string.next))
+                    1 -> listOf("", context.getString(R.string.next))
+                    2 -> listOf("", context.getString(R.string.get_started))
                     else -> listOf("", "")
                 }
             }

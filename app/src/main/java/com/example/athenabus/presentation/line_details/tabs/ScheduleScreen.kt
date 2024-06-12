@@ -1,4 +1,4 @@
-package com.example.athenabus.presentation.line_details.components.tabs
+package com.example.athenabus.presentation.line_details.tabs
 
 import DropdownMenuSelection
 import android.widget.Toast

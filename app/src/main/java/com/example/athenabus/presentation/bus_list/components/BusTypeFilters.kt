@@ -75,7 +75,7 @@ fun MultiLineFilters(
             FilterChip(
                 modifier = modifier,
                 colors = customColors,
-                onClick = { onClick(context.getString(item.titleResId)) },
+                onClick = { onClick(item.name) },
                 label = {
                     Row(
                         horizontalArrangement = Arrangement.SpaceAround,
@@ -85,8 +85,8 @@ fun MultiLineFilters(
                         Text(context.getString(item.titleResId))
                     }
                 },
-                selected = selected.contains(context.getString(item.titleResId)),
-                leadingIcon = if (selected.contains(context.getString(item.titleResId))) {
+                selected = selected.contains(item.name),
+                leadingIcon = if (selected.contains(item.name)) {
                     {
                         Icon(
                             imageVector = Icons.Filled.Done,
@@ -146,7 +146,7 @@ fun SingleLineFilters(
             ElevatedFilterChip(
                 modifier = modifier,
                 colors = customColors,
-                onClick = { onClick(context.getString(item.titleResId)) },
+                onClick = { onClick(item.name) },
                 leadingIcon = {
                     Icon(
                         imageVector = item.iconResId,
@@ -157,7 +157,7 @@ fun SingleLineFilters(
                 label = {
                     Text(context.getString(item.titleResId))
                 },
-                selected = (context.getString(item.titleResId) == selected),
+                selected = (item.name == selected),
             )
         }
     }

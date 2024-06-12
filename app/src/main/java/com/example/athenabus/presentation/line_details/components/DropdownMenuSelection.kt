@@ -52,6 +52,7 @@ fun DropdownMenuSelection(
             trailingIcon = {
                 TrailingIcon(expanded = expanded)
             },
+            enabled = itemList.size > 1,
             textStyle = MaterialTheme.typography.titleSmall,
         )
         ExposedDropdownMenu(
@@ -107,6 +108,9 @@ private fun SelectItemPreview() {
             .background(MaterialTheme.colorScheme.surface)
     ) {
         DropdownMenuSelection(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             itemList = routes.map { it.LineDescr },
             initialText = "Choose direction",
             onDismiss = { expanded = false },

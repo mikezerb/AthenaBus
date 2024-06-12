@@ -19,14 +19,17 @@ import com.example.athenabus.R
 import com.example.athenabus.presentation.common.EmptyScreen
 import com.example.athenabus.presentation.favorites.FavoriteScreenViewModel
 import com.example.athenabus.presentation.favorites.components.FavoriteStopItem
+import com.example.athenabus.presentation.settings.SettingsViewModel
 import kotlinx.coroutines.launch
 
 @Composable
 fun FavoriteStopsScreen(
     viewModel: FavoriteScreenViewModel = hiltViewModel(),
     navController: NavController = rememberNavController(),
+    settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.stopState.value
+    val settingsState = settingsViewModel.settingState.value
 
     val scope = rememberCoroutineScope()
     val context = LocalContext.current

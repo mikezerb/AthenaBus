@@ -60,8 +60,10 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.presentation.common.TabItem
-import com.example.athenabus.presentation.line_details.components.tabs.ScheduleScreen
-import com.example.athenabus.presentation.line_details.components.tabs.StopsScreen
+import com.example.athenabus.presentation.line_details.tabs.ScheduleScreen
+import com.example.athenabus.presentation.line_details.tabs.StopsScreen
+import com.example.athenabus.presentation.navigation.Route
+import com.example.athenabus.presentation.settings.SettingsViewModel
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterial3Api::class)
@@ -71,10 +73,11 @@ fun LineDetailsScreen(
     navController: NavController = rememberNavController(),
     lineId: String,
     viewModel: LineDetailsViewModel = hiltViewModel(),
+    settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
     val routeState = viewModel.routeState.value
-
+    val settingsState = settingsViewModel.settingState.value
     val checkedState = remember { mutableStateOf(state.line?.isFavorite) }
     var checked by remember {
         mutableStateOf(
@@ -94,7 +97,7 @@ fun LineDetailsScreen(
             screen = {
                 state.line?.let {
                     StopsScreen(
-                        routes = routeState.availableRoutes,
+                        routes = routeState.availableRoutes.sortedBy { it.RouteCode },
                         navController = navController
                     )
                 }
@@ -122,14 +125,17 @@ fun LineDetailsScreen(
                     Column {
                         Text(text = state.line?.LineID ?: "")
                         Text(
-                            text = state.line?.LineDescr ?: "",
+                            text = if (settingsState.lanCode != "el") state.line?.LineDescrEng
+                                ?: "" else state.line?.LineDescr ?: "",
                             maxLines = 1,
                             style = MaterialTheme.typography.titleMedium
                         )
                     }
                 },
                 actions = {
-                    IconButton(onClick = { }) {
+                    IconButton(onClick = {
+                        navController.navigate(Route.LinesOnMapActivity.route + "?lineId=$lineId")
+                    }) {
                         Icon(imageVector = Icons.Default.Map, contentDescription = null)
                     }
                     IconToggleButton(

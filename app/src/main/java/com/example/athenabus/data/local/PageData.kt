@@ -6,19 +6,19 @@ import com.example.athenabus.presentation.onboarding.Page
 object PageData {
     val pages = listOf(
         Page(
-            "Page 1",
-            "This is the description for Page 1.",
-            R.drawable.page_1_img
+            R.string.onboard_title_1,
+            R.string.onboard_desc_1,
+            R.drawable.people_map
         ),
         Page(
-            "Page 2",
-            "This is the description for Page 2.",
-            R.drawable.page_1_img
+            R.string.onboard_title_2,
+            R.string.onboard_desc_2,
+            R.drawable.location
         ),
         Page(
-            "Page 3",
-            "This is the description for Page 3.",
-            R.drawable.page_1_img
+            R.string.onboard_title_3,
+            R.string.onboard_desc_3,
+            R.drawable.man_phone
         )
     )
 }

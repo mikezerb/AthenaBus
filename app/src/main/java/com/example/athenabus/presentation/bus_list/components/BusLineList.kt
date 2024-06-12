@@ -5,18 +5,22 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.presentation.common.EmptyScreen
 import com.example.athenabus.presentation.navigation.Route
+import com.example.athenabus.presentation.settings.SettingsViewModel
 
 @Composable
 fun BusLineList(
@@ -25,7 +29,10 @@ fun BusLineList(
     isGridLayout: Boolean = false,
     lines: List<Line>,
     search: String,
+    settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
+    val settingsState = settingsViewModel.settingState.value
+
     if (lines.isEmpty() && search.isNotBlank()) {
         EmptyScreen(
             modifier = Modifier.fillMaxSize(),
@@ -60,9 +67,7 @@ fun BusLineList(
             enter = fadeIn(animationSpec = tween(300)),
             exit = fadeOut(animationSpec = tween(300))
         ) {
-            //Using LazyVerticalStaggeredGrid with 1 column because LazyColumn with filter crashes...
-            LazyVerticalStaggeredGrid(
-                columns = StaggeredGridCells.Fixed(1),
+            LazyColumn(
                 modifier = modifier
             ) {
                 items(
@@ -78,6 +83,7 @@ fun BusLineList(
                                         "?lineId=${line.LineID}"
                             )
                         },
+                        isEnglish = settingsState.lanCode != "el"
                     )
                 }
             }

@@ -1,6 +1,8 @@
 package com.example.athenabus.presentation.stop_arrival
 
 import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -47,7 +49,6 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -55,6 +56,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Stop
 import com.example.athenabus.presentation.settings.AppTheme
+import com.example.athenabus.presentation.settings.SettingsViewModel
 import com.example.athenabus.presentation.settings.ThemeViewModel
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.android.gms.maps.model.CameraPosition
@@ -68,12 +70,16 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
+@OptIn(
+    ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class,
+    ExperimentalFoundationApi::class
+)
 @Composable
 fun StopArrivalScreen(
     navController: NavController = rememberNavController(),
     viewModel: StopArrivalViewModel = hiltViewModel(),
     themeViewModel: ThemeViewModel = hiltViewModel(),
+    settingsViewModel: SettingsViewModel = hiltViewModel(),
     stopCode: String,
     stopDesc: String,
     stopLat: String,
@@ -85,6 +91,9 @@ fun StopArrivalScreen(
     val context = LocalContext.current
 
     val darkThemeState by themeViewModel.themeState.collectAsState()
+    val settingsState = settingsViewModel.settingState.value
+
+    var langFlag = settingsState.lanCode != "el"
 
     var checked by remember {
         mutableStateOf(
@@ -213,8 +222,8 @@ fun StopArrivalScreen(
         sheetContent = {
             Column(
                 modifier = Modifier
-                    .heightIn(min = 200.dp, max = 500.dp)//This will set the max height
                     .fillMaxWidth()
+                    .heightIn(min = 200.dp, max = 500.dp)//This will set the max height
                     .padding(horizontal = 8.dp, vertical = 4.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -230,7 +239,7 @@ fun StopArrivalScreen(
                             items(stopState.routeStops) { route ->
                                 ListItem(
                                     headlineContent = { Text(text = route.LineID) },
-                                    supportingContent = { Text(text = route.LineDescr) }
+                                    supportingContent = { Text(text = if (langFlag) route.LineDescrEng else route.LineDescr) }
                                 )
                             }
                         }
@@ -253,7 +262,7 @@ fun StopArrivalScreen(
                             items(stopState.routeStops) { route ->
                                 ListItem(
                                     headlineContent = { Text(text = route.LineID) },
-                                    supportingContent = { Text(route.LineDescr) }
+                                    supportingContent = { Text(if (langFlag) route.LineDescrEng else route.LineDescr) }
                                 )
                             }
                         }
@@ -278,6 +287,9 @@ fun StopArrivalScreen(
                             val lineDesc =
                                 stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescr
                                     ?: ""
+                            val lineDescEng =
+                                stopState.routeStops.find { it.RouteCode == item.route_code }?.LineDescrEng
+                                    ?: ""
                             ListItem(
                                 headlineContent = {
                                     Text(
@@ -287,9 +299,10 @@ fun StopArrivalScreen(
                                 },
                                 supportingContent = {
                                     Text(
-                                        text = lineDesc,
-                                        overflow = TextOverflow.Ellipsis,
-                                        maxLines = 2
+                                        modifier = Modifier.basicMarquee(),
+                                        text = if (langFlag) lineDescEng else lineDesc,
+//                                        overflow = TextOverflow.Ellipsis,
+                                        maxLines = 1
                                     )
                                 },
                                 trailingContent = {
@@ -309,35 +322,37 @@ fun StopArrivalScreen(
             }
         }
     ) {
-        Box(
-            Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            GoogleMap(
-                modifier = Modifier.fillMaxSize(),
-                cameraPositionState = cameraPositionState,
-                properties = mapProperties,
-                uiSettings = uiSettings,
-                onMapLoaded = {
-                    isMapLoaded = true
-                },
+        Column(Modifier.padding(it)) {
+            Box(
+                Modifier
+                    .weight(1f)
+                    .fillMaxSize()
             ) {
-                MarkerComposable(
-                    state = MarkerState(
-                        position = LatLng(
-                            stopLat.toDouble(),
-                            stopLng.toDouble()
-                        )
-                    ),
-                    title = stopDesc,
-                    draggable = false,
+                GoogleMap(
+                    modifier = Modifier.fillMaxSize(),
+                    cameraPositionState = cameraPositionState,
+                    properties = mapProperties,
+                    uiSettings = uiSettings,
+                    onMapLoaded = {
+                        isMapLoaded = true
+                    },
                 ) {
-                    Icon(
-                        imageVector = ImageVector.vectorResource(id = R.drawable.bus_stop_new),
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.surfaceTint
-                    )
+                    MarkerComposable(
+                        state = MarkerState(
+                            position = LatLng(
+                                stopLat.toDouble(),
+                                stopLng.toDouble()
+                            )
+                        ),
+                        title = stopDesc,
+                        draggable = false,
+                    ) {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(id = R.drawable.bus_stop_new),
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.surfaceTint
+                        )
+                    }
                 }
             }
         }

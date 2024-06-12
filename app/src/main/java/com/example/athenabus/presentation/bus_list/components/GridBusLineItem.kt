@@ -29,7 +29,8 @@ fun GridBusLineItem(
     busLine: Line,
     onItemClick: (Line) -> Unit,
     onToggleFavorite: (Line) -> Unit,
-    showFavorite: Boolean = false
+    showFavorite: Boolean = false,
+    isEnglish: Boolean = false
 ) {
     OutlinedCard(
         modifier = Modifier
@@ -66,7 +67,7 @@ fun GridBusLineItem(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = busLine.LineDescr,
+                    text = if (isEnglish) busLine.LineDescrEng else busLine.LineDescr,
                     style = MaterialTheme.typography.bodySmall,
                     textAlign = TextAlign.Start,
                     modifier = Modifier.padding(bottom = 4.dp, start = 4.dp)

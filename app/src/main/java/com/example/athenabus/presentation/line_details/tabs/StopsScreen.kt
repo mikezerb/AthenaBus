@@ -1,27 +1,23 @@
-package com.example.athenabus.presentation.line_details.components.tabs
+package com.example.athenabus.presentation.line_details.tabs
 
 import DropdownMenuSelection
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,7 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
 import com.example.athenabus.domain.model.Route
 import com.example.athenabus.presentation.line_details.LineDetailsViewModel
-import com.example.athenabus.presentation.line_details.components.StopItem
+import com.example.athenabus.presentation.line_details.components.BusStopItems
 
 @Composable
 fun StopsScreen(
@@ -42,16 +38,17 @@ fun StopsScreen(
     var expanded by remember { mutableStateOf(false) }
 
     var selectedRoute by remember {
-        mutableStateOf("")
+        mutableStateOf(routes.firstOrNull()?.RouteDescr ?: "")
     }
-    var selected by remember {
-        mutableIntStateOf(0)
-    }
+
     var selectedRouteCode by remember {
-        mutableStateOf("")
+        mutableStateOf(routes.firstOrNull()?.RouteCode ?: "")
     }
-    val context = LocalContext.current
     val state = viewModel.stopState.value
+
+    LaunchedEffect(key1 = selectedRoute) {
+        viewModel.getStops(selectedRouteCode)
+    }
 
     Column(
         modifier = modifier
@@ -59,13 +56,11 @@ fun StopsScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Top
     ) {
-        val options: MutableList<String> = mutableListOf()
-
         DropdownMenuSelection(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(4.dp),
-            itemList = routes.sortedBy { it.RouteCode }.map { it.RouteDescr },
+            itemList = routes.map { it.RouteDescr },
             initialText = stringResource(id = R.string.choose_direction),
             onDismiss = { expanded = false },
             onClick = { route, i ->
@@ -80,32 +75,29 @@ fun StopsScreen(
         )
 
         if (state.isLoading) {
-            CircularProgressIndicator()
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1f),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator()
+            }
         } else if (state.error.isNotEmpty()) {
             Text(
                 text = state.error,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.error
             )
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(4.dp),
-                contentPadding = PaddingValues(0.dp)
-            ) {
-                items(state.stops) { stop ->
-                    StopItem(
-                        stop = stop,
-                        onItemClick = {
-                            navController.navigate(
-                                com.example.athenabus.presentation.navigation.Route.StopActivity.route + "?stopCode=${stop.StopCode}&stopDesc=${stop.StopDescr}&stopLat=${stop.StopLat}&stopLng=${stop.StopLng}"
-                            )
-                        }
+        } else if (state.stops.isNotEmpty()) {
+            BusStopItems(
+                items = state.stops,
+                onStopClick = { stop ->
+                    navController.navigate(
+                        com.example.athenabus.presentation.navigation.Route.StopActivity.route + "?stopCode=${stop.StopCode}&stopDesc=${stop.StopDescr}&stopLat=${stop.StopLat}&stopLng=${stop.StopLng}"
                     )
-                    HorizontalDivider()
                 }
-            }
+            )
         }
     }
 }

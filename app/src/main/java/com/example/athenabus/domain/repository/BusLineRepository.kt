@@ -2,6 +2,7 @@ package com.example.athenabus.domain.repository
 
 import com.example.athenabus.common.Resource
 import com.example.athenabus.domain.model.Arrival
+import com.example.athenabus.domain.model.BusLocation
 import com.example.athenabus.domain.model.DailySchedule
 import com.example.athenabus.domain.model.Line
 import com.example.athenabus.domain.model.Route
@@ -28,4 +29,5 @@ interface BusLineRepository {
     suspend fun isFavoriteStop(stopCode: String): Boolean
     suspend fun removeFavoriteStop(stopCode: String)
     fun getStopDetailsFromCode(routeCode: String): Flow<Resource<Stop>>
+    fun getBusLocation(routeCode: String): Flow<Resource<List<BusLocation>>>
 }
