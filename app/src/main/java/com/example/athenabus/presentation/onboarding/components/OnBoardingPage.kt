@@ -17,11 +17,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.athenabus.data.local.PageData
 import com.example.athenabus.presentation.onboarding.Page
 import com.example.athenabus.ui.theme.Dimens.MediumPadding1
+import com.example.athenabus.ui.theme.Dimens.SmallPadding1
 
 @Composable
 fun OnBoardingPage(
@@ -49,16 +51,17 @@ fun OnBoardingPage(
             Text(
                 text = page.title,
                 modifier = Modifier
-                    .padding(horizontal = MediumPadding1)
-                    .padding(bottom = 14.dp),
-                style = MaterialTheme.typography.headlineLarge,
-                color = MaterialTheme.colorScheme.onBackground
+                    .padding(horizontal = SmallPadding1)
+                    .padding(bottom = 18.dp, top = 12.dp),
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.onBackground,
+                textAlign = TextAlign.Center
             )
             Text(
                 text = page.description,
                 modifier = Modifier.padding(horizontal = MediumPadding1),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onBackground
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onBackground,
             )
         }
     }
@@ -69,6 +72,6 @@ fun OnBoardingPage(
 @Composable
 fun OnBoardingPreview() {
     OnBoardingPage(
-        page = PageData.pages[0]
+        page = PageData.pages[2]
     )
 }

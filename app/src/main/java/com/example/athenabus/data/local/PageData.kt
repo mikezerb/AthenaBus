@@ -6,19 +6,19 @@ import com.example.athenabus.presentation.onboarding.Page
 object PageData {
     val pages = listOf(
         Page(
-            "Page 1",
-            "This is the description for Page 1.",
-            R.drawable.page_1_img
+            "Άνετη πλοήγηση",
+            "Περιηγηθείτε την Αθήνα με ευκολία με την κομψή και εύχρηστη διεπαφή μας",
+            R.drawable.people_map
         ),
         Page(
-            "Page 2",
-            "This is the description for Page 2.",
-            R.drawable.page_1_img
+            "Πάντα ενήμεροι πριν τη διαδρομή σας",
+            "Δείτε αφίξεις σε πραγματικό χρόνο, δρομολόγια και στάσεις για όλες τις αγαπημένες σας γραμμές",
+            R.drawable.location
         ),
         Page(
-            "Page 3",
-            "This is the description for Page 3.",
-            R.drawable.page_1_img
+            "Κάντε κάθε βόλτα ένα παιχνιδάκι",
+            "Αποθηκεύοντας γραμμές λεωφορείων και στάσεις που χρησιμοποιείτε συχνά",
+            R.drawable.man_phone
         )
     )
 }

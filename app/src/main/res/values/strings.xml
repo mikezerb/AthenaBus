@@ -104,4 +104,6 @@
     <string name="incoming_buses">Ανερχόμενα Λεωφορεία</string>
     <string name="remove_stop">Αφαίρεση %1$s</string>
     <string name="bus_locations">Τοποθεσία λεωφορείων</string>
+    <string name="next">Επόμενο</string>
+    <string name="get_started">Ας ξεκινήσουμε</string>
 </resources>

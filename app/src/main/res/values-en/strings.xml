@@ -99,5 +99,7 @@
     <string name="incoming_buses">Incoming Buses</string>
     <string name="remove_stop">Remove %1$s</string>
     <string name="bus_locations">Bus Locations</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
 
 </resources>
