@@ -103,4 +103,13 @@
     <string name="available_routes">Διαθέσιμες Γραμμές</string>
     <string name="incoming_buses">Ανερχόμενα Λεωφορεία</string>
     <string name="remove_stop">Αφαίρεση %1$s</string>
+    <string name="bus_locations">Τοποθεσία λεωφορείων</string>
+    <string name="next">Επόμενο</string>
+    <string name="get_started">Ας ξεκινήσουμε</string>
+    <string name="onboard_title_1">Άνετη πλοήγηση</string>
+    <string name="onboard_desc_1">Περιηγηθείτε την Αθήνα με ευκολία με την κομψή και εύχρηστη διεπαφή μας</string>
+    <string name="onboard_title_2">Πάντα ενήμεροι πριν τη διαδρομή σας</string>
+    <string name="onboard_desc_2">Δείτε αφίξεις σε πραγματικό χρόνο, δρομολόγια και στάσεις για όλες τις αγαπημένες σας γραμμές</string>
+    <string name="onboard_title_3">Κάντε κάθε βόλτα ένα παιχνιδάκι</string>
+    <string name="onboard_desc_3">Αποθηκεύοντας γραμμές λεωφορείων και στάσεις που χρησιμοποιείτε συχνά</string>
 </resources>

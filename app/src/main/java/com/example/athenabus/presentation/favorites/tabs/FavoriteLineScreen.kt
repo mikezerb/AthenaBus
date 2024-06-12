@@ -13,17 +13,21 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
-import com.example.athenabus.presentation.bus_list.components.BusLineListItem
 import com.example.athenabus.presentation.common.EmptyScreen
 import com.example.athenabus.presentation.favorites.FavoriteScreenViewModel
+import com.example.athenabus.presentation.favorites.components.FavoriteLineItem
 import com.example.athenabus.presentation.navigation.Route
+import com.example.athenabus.presentation.settings.SettingsViewModel
 
 @Composable
 fun FavoriteLineScreen(
     viewModel: FavoriteScreenViewModel = hiltViewModel(),
     navController: NavController = rememberNavController(),
+    settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+    val settingsState = settingsViewModel.settingState.value
+
     if (state.isLoading) {
         CircularProgressIndicator()
     } else if (state.favoriteLines.isEmpty()) {
@@ -32,7 +36,7 @@ fun FavoriteLineScreen(
         Column(Modifier.fillMaxSize()) {
             LazyColumn {
                 items(state.favoriteLines, key = { it.LineCode }) { line ->
-                    BusLineListItem(
+                    FavoriteLineItem(
                         busLine = line,
                         onItemClick =
                         {
@@ -41,6 +45,7 @@ fun FavoriteLineScreen(
                                         "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}"
                             )
                         },
+                        isEnglish = settingsState.lanCode != "el"
                     )
                 }
             }

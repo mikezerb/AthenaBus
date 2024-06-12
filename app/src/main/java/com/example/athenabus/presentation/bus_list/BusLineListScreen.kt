@@ -156,7 +156,6 @@ fun BusLineListScreen(
     var filteredLines by remember { mutableStateOf(state.busLines) }
 
     filteredLines = state.busLines.filter { line ->
-        0
 
         var isSearchMatch = (
                 line.LineDescrEng.contains(searchQuery.value, ignoreCase = true) ||
@@ -306,6 +305,3 @@ fun BusLineListScreen(
         }
     }
 }
-
-
-// Function to filter lines based on the selected category

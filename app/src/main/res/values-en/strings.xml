@@ -98,5 +98,14 @@
     <string name="available_routes">Available Routes</string>
     <string name="incoming_buses">Incoming Buses</string>
     <string name="remove_stop">Remove %1$s</string>
+    <string name="bus_locations">Bus Locations</string>
+    <string name="next">Next</string>
+    <string name="get_started">Get Started</string>
+    <string name="onboard_title_1">Effortless Transit Navigation</string>
+    <string name="onboard_desc_1">Navigate Athens with ease using our sleek and intuitive interface</string>
+    <string name="onboard_title_2">Always Know Before You Go</string>
+    <string name="onboard_desc_2">View real-time bus arrival information, detailed schedules, and stops for all your favorite lines</string>
+    <string name="onboard_title_3">Make Every Ride a Breeze</string>
+    <string name="onboard_desc_3">Simplify your daily commute by saving frequently used bus lines and stops</string>
 
 </resources>
