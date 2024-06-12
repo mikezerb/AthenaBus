@@ -38,7 +38,8 @@ fun FavoriteStopItem(
     routes: List<String>? = emptyList(),
     onStopClick: (Stop) -> Unit,
     onRouteClick: (String) -> Unit,
-    onDelete: (String) -> Unit
+    onDelete: (String) -> Unit,
+    isEnglish: Boolean = false
 ) {
     val density = LocalDensity.current
 
@@ -86,7 +87,11 @@ fun FavoriteStopItem(
                 contentDescription = null
             )
         },
-        headlineContent = { Text(text = stop.StopDescr) },
+        headlineContent = {
+            Text(
+                text = if (isEnglish) stop.StopDescrEng ?: stop.StopDescr else stop.StopDescr
+            )
+        },
         supportingContent = {
             routes?.let {
                 RoutesChipItem(

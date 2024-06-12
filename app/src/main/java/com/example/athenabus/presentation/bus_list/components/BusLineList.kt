@@ -67,9 +67,7 @@ fun BusLineList(
             enter = fadeIn(animationSpec = tween(300)),
             exit = fadeOut(animationSpec = tween(300))
         ) {
-            //Using LazyVerticalStaggeredGrid with 1 column because LazyColumn with filter crashes...
             LazyColumn(
-//                columns = StaggeredGridCells.Fixed(1),
                 modifier = modifier
             ) {
                 items(

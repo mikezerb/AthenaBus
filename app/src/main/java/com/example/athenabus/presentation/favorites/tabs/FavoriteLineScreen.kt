@@ -17,13 +17,17 @@ import com.example.athenabus.presentation.common.EmptyScreen
 import com.example.athenabus.presentation.favorites.FavoriteScreenViewModel
 import com.example.athenabus.presentation.favorites.components.FavoriteLineItem
 import com.example.athenabus.presentation.navigation.Route
+import com.example.athenabus.presentation.settings.SettingsViewModel
 
 @Composable
 fun FavoriteLineScreen(
     viewModel: FavoriteScreenViewModel = hiltViewModel(),
     navController: NavController = rememberNavController(),
+    settingsViewModel: SettingsViewModel = hiltViewModel()
 ) {
     val state = viewModel.state.value
+    val settingsState = settingsViewModel.settingState.value
+
     if (state.isLoading) {
         CircularProgressIndicator()
     } else if (state.favoriteLines.isEmpty()) {
@@ -41,6 +45,7 @@ fun FavoriteLineScreen(
                                         "?lineId=${line.LineID}&lineCode=${line.LineCode}&lineDesc=${line.LineDescr}&isFav=${line.isFavorite}"
                             )
                         },
+                        isEnglish = settingsState.lanCode != "el"
                     )
                 }
             }
