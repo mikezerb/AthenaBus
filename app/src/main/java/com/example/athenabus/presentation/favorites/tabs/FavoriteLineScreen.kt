@@ -13,9 +13,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.athenabus.R
-import com.example.athenabus.presentation.bus_list.components.BusLineListItem
 import com.example.athenabus.presentation.common.EmptyScreen
 import com.example.athenabus.presentation.favorites.FavoriteScreenViewModel
+import com.example.athenabus.presentation.favorites.components.FavoriteLineItem
 import com.example.athenabus.presentation.navigation.Route
 
 @Composable
@@ -32,7 +32,7 @@ fun FavoriteLineScreen(
         Column(Modifier.fillMaxSize()) {
             LazyColumn {
                 items(state.favoriteLines, key = { it.LineCode }) { line ->
-                    BusLineListItem(
+                    FavoriteLineItem(
                         busLine = line,
                         onItemClick =
                         {
