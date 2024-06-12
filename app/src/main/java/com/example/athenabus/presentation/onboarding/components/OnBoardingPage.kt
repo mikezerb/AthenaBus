@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +31,7 @@ fun OnBoardingPage(
     modifier: Modifier = Modifier,
     page: Page
 ) {
+    val context = LocalContext.current
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -49,7 +51,7 @@ fun OnBoardingPage(
             )
             Spacer(modifier = Modifier.width(MediumPadding1))
             Text(
-                text = page.title,
+                text = context.getString(page.titleResId),
                 modifier = Modifier
                     .padding(horizontal = SmallPadding1)
                     .padding(bottom = 18.dp, top = 12.dp),
@@ -58,7 +60,7 @@ fun OnBoardingPage(
                 textAlign = TextAlign.Center
             )
             Text(
-                text = page.description,
+                text = context.getString(page.descriptionResId),
                 modifier = Modifier.padding(horizontal = MediumPadding1),
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onBackground,
