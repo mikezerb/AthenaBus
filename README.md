@@ -2,7 +2,17 @@
 
 AthenaBus is an Android application designed to provide a seamless and efficient experience for navigating the Athens bus transit system. The app leverages modern technologies such as Jetpack Compose, Kotlin, and Material 3 to offer a user-friendly interface with comprehensive features for bus line information, real-time arrivals, and more.
 
+
+<p float="left">
+  <img src="https://github.com/user-attachments/assets/5eb2ddaa-fd35-4220-a85e-d94a25b3cb58" width="190" />
+  <img src="https://github.com/user-attachments/assets/ffcd8365-722f-4954-bad5-29a327c440ac" width="190" /> 
+  <img src="https://github.com/user-attachments/assets/78c5adbc-5f5f-4677-89b7-12e1a3ef046f" width="190" />
+  <img src="https://github.com/user-attachments/assets/fbcb501a-2ace-4ec0-935e-b2b5b4050b6f" width="190" />
+  <img src="https://github.com/user-attachments/assets/85d36c2b-f437-4a67-9e26-fe2380463771" width="190" />
+</p>
+
 ## Features ✨
+
 
 AthenaBus achieves the following things:
 
